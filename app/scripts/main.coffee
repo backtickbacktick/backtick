@@ -12,6 +12,6 @@ require.config
     backbone: "../vendor/backbone-amd/backbone"
     underscore: "../vendor/underscore-amd/underscore"
 
-require [], ->
-  console.log "Loaded"
+require ["app"], (App) ->
+  new App
 
