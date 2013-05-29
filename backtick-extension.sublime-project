@@ -1,0 +1,22 @@
+{
+	"folders":
+	[
+		{
+			"path": "./",
+      "folder_exclude_patterns": [
+        ".tmp",
+        ".sass-cache",
+        "dist",
+        "node_modules",
+        "app/vendor"
+      ]
+    }
+  ],
+  "build_systems":
+  [
+    {
+      "name": "Grunt",
+      "cmd": ["grunt"]
+    }
+  ]
+}
