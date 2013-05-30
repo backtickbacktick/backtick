@@ -1,0 +1,20 @@
+@mixin light {
+  #__backtick__.light & {
+    @content;
+  }
+}
+
+@mixin theme-background-color() {
+  background-color: $dark-background;
+  @include light { background-color: $light-background; }
+}
+
+@mixin theme-color() {
+  color: $dark-foreground;
+  @include light { color: $light-foreground; }
+}
+
+@mixin theme-color-highlight() {
+  color: $dark-foreground-highlight;
+  #__backtick__.light & { color: $light-foreground-highlight; }
+}

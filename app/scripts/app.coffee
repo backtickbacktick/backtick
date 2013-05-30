@@ -21,6 +21,10 @@ define [
 
     appendContainer: ->
       @$el = $ Handlebars.compile(template)()
+
+      # Temporary way to switch between themes
+      @$el.addClass "light" if location.hash is "#light"
+
       @$console = @$el.find "#__backtick__console"
       @$results = @$el.find "#__backtick__results"
       @$settings = @$el.find "#__backtick__settings"
