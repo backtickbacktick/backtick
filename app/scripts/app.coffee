@@ -20,6 +20,11 @@ define [
       @trigger "action:displayConsole"
 
     appendContainer: ->
-      $("body").append Handlebars.compile(template)()
+      @$el = $ Handlebars.compile(template)()
+      @$console = @$el.find "#__backtick__console"
+      @$results = @$el.find "#__backtick__results"
+      @$settings = @$el.find "#__backtick__settings"
+
+      $("body").append @$el
 
   new App
