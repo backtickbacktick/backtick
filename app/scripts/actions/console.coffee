@@ -1,11 +1,12 @@
 define [
   "app"
-], (App) ->
+  "views/console"
+], (App, ConsoleView) ->
   class ConsoleActions
     constructor: ->
       App.on "action:displayConsole", @displayConsole.bind(this)
 
     displayConsole: ->
-      console.log "displaying console"
+      new ConsoleView().render().in().focus()
 
   new ConsoleActions

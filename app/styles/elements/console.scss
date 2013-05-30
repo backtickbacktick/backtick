@@ -1,0 +1,112 @@
+#__backtick__console {
+  display: block;
+  position: fixed;
+
+  left: 20px;
+  top: 20px;
+
+  width: 400px;
+  height: 50px;
+  padding: 5px 10px 5px 5px;
+
+  background: $background-dark;
+  opacity: 0;
+
+  &.in {
+    -webkit-animation: __backtick__console-in 0.5s both;
+  }
+
+  &.out {
+    -webkit-animation: __backtick__console-out 0.5s both;
+  }
+
+  button.settings {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+
+    background-image: url(../../assets/icon-transparent.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+
+    cursor: pointer;
+
+    &:after {
+      display: block;
+      content: "";
+      position: absolute;
+
+      left: 0;
+      top: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background-color: $background-dark;
+      background-image: url(../../assets/icon-transparent-highlight.png);
+      background-size: 100%;
+      background-repeat: none;
+      opacity: 0;
+
+      -webkit-transition: opacity 0.25s;
+    }
+
+    &:hover:after {
+      opacity: 1;
+    }
+
+    &:active {
+      top: 1px;
+    }
+  }
+
+  input {
+    display: inline-block;
+    width: 330px;
+    height: 100%;
+
+    font-family: $fonts;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 18px;
+    color: $foreground-dark;
+
+    &::-webkit-input-placeholder {
+      font-style: italic;
+      color: transparentize($foreground-dark, 0.2);
+      -webkit-transition: color 0.25s;
+    }
+    &:hover::-webkit-input-placeholder {
+      color: $foreground-dark;
+    }
+
+    &:focus::-webkit-input-placeholder {
+      color: transparentize($foreground-dark, 0.5);
+    }
+  }
+}
+
+@-webkit-keyframes __backtick__console-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3D(0, -100px, 0);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes __backtick__console-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3D(0, -100px, 0);
+  }
+}
