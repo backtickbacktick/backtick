@@ -7,5 +7,9 @@ define [
 ) ->
   class App
     constructor: ->
-      _.extend(this, Backbone.Events)
+      _.extend this, Backbone.Events
+
+    start: ->
       @trigger "action:displayConsole"
+
+  new App

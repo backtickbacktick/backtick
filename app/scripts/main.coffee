@@ -1,3 +1,5 @@
-require ["app"], (App) ->
-  new App
+require [
+  "app"
+], (App) ->
+  App.start()
 
