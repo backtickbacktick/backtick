@@ -30,9 +30,9 @@
     height: 40px;
     margin-right: 5px;
 
-    background-image: url(../../assets/dark-icon-transparent.png);
+    background-image: url(../../assets/dark-icon.png);
     @include light {
-      background-image: url(../../assets/light-icon-transparent.png);
+      background-image: url(../../assets/light-icon.png);
     }
 
     background-color: inherit;
@@ -55,9 +55,9 @@
 
       background-color: inherit;
 
-      background-image: url(../../assets/dark-icon-transparent-highlight.png);
+      background-image: url(../../assets/dark-icon-highlight.png);
       @include light {
-        background-image: url(../../assets/light-icon-transparent-highlight.png);
+        background-image: url(../../assets/light-icon-highlight.png);
       }
 
       background-size: 100%;
