@@ -3,12 +3,14 @@ define [
   "jquery"
   "backbone"
   "handlebars"
+  "lib/command-store"
   "text!../templates/container.hbs"
 ], (
   _
   $
   Backbone
   Handlebars
+  CommandStore
   template
 ) ->
   class App
@@ -16,8 +18,10 @@ define [
       _.extend this, Backbone.Events
 
     start: ->
-      @appendContainer()
-      @trigger "action:displayConsole"
+        CommandStore.init()
+        CommandStore.on "synced", =>
+          @appendContainer()
+          @trigger "action:displayConsole"
 
     appendContainer: ->
       @$el = $ Handlebars.compile(template)()
