@@ -15,7 +15,5 @@ require.config
     backbone: "../vendor/backbone-amd/backbone"
     underscore: "../vendor/underscore-amd/underscore"
 
-    app: "app"
-
 define ->
   API_URL: "#{location.hostname}:4000"
