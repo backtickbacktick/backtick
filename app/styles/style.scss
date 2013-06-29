@@ -12,6 +12,16 @@
   * {
     box-sizing: border-box;
   }
+
+  .__backtick__console-container {
+    display: block;
+    position: fixed;
+
+    left: 20px;
+    top: 20px;
+
+    width: 400px;
+  }
 }
 
 @import "elements/console";
