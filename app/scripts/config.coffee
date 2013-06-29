@@ -16,4 +16,4 @@ require.config
     underscore: "../vendor/underscore-amd/underscore"
 
 define ->
-  API_URL: "#{location.hostname}:4000"
+  API_URL: "http://#{location.hostname}:4100"
