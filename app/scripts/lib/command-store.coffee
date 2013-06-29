@@ -1,13 +1,17 @@
 define [
   "underscore"
   "backbone"
-], (_, Backbone) ->
+  "config"
+], (
+  _
+  Backbone
+  Config
+) ->
   class CommandStore
     commands: null
     fileEntry: null
     constructor: ->
       _.extend this, Backbone.Events
-
       @requestFileSystem(
         window.PERSISTENT
         10 * 1024 * 1024
@@ -21,7 +25,7 @@ define [
       @fs = fs
       @trigger "loaded"
 
-    onLoadError: console.log.bind("error", console)
+    onLoadError: console.log.bind(console, "error")
 
     readFile: (file) ->
       reader = new FileReader
@@ -42,14 +46,15 @@ define [
 
     init: ->
       return @on "loaded", @init.bind(this, arguments) unless @fs
-      @fs.root.getFile "commands.json", { create: true }, (fileEntry) =>
+      @fs.root.getFile "commands.json", { create: true }, ((fileEntry) =>
         @fileEntry = fileEntry
         fileEntry.file @readFile.bind(this), @onLoadError.bind(this)
+      ), console.log.bind(console, "error loading file")
 
     sync: ->
       return _.defer @trigger.bind(this, "synced") if @commands
 
-      $.getJSON "http://#{location.hostname}:4100/commands", (response) =>
+      $.getJSON "#{Config.API_URL}:4100/commands", (response) =>
         @commands = response
         @trigger "synced"
         @storeCommands()
