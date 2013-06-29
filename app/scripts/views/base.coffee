@@ -11,7 +11,7 @@ define [
 
     constructor: ->
       @template = @compile @rawTemplate
-      super()
+      super
 
     in: ->
       @$el.removeClass("out").addClass "in"
