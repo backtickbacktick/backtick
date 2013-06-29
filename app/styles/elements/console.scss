@@ -9,11 +9,11 @@
   opacity: 0;
 
   &.in {
-    -webkit-animation: __backtick__console-in 0.5s both;
+    -webkit-animation: __backtick__console-in 0.3s both;
   }
 
   &.out {
-    -webkit-animation: __backtick__console-out 0.5s both;
+    -webkit-animation: __backtick__console-out 0.3s both;
   }
 
   button.settings {
