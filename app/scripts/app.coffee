@@ -18,10 +18,10 @@ define [
       _.extend this, Backbone.Events
 
     start: ->
-        CommandStore.init()
-        CommandStore.on "synced", =>
-          @appendContainer()
-          @trigger "action:displayConsole"
+      CommandStore.init()
+      CommandStore.on "synced", =>
+        @appendContainer()
+        @trigger "action:displayConsole"
 
     appendContainer: ->
       @$el = $ Handlebars.compile(template)()
