@@ -1,0 +1,16 @@
+#__backtick__results {
+  width: 100%;
+  display: block;
+
+  @include theme-background-color();
+
+  ul {
+    display: block;
+    padding: 0.5em 1em;
+  }
+
+  li {
+    display: block;
+    padding: 0.5em 0;
+  }
+}

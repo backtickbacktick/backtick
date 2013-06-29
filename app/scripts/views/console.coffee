@@ -2,11 +2,13 @@ define [
   "backbone"
   "views/base"
   "collections/command"
+  "views/results"
   "text!../../templates/console.hbs"
 ], (
   Backbone
   BaseView
   CommandCollection
+  ResultsView
   template
 ) ->
   class ConsoleView extends BaseView
@@ -16,10 +18,8 @@ define [
     initialize: ->
       @render().in().focus()
       @commandCollection = new CommandCollection
-      @commandCollection.fetch()
-      @commandCollection.on "sync", =>
-        console.log @commandCollection
-        console.log "synced commands"
+      @commandCollectionView = new ResultsView \
+        collection: @commandCollection
 
     render: ->
       @$el.append @template()
