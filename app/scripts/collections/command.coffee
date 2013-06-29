@@ -11,9 +11,10 @@ define [
 ) ->
   class CommandCollection extends Backbone.Collection
     model: Command
-    sync: (method, collection, {success}) ->
-      if method is "read"
-        _.defer success.bind(null, CommandStore.commands)
-        return
+    initialize: ->
+      @fetch()
 
-      super
+    sync: (method, collection, {success}) ->
+      return super unless method is "read"
+      _.defer success.bind(null, CommandStore.commands)
+

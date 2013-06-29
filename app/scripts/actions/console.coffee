@@ -7,6 +7,6 @@ define [
       App.on "action:displayConsole", @displayConsole.bind(this)
 
     displayConsole: ->
-      new ConsoleView().render().in().focus()
+      new ConsoleView
 
   new ConsoleActions

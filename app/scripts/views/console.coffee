@@ -1,12 +1,10 @@
 define [
   "backbone"
-  "app"
   "views/base"
   "collections/command"
   "text!../../templates/console.hbs"
 ], (
   Backbone
-  App
   BaseView
   CommandCollection
   template
@@ -16,6 +14,7 @@ define [
     el: "#__backtick__console"
 
     initialize: ->
+      @render().in().focus()
       @commandCollection = new CommandCollection
       @commandCollection.fetch()
       @commandCollection.on "sync", =>
