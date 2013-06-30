@@ -1,0 +1,15 @@
+require [
+  "handlebars"
+  "lib/fuzzy-search"
+], (
+  Handlebars
+  FuzzySearch
+) ->
+  helpers =
+    "highlight-matches": (text, search) ->
+      result = FuzzySearch.wrap search, text, (match) ->
+        "<span class=\"match\">#{match}</span>"
+
+      new Handlebars.SafeString result
+
+  Handlebars.registerHelper(name, helper) for name, helper of helpers
