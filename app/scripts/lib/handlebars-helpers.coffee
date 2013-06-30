@@ -8,7 +8,7 @@ require [
   helpers =
     "highlight-matches": (text, search) ->
       result = FuzzySearch.wrap search, text, (match) ->
-        "<span class=\"match\">#{match}</span>"
+        "<span class=\"_bt-match\">#{match}</span>"
 
       new Handlebars.SafeString result
 

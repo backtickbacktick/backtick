@@ -1,4 +1,4 @@
-#__backtick__results {
+#_bt-results {
   width: 100%;
   display: block;
 
@@ -16,7 +16,7 @@
     padding-bottom: 10px;
   }
 
-  .icon {
+  ._bt-icon {
     display: inline-block;
     vertical-align: top;
     height: 30px;
@@ -26,21 +26,21 @@
     background: rgba(255,255,255,0.3);
   }
 
-  .body {
+  ._bt-body {
     display: inline-block;
     margin-left: 10px;
 
-    .name {
+    ._bt-name {
       display: block;
 
-      .match {
+      ._bt-match {
         font-weight: bold;
         color: $accent-color-dark;
         @include light { color: $accent-color-light; }
       }
     }
 
-    .description {
+    ._bt-description {
       opacity: 0.8;
 
       font-size: 0.8em;

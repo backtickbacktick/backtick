@@ -19,7 +19,7 @@ define [
 ) ->
   class ConsoleView extends BaseView
     rawTemplate: template
-    el: "#__backtick__console"
+    el: "#_bt-console"
 
     events:
       "keydown": "onKeyDown"

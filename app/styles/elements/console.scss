@@ -1,4 +1,4 @@
-#__backtick__console {
+#_bt-console {
   display: block;
   width: 100%;
   height: 50px;
@@ -9,14 +9,14 @@
   opacity: 0;
 
   &.in {
-    -webkit-animation: __backtick__console-in 0.3s both;
+    -webkit-animation: _bt-console-in 0.3s both;
   }
 
   &.out {
-    -webkit-animation: __backtick__console-out 0.3s both;
+    -webkit-animation: _bt-console-out 0.3s both;
   }
 
-  button.settings {
+  button._bt-settings {
     position: relative;
     display: inline-block;
     vertical-align: top;
@@ -89,7 +89,7 @@
   }
 }
 
-@-webkit-keyframes __backtick__console-in {
+@-webkit-keyframes _bt-console-in {
   0% {
     opacity: 0;
     -webkit-transform: translate3D(0, -100px, 0);
@@ -99,7 +99,7 @@
   }
 }
 
-@-webkit-keyframes __backtick__console-out {
+@-webkit-keyframes _bt-console-out {
   0% {
     opacity: 1;
   }

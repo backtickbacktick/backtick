@@ -8,7 +8,7 @@ define [
   CommandView
 ) ->
   class ResultsView extends BaseView
-    el: "#__backtick__results"
+    el: "#_bt-results"
     commandViews: []
     activeCommand: null
 

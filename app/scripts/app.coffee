@@ -29,9 +29,9 @@ define [
       # Temporary way to switch between themes
       @$el.addClass "light" if location.hash is "#light"
 
-      @$console = @$el.find "#__backtick__console"
-      @$results = @$el.find "#__backtick__results"
-      @$settings = @$el.find "#__backtick__settings"
+      @$console = @$el.find "#_bt-console"
+      @$results = @$el.find "#_bt-results"
+      @$settings = @$el.find "#_bt-settings"
 
       $("body").append @$el
 
