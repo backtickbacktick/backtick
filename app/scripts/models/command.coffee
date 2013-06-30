@@ -1,8 +1,12 @@
 define [
+  "jquery"
   "backbone"
+  "app"
   "lib/fuzzy-search"
 ], (
+  $
   Backbone
+  App
   FuzzySearch
 ) ->
   class Command extends Backbone.Model
@@ -11,3 +15,7 @@ define [
 
     weight: (search) ->
       FuzzySearch.weight search, @get "name"
+
+    execute: ->
+      $("body").append $("<script>").attr("src", @get("src"))
+      App.trigger "close"

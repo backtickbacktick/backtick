@@ -2,6 +2,7 @@ define [
   "underscore"
   "backbone"
   "app"
+  "lib/constants"
   "views/base"
   "collections/command"
   "views/results"
@@ -10,6 +11,7 @@ define [
   _
   Backbone
   App
+  Constants
   BaseView
   CommandCollection
   ResultsView
@@ -25,6 +27,7 @@ define [
     initialize: ->
       @render().in()
       @once "in", @focus.bind(this)
+      App.once "close", @out.bind(this)
 
     render: ->
       @$el.append @template()
@@ -36,4 +39,9 @@ define [
       this
 
     onKeyDown: (e) ->
-      _.defer => App.trigger "search", @$input.val()
+      switch e.which
+        when Constants.Keys.ENTER
+          e.preventDefault()
+          App.trigger "execute"
+        else
+          _.defer => App.trigger "search", @$input.val()
