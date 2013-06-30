@@ -40,7 +40,7 @@ define [
       @_lastSearch = search
 
       @commandViews = @collection.filterMatches(search)
-        .map (model) -> model.view.highlightMatches search
+        .map (model) -> model.view.render search
 
       @render()
 

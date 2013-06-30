@@ -1,20 +1,18 @@
 define [
+  "underscore"
   "views/base"
   "lib/fuzzy-search"
+  "text!../../templates/command.hbs"
 ], (
+  _
   BaseView
   FuzzySearch
+  template
 ) ->
   class CommandView extends BaseView
+    rawTemplate: template
     tagName: "li"
 
-    render: ->
-      @$el.append @model.get "name"
+    render: (search = "") ->
+      @$el.html @template(_.extend({}, @model.toJSON(), search: search))
       this
-
-    highlightMatches: (search) ->
-      @$el.html FuzzySearch.wrap search, @model.get("name"), (match) ->
-        "<span class=\"match\">#{match}</span>"
-      this
-
-
