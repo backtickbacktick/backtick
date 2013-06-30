@@ -12,19 +12,32 @@ define [
     initialize: ->
       @collection.on "sync", =>
         @createModelViews()
-        @render()
 
     createModelViews: ->
       @collection.each (command) =>
         view = new CommandView model: command
+        command.view = view
         @commandViews.push view
 
     render: ->
+      @$el.empty()
+      return unless @commandViews.length
       $ul = $ "<ul>"
       for view in @commandViews
-        $ul.append view.render().el
+        view.render() unless view.isRendered()
+        $ul.append view.el
 
       @$el.append $ul
-      console.log @$el
       this
 
+    _lastSearch: ""
+    _renderMatches: (search) ->
+      return if @_lastSearch is search
+      @_lastSearch = search
+
+      @commandViews = @collection.filterMatches(search)
+        .map (model) -> model.view.highlightMatches search
+
+      @render()
+
+    renderMatches: _.debounce ResultsView::_renderMatches, 100

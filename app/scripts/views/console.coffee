@@ -1,10 +1,12 @@
 define [
+  "underscore"
   "backbone"
   "views/base"
   "collections/command"
   "views/results"
   "text!../../templates/console.hbs"
 ], (
+  _
   Backbone
   BaseView
   CommandCollection
@@ -15,16 +17,25 @@ define [
     rawTemplate: template
     el: "#__backtick__console"
 
+    events:
+      "keydown": "onKeyDown"
+
     initialize: ->
-      @render().in().focus()
+      @render().in()
+      @once "in", @focus.bind(this)
+
       @commandCollection = new CommandCollection
-      @commandCollectionView = new ResultsView \
+      @resultsView = new ResultsView \
         collection: @commandCollection
 
     render: ->
       @$el.append @template()
+      @$input = @$ "input"
       this
 
     focus: ->
-      @$("input").focus()
+      @$input.focus()
       this
+
+    onKeyDown: (e) ->
+      _.defer => @resultsView.renderMatches @$input.val()

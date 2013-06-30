@@ -12,5 +12,11 @@
   li {
     display: block;
     padding: 0.5em 0;
+
+    .match {
+      font-weight: bold;
+      color: $accent-color-dark;
+      @include light { color: $accent-color-light; }
+    }
   }
 }
