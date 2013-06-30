@@ -27,3 +27,5 @@ define [
         @trigger.bind(this, "out")
       this
 
+    isRendered: ->
+      not @$el.is ":empty"
