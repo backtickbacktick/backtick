@@ -1,6 +1,7 @@
 define [
   "underscore"
   "backbone"
+  "app"
   "views/base"
   "collections/command"
   "views/results"
@@ -8,6 +9,7 @@ define [
 ], (
   _
   Backbone
+  App
   BaseView
   CommandCollection
   ResultsView
@@ -24,10 +26,6 @@ define [
       @render().in()
       @once "in", @focus.bind(this)
 
-      @commandCollection = new CommandCollection
-      @resultsView = new ResultsView \
-        collection: @commandCollection
-
     render: ->
       @$el.append @template()
       @$input = @$ "input"
@@ -38,4 +36,4 @@ define [
       this
 
     onKeyDown: (e) ->
-      _.defer => @resultsView.renderMatches @$input.val()
+      _.defer => App.trigger "search", @$input.val()

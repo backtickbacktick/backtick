@@ -21,7 +21,7 @@ define [
       CommandStore.init()
       CommandStore.on "synced", =>
         @appendContainer()
-        @trigger "action:displayConsole"
+        @trigger "action:initConsole"
 
     appendContainer: ->
       @$el = $ Handlebars.compile(template)()

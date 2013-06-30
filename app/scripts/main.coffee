@@ -1,6 +1,6 @@
 require [
   "app"
-  "actions/console"
+  "actions"
 ], (App) ->
   App.start()
 

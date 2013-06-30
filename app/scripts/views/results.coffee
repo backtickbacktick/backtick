@@ -1,7 +1,9 @@
 define [
+  "app"
   "views/base"
   "views/command"
 ], (
+  App
   BaseView
   CommandView
 ) ->
@@ -12,6 +14,8 @@ define [
     initialize: ->
       @collection.on "sync", =>
         @createModelViews()
+
+      App.on "search", @renderMatches.bind this
 
     createModelViews: ->
       @collection.each (command) =>
