@@ -54,7 +54,7 @@ define [
     sync: ->
       return _.defer @trigger.bind(this, "synced") if @commands
 
-      $.getJSON "#{Config.API_URL}:4100/commands", (response) =>
+      $.getJSON "#{Config.API_URL}/commands", (response) =>
         @commands = response
         @trigger "synced"
         @storeCommands()
