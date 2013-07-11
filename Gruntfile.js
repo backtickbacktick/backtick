@@ -40,6 +40,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/*.html',
                     '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+                    '{.tmp,<%= yeoman.app %>}/spec/{,*/}*.js',
                     '{.tmp,<%= yeoman.app %>}/templates/{,*/}*.hbs',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,webp}'
                 ],
@@ -67,6 +68,7 @@ module.exports = function (grunt) {
                 options: {
                     middleware: function (connect) {
                         return [
+                            lrSnippet,
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, 'test')
                         ];
@@ -126,9 +128,10 @@ module.exports = function (grunt) {
             test: {
                 files: [{
                     expand: true,
-                    cwd: '.tmp/spec',
-                    src: '*.coffee',
-                    dest: 'test/spec'
+                    cwd: 'test/spec',
+                    src: '**/*.coffee',
+                    dest: '.tmp/spec',
+                    ext: '.js'
                 }]
             }
         },
@@ -304,9 +307,11 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:server',
         'coffee',
+        'copy',
         'compass',
+        'livereload-start',
         'connect:test',
-        'mocha'
+        'watch'
     ]);
 
     grunt.registerTask('build', [
