@@ -5,7 +5,7 @@
   width: 100%;
   display: block;
 
-  @include theme-background-color();
+  background-color: $background-color;
 
   ul {
     display: block;
@@ -38,8 +38,7 @@
 
       ._bt-match {
         font-weight: bold;
-        color: $accent-color-dark;
-        @include light { color: $accent-color-light; }
+        color: $accent-color;
       }
     }
 

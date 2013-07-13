@@ -7,7 +7,7 @@
   height: 50px;
   padding: 5px 10px 5px 5px;
 
-  @include theme-background-color();
+  background-color: $background-color;
 
   opacity: 0;
 
@@ -28,10 +28,7 @@
     height: 40px;
     margin-right: 5px;
 
-    background-image: url(../../assets/dark-icon.png);
-    @include light {
-      background-image: url(../../assets/light-icon.png);
-    }
+    background-image: url(../../assets/icon.png);
 
     background-color: inherit;
     background-size: 100%;
@@ -53,10 +50,7 @@
 
       background-color: inherit;
 
-      background-image: url(../../assets/dark-icon-highlight.png);
-      @include light {
-        background-image: url(../../assets/light-icon-highlight.png);
-      }
+      background-image: url(../../assets/icon-highlight.png);
 
       background-size: 100%;
       background-repeat: none;
@@ -83,11 +77,11 @@
     font-size: 16px;
     line-height: 18px;
 
-    @include theme-color-highlight();
+    color: $foreground-color;
 
     &::-webkit-input-placeholder {
       font-style: italic;
-      @include theme-color-highlight();
+      color: fade($foreground-color, 40%);
     }
   }
 }
