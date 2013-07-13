@@ -17,5 +17,6 @@ define [
       FuzzySearch.weight search, @get "name"
 
     execute: ->
-      $("body").append $("<script>").attr("src", @get("src"))
-      App.trigger "close"
+      $.getScript(@get "src")
+        .success(App.trigger.bind(App, "close"))
+        .error(console.log.bind(console, "Error loading script"))
