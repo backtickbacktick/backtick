@@ -25,13 +25,17 @@
     height: 30px;
     width: 30px;
     margin-top: 4px;
+    border-radius: 3px;
+    margin-left: 5px;
 
-    background: rgba(255,255,255,0.3);
+    background-size: 100%;
+    background-repeat: no-repeat;
   }
 
   ._bt-body {
     display: inline-block;
     margin-left: 10px;
+    width: 335px;
 
     ._bt-name {
       display: block;
@@ -44,9 +48,19 @@
 
     ._bt-description {
       opacity: 0.8;
-
-      font-size: 0.8em;
+      font-size: 14px;
       font-style: italic;
+    }
+
+    ._bt-link {
+      display: block;
+      font-size: 12px;
+      margin-top: 3px;
+      opacity: 0.5;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

@@ -12,4 +12,7 @@ require [
 
       new Handlebars.SafeString result
 
+    prettyUrl: (url) ->
+      url.replace /^((http|https):\/\/)?(www.)?/, ""
+
   Handlebars.registerHelper(name, helper) for name, helper of helpers
