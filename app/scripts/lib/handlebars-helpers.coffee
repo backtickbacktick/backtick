@@ -6,7 +6,7 @@ require [
   FuzzySearch
 ) ->
   helpers =
-    "highlight-matches": (text, search) ->
+    highlightMatches: (text, search) ->
       result = FuzzySearch.wrap search, text, (match) ->
         "<span class=\"_bt-match\">#{match}</span>"
 
