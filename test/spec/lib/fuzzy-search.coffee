@@ -26,7 +26,7 @@ define [
       it "returns false when search does not match", ->
         match("hello planet").should.be.false
 
-    describe "weight", ->
+    describe "#weight", ->
       weight = (search, text = "Hello World") -> FuzzySearch.weight search, text
 
       it "gives points for characters at the start of words", ->
@@ -46,7 +46,7 @@ define [
       it "separates words in camelCased text", ->
         weight("hw", "helloWorld").should.eq 2
 
-    describe "wrap", ->
+    describe "#wrap", ->
       wrapFunction = (char) -> "<#{char}>"
       wrap = (search) -> FuzzySearch.wrap search, "Hello World", wrapFunction
 
