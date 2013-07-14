@@ -11,13 +11,16 @@ define [
     el: "#_bt-results"
     commandViews: []
     activeCommand: null
+    activeCommandIndex: 0
 
     initialize: ->
       @collection.on "sync", =>
         @createModelViews()
 
-      App.on "search", @renderMatches.bind this
-      App.on "execute", @executeActive.bind this
+      App.on "command:search", @renderMatches.bind this
+      App.on "command:navigateDown", @cycleActive.bind this, 1
+      App.on "command:navigateUp", @cycleActive.bind this, -1
+      App.on "command:execute", @executeActive.bind this
       App.once "close", @remove.bind this
 
     createModelViews: ->
@@ -46,12 +49,23 @@ define [
       @_lastSearch = search
 
       @commandViews = @collection.filterMatches(search)
-        .map (model) -> model.view.render search
+        .map (model) -> model.view.render()
 
-      @activeCommand = @commandViews[0]?.model
+      @setActive @commandViews[0]
       @render()
 
     renderMatches: _.debounce ResultsView::_renderMatches, 100
+
+    cycleActive: (step) ->
+      @activeCommandIndex = (@activeCommandIndex + step) % @commandViews.length
+      @activeCommandIndex = @commandViews.length - 1 if @activeCommandIndex < 0
+      @setActive @commandViews[@activeCommandIndex]
+
+    setActive: (view) ->
+      return unless view
+      @activeCommand = view.model
+      @$("._bt-active").removeClass "_bt-active"
+      view.$el.addClass "_bt-active"
 
     executeActive: ->
       @activeCommand?.execute()

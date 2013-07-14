@@ -10,13 +10,17 @@
   ul {
     display: block;
     padding: 0;
-    padding-left: 10px;
+    padding-bottom: 10px;
   }
 
-  li {
+  ._bt-command {
     display: block;
-    padding: 0;
-    padding-bottom: 10px;
+    padding: 6px 10px;
+
+    transition: background-color 0.15s;
+    &._bt-active {
+      background-color: rgba(255,255,255,0.05);
+    }
   }
 
   ._bt-icon {
@@ -35,7 +39,9 @@
   ._bt-body {
     display: inline-block;
     margin-left: 10px;
-    width: 335px;
+    width: 325px;
+
+    * { cursor: default; }
 
     ._bt-name {
       display: block;
@@ -57,6 +63,7 @@
       font-size: 12px;
       margin-top: 3px;
       opacity: 0.5;
+      cursor: pointer;
 
       &:hover {
         text-decoration: underline;
