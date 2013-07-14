@@ -11,6 +11,6 @@ define [
     rawTemplate: template
     tagName: "li"
 
-    render: (search = "") ->
+    render: ->
       @$el.html @template(_.extend({}, @model.getTemplateData()))
       this
