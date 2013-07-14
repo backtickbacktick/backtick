@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Backtick",
+  "description": "Powerful commands in your browser.",
+  "version": "0.1",
+
+  "icons": {
+    "16": "assets/extension/icon128.png",
+    "32": "assets/extension/icon128.png",
+    "48": "assets/extension/icon128.png",
+    "128": "assets/extension/icon128.png"
+  },
+  "background": { "scripts": ["scripts/background.js"] },
+  "browser_action": {
+    "default_icon": {
+      "19": "assets/extension/icon128.png",
+      "38": "assets/extension/icon128.png"
+    },
+    "default_title": "Open the Backtick console"
+  },
+  "permissions": [
+    "tabs", "unlimitedStorage", "http://*/*", "https://*/*"
+  ]
+}
