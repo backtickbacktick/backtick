@@ -14,14 +14,26 @@ define [
   template
 ) ->
   class App
+    open: false
+
     constructor: ->
       _.extend this, Backbone.Events
+
+      @on "open", => @open = true
+      @on "close", => @open = false
 
     start: ->
       CommandStore.init()
       CommandStore.on "synced", =>
+        @open = true
         @appendContainer()
         @trigger "action:initConsole"
+
+      @on "toggleClose", ->
+        if @open
+          @trigger "close"
+        else
+          @trigger "open"
 
     appendContainer: ->
       @$el = $ Handlebars.compile(template)()

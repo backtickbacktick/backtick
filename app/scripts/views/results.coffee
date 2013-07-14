@@ -21,7 +21,7 @@ define [
       App.on "command:navigateDown", @cycleActive.bind this, 1
       App.on "command:navigateUp", @cycleActive.bind this, -1
       App.on "command:execute", @executeActive.bind this
-      App.once "close", @remove.bind this
+      App.on "close", @empty.bind this
 
     createModelViews: ->
       @collection.each (command) =>
@@ -31,6 +31,12 @@ define [
 
     remove: ->
       @$el.remove()
+
+    empty: ->
+      @commandViews = []
+      @activeCommand = null
+      @activeCommandIndex = 0
+      @$el.empty()
 
     render: ->
       @$el.empty()

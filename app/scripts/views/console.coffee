@@ -25,13 +25,21 @@ define [
       "keydown": "onKeyDown"
 
     initialize: ->
+      window.App = App
       @render().in()
-      @once "in", @focus.bind(this)
 
       @keepFocused()
       @escapeClose()
 
-      App.once "close", @out.bind(this)
+      App.on "close", @close.bind(this)
+      App.on "open", @open.bind(this)
+
+    open: ->
+      @$input.val ""
+      @in()
+
+    close: ->
+      @out()
 
     render: ->
       @$el.append @template()
@@ -43,7 +51,9 @@ define [
       this
 
     keepFocused: ->
-      @$input.on "blur", => _.defer @focus.bind(this)
+      @on "in", @focus.bind(this)
+      @$input.on "blur", =>
+        _.defer @focus.bind(this) if App.open
 
     escapeClose: ->
       $(document).on "keyup", (e) ->
