@@ -15,6 +15,7 @@
   ._bt-console-container {
     display: block;
     position: fixed;
+    z-index: 2147483647;
 
     left: 20px;
     top: 20px;
