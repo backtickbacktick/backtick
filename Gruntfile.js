@@ -240,7 +240,27 @@ module.exports = function (grunt) {
                     src: [
                         '*.{ico,txt}',
                         '.htaccess',
-                        'images/*.svg'
+                        'images/*.svg',
+                        'assets/{,*/}*'
+                    ]
+                }]
+            },
+            ext: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        'manifest.json'
+                    ]
+                }, {
+                    expand: true,
+                    dot: true,
+                    cwd: '.tmp',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        'scripts/background.js'
                     ]
                 }]
             },
