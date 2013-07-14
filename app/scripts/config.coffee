@@ -16,4 +16,4 @@ require.config
     underscore: "../vendor/underscore-amd/underscore"
 
 define ->
-  API_URL: "http://#{location.hostname}:4100"
+  API_URL: "http://dev.api.backtick.io"
