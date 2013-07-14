@@ -14,6 +14,6 @@ require.config
     underscore: "../vendor/underscore-amd/underscore"
 
 require [
-  "lib/fuzzy-search"
+  "lib/fuzzy-match"
 ], ->
   mocha.run()

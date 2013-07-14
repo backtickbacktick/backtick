@@ -2,19 +2,21 @@ define [
   "jquery"
   "backbone"
   "app"
-  "lib/fuzzy-search"
+  "lib/fuzzy-match"
 ], (
   $
   Backbone
   App
-  FuzzySearch
+  FuzzyMatch
 ) ->
   class Command extends Backbone.Model
-    match: (search) ->
-      FuzzySearch.match search, @get "name"
+    match: null
 
-    weight: (search) ->
-      FuzzySearch.weight search, @get "name"
+    getTemplateData: ->
+      $.extend {}, @toJSON(), match: @match
+
+    createMatch: (search) ->
+      @match = new FuzzyMatch @get("name"), search
 
     execute: ->
       $.getScript(@get "src")

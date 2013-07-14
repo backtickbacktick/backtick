@@ -22,8 +22,9 @@ define [
     filterMatches: (search) ->
       return [] unless search
 
+      model.createMatch(search) for model in @models
       _.chain(@models)
-        .filter((command) -> command.match search)
-        .sortBy((command) -> -(command.weight search))
+        .filter((command) -> command.match.matches)
+        .sortBy((command) -> -(command.match.weight))
         .value()
 

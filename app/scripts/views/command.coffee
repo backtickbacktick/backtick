@@ -1,12 +1,10 @@
 define [
   "underscore"
   "views/base"
-  "lib/fuzzy-search"
   "text!../../templates/command.hbs"
 ], (
   _
   BaseView
-  FuzzySearch
   template
 ) ->
   class CommandView extends BaseView
@@ -14,5 +12,5 @@ define [
     tagName: "li"
 
     render: (search = "") ->
-      @$el.html @template(_.extend({}, @model.toJSON(), search: search))
+      @$el.html @template(_.extend({}, @model.getTemplateData()))
       this

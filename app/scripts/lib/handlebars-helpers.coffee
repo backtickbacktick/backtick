@@ -1,13 +1,11 @@
 require [
   "handlebars"
-  "lib/fuzzy-search"
 ], (
   Handlebars
-  FuzzySearch
 ) ->
   helpers =
-    highlightMatches: (text, search) ->
-      result = FuzzySearch.wrap search, text, (match) ->
+    highlightMatches: (match) ->
+      result = match.wrap (match) ->
         "<span class=\"_bt-match\">#{match}</span>"
 
       new Handlebars.SafeString result
