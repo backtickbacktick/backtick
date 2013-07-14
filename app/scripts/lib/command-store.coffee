@@ -14,12 +14,12 @@ define [
 
     constructor: ->
       _.extend this, Backbone.Events
-      @requestFileSystem(
-        window.PERSISTENT
-        10 * 1024 * 1024
-        @onLoad.bind this
-        @onLoadError.bind this
-      )
+      # @requestFileSystem(
+      #   window.PERSISTENT
+      #   10 * 1024 * 1024
+      #   @onLoad.bind this
+      #   @onLoadError.bind this
+      # )
 
       @on "initialised", @sync.bind this
 
@@ -50,6 +50,7 @@ define [
       @lastSync = json.lastSync
 
     storeCommands: ->
+      return
       @fileEntry.createWriter ((fileWriter) =>
         json = JSON.stringify {
           commands: @commands
@@ -74,11 +75,12 @@ define [
           @commands.push command
 
     init: ->
-      return @on "loaded", @init.bind(this, arguments) unless @fs
-      @fs.root.getFile "commands.json", { create: true }, ((fileEntry) =>
-        @fileEntry = fileEntry
-        fileEntry.file @readFile.bind(this), @onLoadError.bind(this)
-      ), console.log.bind(console, "Error loading file")
+      _.defer @trigger.bind(this, "initialised")
+      # return @on "loaded", @init.bind(this, arguments) unless @fs
+      # @fs.root.getFile "commands.json", { create: true }, ((fileEntry) =>
+      #   @fileEntry = fileEntry
+      #   fileEntry.file @readFile.bind(this), @onLoadError.bind(this)
+      # ), console.log.bind(console, "Error loading file")
 
     sync: ->
       params = {}
