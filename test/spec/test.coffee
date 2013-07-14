@@ -15,5 +15,6 @@ require.config
 
 require [
   "lib/fuzzy-match"
+  "lib/command-store"
 ], ->
   mocha.run()

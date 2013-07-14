@@ -63,6 +63,16 @@ define [
         fileWriter.onerror = console.log.bind console, "Error writing file"
       ), console.log.bind(console, "Error creating writer")
 
+    mergeCommands: (updatedCommands) ->
+      commandsMap = {}
+      commandsMap[command.gistID] = command for command in @commands
+
+      for command in updatedCommands
+        if commandsMap[command.gistID]
+          _.extend commandsMap[command.gistID], command
+        else
+          @commands.push command
+
     init: ->
       return @on "loaded", @init.bind(this, arguments) unless @fs
       @fs.root.getFile "commands.json", { create: true }, ((fileEntry) =>
@@ -77,7 +87,7 @@ define [
       $.getJSON("#{Config.API_URL}/commands", params)
         .success((response) =>
           if response.length
-            @commands = response.concat @commands
+            @mergeCommands response
             @lastSync = _.last(response).updatedAt # Response is sorted by
                                                    # ascending updatedAt
             @storeCommands()
