@@ -28,7 +28,7 @@
     height: 40px;
     margin-right: 5px;
 
-    background-image: url(../../assets/icon.png);
+    background-image: inline-image("icon.png");
 
     background-color: inherit;
     background-size: 100%;
@@ -50,7 +50,7 @@
 
       background-color: inherit;
 
-      background-image: url(../../assets/icon-highlight.png);
+      background-image: inline-image("icon-highlight.png");
 
       background-size: 100%;
       background-repeat: none;
