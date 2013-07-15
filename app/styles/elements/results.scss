@@ -4,6 +4,8 @@
 #_bt-results {
   width: 100%;
   display: block;
+  max-height: 310px;
+  overflow: auto;
 
   background-color: $background-color;
 
@@ -17,7 +19,6 @@
     display: block;
     padding: 6px 10px;
 
-    transition: background-color 0.15s;
     &._bt-active {
       background-color: rgba(255,255,255,0.05);
     }

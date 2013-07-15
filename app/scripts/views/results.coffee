@@ -73,5 +73,19 @@ define [
       @$("._bt-active").removeClass "_bt-active"
       view.$el.addClass "_bt-active"
 
+      @scrollToActive()
+
+    scrollToActive: ->
+      $active = $ "._bt-active"
+
+      top =  $active.offset().top - @$el.offset().top
+      bottom = top + $active.outerHeight()
+      maxHeight = parseInt @$el.css("max-height"), 10
+
+      if bottom > maxHeight
+        @$el.scrollTop bottom - maxHeight + @$el.scrollTop()
+      else if top < 0
+        @$el.scrollTop top + @$el.scrollTop()
+
     executeActive: ->
       @activeCommand?.execute()
