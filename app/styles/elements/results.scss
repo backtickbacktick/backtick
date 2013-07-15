@@ -32,6 +32,7 @@
     border-radius: 3px;
     margin-left: 5px;
 
+    background-image: inline-image("command-default.png");
     background-size: 100%;
     background-repeat: no-repeat;
   }
@@ -67,6 +68,8 @@
 
       &:hover {
         text-decoration: underline;
+        color: $accent-color;
+        opacity: 1;
       }
     }
   }

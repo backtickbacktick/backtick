@@ -36,6 +36,7 @@
     opacity: 0.8;
 
     cursor: pointer;
+    transition: opacity 0.25s;
 
     &:after {
       display: block;
@@ -56,11 +57,14 @@
       background-repeat: none;
       opacity: 0;
 
-      -webkit-transition: opacity 0.25s;
+      transition: opacity 0.25s;
     }
 
-    &:hover:after {
+    &:hover {
       opacity: 1;
+      &:after {
+        opacity: 1;
+      }
     }
 
     &:active {
