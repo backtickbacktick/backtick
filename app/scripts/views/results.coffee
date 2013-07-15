@@ -57,8 +57,8 @@ define [
       @commandViews = @collection.filterMatches(search)
         .map (model) -> model.view.render()
 
-      @setActive @commandViews[0]
       @render()
+      @setActive @commandViews[0]
 
     renderMatches: _.debounce ResultsView::_renderMatches, 100
 
