@@ -81,11 +81,11 @@
     font-size: 16px;
     line-height: 18px;
 
-    color: $foreground-color;
+    color: $foreground-color !important;
 
     &::-webkit-input-placeholder {
       font-style: italic;
-      color: fade($foreground-color, 40%);
+      color: fade-out($foreground-color, 0.6);
     }
   }
 }
