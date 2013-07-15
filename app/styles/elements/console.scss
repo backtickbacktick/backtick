@@ -85,7 +85,7 @@
 
     &::-webkit-input-placeholder {
       font-style: italic;
-      color: fade-out($foreground-color, 0.6);
+      color: fade-out($foreground-color, 0.5);
     }
   }
 }
