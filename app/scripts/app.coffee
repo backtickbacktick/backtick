@@ -3,18 +3,19 @@ define [
   "jquery"
   "backbone"
   "handlebars"
-  "lib/command-store"
+  "lib/extension"
   "text!../templates/container.hbs"
 ], (
   _
   $
   Backbone
   Handlebars
-  CommandStore
+  Extension
   template
 ) ->
   class App
     open: false
+    commands: []
 
     constructor: ->
       _.extend this, Backbone.Events
@@ -23,11 +24,13 @@ define [
       @on "close", => @open = false
 
     start: ->
-      CommandStore.init()
-      CommandStore.on "synced", =>
-        @open = true
-        @appendContainer()
-        @trigger "action:initConsole"
+      @appendContainer()
+      @trigger "loadConsole.action"
+
+      @on "load.commands", => @open = true
+      @on "load.commands sync.commands", (commands) => @commands = commands
+
+      Extension.trigger "ready.app"
 
       @on "toggleClose", ->
         if @open

@@ -1,23 +1,23 @@
 define [
   "underscore"
   "backbone"
+  "app"
   "models/command"
-  "lib/command-store"
 ], (
   _
   Backbone
+  App
   Command
-  CommandStore
 ) ->
   class CommandCollection extends Backbone.Collection
     model: Command
 
     initialize: ->
-      @fetch()
+      App.on "sync.commands load.commands", _.defer.bind(_, @fetch.bind(this))
 
     sync: (method, collection, {success}) ->
       return super unless method is "read"
-      _.defer success.bind(null, CommandStore.commands)
+      _.defer success.bind(null, App.commands)
 
     filterMatches: (search) ->
       return [] unless search

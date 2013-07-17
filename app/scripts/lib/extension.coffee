@@ -4,12 +4,19 @@ define [
   App
 ) ->
   class Extension
+    supported: !!chrome.runtime
     constructor: ->
-      return unless chrome.runtime
       @listenAndTrigger()
 
     listenAndTrigger: ->
+      return unless @supported
       chrome.runtime.onMessage.addListener (req, sender, sendResponse) ->
-        App.trigger(req.event) if req.event
+        App or= require "app"
+        if req.event
+          App.trigger(req.event, req.data)
+
+    trigger: (eventName, eventData) ->
+      return unless @supported
+      chrome.runtime.sendMessage { event: eventName, data: eventData }
 
   new Extension

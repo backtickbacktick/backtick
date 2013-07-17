@@ -13,7 +13,7 @@ define [
 ) ->
   class Actions
     constructor: ->
-      App.on "action:initConsole", @initConsole.bind this
+      App.on "loadConsole.action", @initConsole.bind this
 
     initConsole: ->
       new ConsoleView

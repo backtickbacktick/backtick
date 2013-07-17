@@ -5,22 +5,26 @@
   "version": "0.1",
 
   "icons": {
-    "16": "assets/extension/icon128.png",
-    "32": "assets/extension/icon128.png",
-    "48": "assets/extension/icon128.png",
-    "128": "assets/extension/icon128.png"
+    "16": "icon128.png",
+    "32": "icon128.png",
+    "48": "icon128.png",
+    "128": "icon128.png"
   },
-  "background": { "scripts": ["scripts/background.js"] },
+
+  "background": { "scripts": ["vendor/jquery/jquery.js", "command-store.js", "background.js"] },
+
   "browser_action": {
     "default_icon": {
-      "19": "assets/extension/icon128.png",
-      "38": "assets/extension/icon128.png"
+      "19": "icon128.png",
+      "38": "icon128.png"
     },
     "default_title": "Open the Backtick console"
   },
+
   "permissions": [
     "tabs", "unlimitedStorage", "http://*/*", "https://*/*"
   ],
+
   "web_accessible_resources": [
     "assets/fonts/Lato-Black.ttf",
     "assets/fonts/Lato-BlackItalic.ttf",

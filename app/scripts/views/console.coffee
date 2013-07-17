@@ -4,8 +4,6 @@ define [
   "app"
   "lib/constants"
   "views/base"
-  "collections/command"
-  "views/results"
   "text!../../templates/console.hbs"
 ], (
   _
@@ -13,8 +11,6 @@ define [
   App
   Constants
   BaseView
-  CommandCollection
-  ResultsView
   template
 ) ->
   class ConsoleView extends BaseView
@@ -25,7 +21,6 @@ define [
       "keydown": "onKeyDown"
 
     initialize: ->
-      window.App = App
       @render().in()
 
       @keepFocused()

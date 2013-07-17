@@ -133,6 +133,15 @@ module.exports = function (grunt) {
                     dest: '.tmp/spec',
                     ext: '.js'
                 }]
+            },
+            ext: {
+                files: [{
+                    expand: true,
+                    cwd: 'extension',
+                    src: '**/*.coffee',
+                    dest: '<%= yeoman.dist %>',
+                    ext: '.js'
+                }]
             }
         },
         compass: {
@@ -241,7 +250,9 @@ module.exports = function (grunt) {
                         '*.{ico,txt}',
                         '.htaccess',
                         'images/*.svg',
-                        'assets/{,*/}*'
+                        'assets/{,*/}*',
+                        'vendor/jquery/jquery.js',
+                        'vendor/requirejs/require.js'
                     ]
                 }]
             },
@@ -249,18 +260,11 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     dot: true,
-                    cwd: '<%= yeoman.app %>',
+                    cwd: 'extension',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        'manifest.json'
-                    ]
-                }, {
-                    expand: true,
-                    dot: true,
-                    cwd: '.tmp',
-                    dest: '<%= yeoman.dist %>',
-                    src: [
-                        'scripts/background.js'
+                        'manifest.json',
+                        'icon128.png'
                     ]
                 }]
             },
@@ -345,7 +349,7 @@ module.exports = function (grunt) {
         'htmlmin',
         'concat',
         'cssmin',
-        'uglify',
+        // 'uglify',
         'usemin'
     ]);
 
