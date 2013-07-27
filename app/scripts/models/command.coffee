@@ -2,11 +2,13 @@ define [
   "jquery"
   "backbone"
   "app"
+  "lib/extension"
   "lib/fuzzy-match"
 ], (
   $
   Backbone
   App
+  Extension
   FuzzyMatch
 ) ->
   class Command extends Backbone.Model
@@ -19,6 +21,5 @@ define [
       @match = new FuzzyMatch @get("name"), search
 
     execute: ->
-      $.getScript(@get "src")
-        .success(App.trigger.bind(App, "close"))
-        .error(console.log.bind(console, "Error loading script"))
+      Extension.trigger "execute.commands", @get("src")
+      App.on "executed.commands", App.trigger.bind(App, "close")

@@ -16,7 +16,10 @@ define [
           App.trigger(req.event, req.data)
 
     trigger: (eventName, eventData) ->
-      return unless @supported
-      chrome.runtime.sendMessage { event: eventName, data: eventData }
+      if @supported
+        chrome.runtime.sendMessage { event: eventName, data: eventData }
+      else
+        App or= require "app"
+        App.trigger eventName, eventData
 
   new Extension
