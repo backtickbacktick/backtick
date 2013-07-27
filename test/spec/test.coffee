@@ -14,7 +14,8 @@ require.config
     underscore: "../vendor/underscore-amd/underscore"
 
 require [
+  "jquery"
   "lib/fuzzy-match"
   "lib/command-store"
 ], ->
-  mocha.run()
+  mocha.ignoreLeaks().run()

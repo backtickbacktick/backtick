@@ -1,6 +1,4 @@
-define [
-  "/scripts/lib/command-store.js"
-], (CommandStore) ->
+require ["/extension/command-store.js"], ->
   describe "CommandStore", ->
     describe "#mergeCommands", ->
       beforeEach ->
