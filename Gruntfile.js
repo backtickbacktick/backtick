@@ -322,7 +322,9 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
-            return grunt.task.run(['build', /*'open',*/ 'connect:dist:keepalive']);
+            return grunt.task.run(['build', 'connect:dist:keepalive']);
+        } else if (target === 'ext') {
+            return grunt.task.run(['ext', 'connect:dist:keepalive']);
         }
 
         grunt.task.run([
@@ -358,13 +360,23 @@ module.exports = function (grunt) {
         'htmlmin',
         'concat',
         'cssmin',
-        // 'uglify',
+        'uglify',
         'usemin'
     ]);
 
-    grunt.registerTask('default', [
-        // 'jshint',
-        // 'test',
-        'build'
+    grunt.registerTask('ext', [
+        'clean:dist',
+        'coffee',
+        'compass:dist',
+        'useminPrepare',
+        'copy',
+        'requirejs',
+        'imagemin',
+        'htmlmin',
+        'concat',
+        'cssmin',
+        'usemin'
     ]);
+
+    grunt.registerTask('default', ['ext']);
 };
