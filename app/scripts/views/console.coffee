@@ -36,6 +36,7 @@ define [
 
     close: ->
       @out()
+      @once "out", => @$input.blur()
 
     render: ->
       @$el.append @template()
