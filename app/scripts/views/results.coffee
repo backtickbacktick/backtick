@@ -40,7 +40,7 @@ define [
 
     render: ->
       @$el.empty()
-      return unless @commandViews.length
+      return unless @commandViews.length and App.open
       $ul = $ "<ul>"
       for view in @commandViews
         view.render() unless view.isRendered()
