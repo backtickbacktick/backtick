@@ -4,6 +4,7 @@ define [
   "backbone"
   "handlebars"
   "lib/extension"
+  "text!../templates/root.hbs"
   "text!../templates/container.hbs"
 ], (
   _
@@ -11,7 +12,8 @@ define [
   Backbone
   Handlebars
   Extension
-  template
+  rootTemplate
+  containerTemplate
 ) ->
   class App
     open: false
@@ -39,11 +41,14 @@ define [
           @trigger "open"
 
     appendContainer: ->
-      @$el = $("<div id=\"__backtick__\">").appendTo "body"
+      @$el = $(Handlebars.compile(rootTemplate)()).appendTo "body"
 
       createShadowRoot = @$el[0].createShadowRoot or @$el[0].webkitCreateShadowRoot
       shadow = createShadowRoot.apply @$el[0]
-      shadow.innerHTML = Handlebars.compile(template)()
+
+      cssPath = "styles/style.css"
+      cssPath = chrome.extension.getURL(cssPath) if chrome.extension
+      shadow.innerHTML = Handlebars.compile(containerTemplate)(cssPath: cssPath)
 
       @$console = $ shadow.querySelector("#console")
       @$results = $ shadow.querySelector("#results")

@@ -1,10 +1,5 @@
 @import "common/vars";
 @import "common/mixins";
-@import "common/fonts";
-
-#__backtick__ {
-  background: transparent !important;
-}
 
 .console-container {
   display: block;
@@ -16,8 +11,9 @@
 
   width: 400px;
 
-  font-family: "Lato", sans-serif;
+  font-family: "Lato", serif;
   font-size: 16px;
+  text-align: left;
   color: $foreground-color;
 
   * {

@@ -88,33 +88,8 @@
 
     color: $foreground-color !important;
 
-    &::-webkit-input-placeholder {
-      font-style: italic;
-      color: fade-out($foreground-color, 0.5);
-    }
-
     &:focus {
       outline: none;
     }
-  }
-}
-
-@-webkit-keyframes _bt-console-in {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3D(0, -100px, 0);
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes _bt-console-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: translate3D(0, -100px, 0);
   }
 }

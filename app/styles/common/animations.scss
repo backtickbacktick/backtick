@@ -1,0 +1,19 @@
+@-webkit-keyframes _bt-console-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3D(0, -100px, 0);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes _bt-console-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3D(0, -100px, 0);
+  }
+}

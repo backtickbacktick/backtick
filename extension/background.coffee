@@ -23,7 +23,7 @@ Events.$.on
     if loaded
       Events.sendTrigger "toggleClose"
     else
-      chrome.tabs.insertCSS null, file: "styles/main.css"
+      chrome.tabs.insertCSS null, file: "styles/container.css"
       chrome.tabs.executeScript null, file: "vendor/requirejs/require.js"
       chrome.tabs.executeScript null, file: "scripts/app.js"
 
