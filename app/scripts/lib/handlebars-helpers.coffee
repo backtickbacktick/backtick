@@ -6,7 +6,7 @@ require [
   helpers =
     highlightMatches: (match) ->
       result = match.wrap (match) ->
-        "<span class=\"_bt-match\">#{match}</span>"
+        "<span class=\"match\">#{match}</span>"
 
       new Handlebars.SafeString result
 

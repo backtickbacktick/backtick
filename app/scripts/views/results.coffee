@@ -8,12 +8,12 @@ define [
   CommandView
 ) ->
   class ResultsView extends BaseView
-    el: "#_bt-results"
     commandViews: []
     activeCommand: null
     activeCommandIndex: 0
 
     initialize: ->
+      @$el = App.$results
       @collection.on "sync", =>
         @createModelViews()
 
@@ -70,15 +70,15 @@ define [
     setActive: (view) ->
       return unless view
       @activeCommand = view.model
-      @$("._bt-active").removeClass "_bt-active"
-      view.$el.addClass "_bt-active"
+      @$(".active").removeClass "active"
+      view.$el.addClass "active"
 
       @scrollToActive()
 
     scrollToActive: ->
-      $active = $ "._bt-active"
+      $active = @$ ".active"
 
-      top =  $active.offset().top - @$el.offset().top
+      top = $active.outerHeight() * @activeCommandIndex - @$el.scrollTop()
       bottom = top + $active.outerHeight()
       maxHeight = parseInt @$el.css("max-height"), 10
 

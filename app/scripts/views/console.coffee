@@ -15,12 +15,13 @@ define [
 ) ->
   class ConsoleView extends BaseView
     rawTemplate: template
-    el: "#_bt-console"
 
     events:
       "keydown": "onKeyDown"
 
     initialize: ->
+      @$el = App.$console
+
       @render().in()
 
       @keepFocused()

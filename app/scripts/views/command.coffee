@@ -10,7 +10,7 @@ define [
   class CommandView extends BaseView
     rawTemplate: template
     tagName: "li"
-    className: "_bt-command"
+    className: "command"
 
     render: ->
       @$el.html @template(_.extend({}, @model.getTemplateData()))

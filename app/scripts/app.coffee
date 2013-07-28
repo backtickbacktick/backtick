@@ -39,15 +39,14 @@ define [
           @trigger "open"
 
     appendContainer: ->
-      @$el = $ Handlebars.compile(template)()
+      @$el = $("<div id=\"__backtick__\">").appendTo "body"
 
-      # Temporary way to switch between themes
-      @$el.addClass "light" if location.hash is "#light"
+      createShadowRoot = @$el[0].createShadowRoot or @$el[0].webkitCreateShadowRoot
+      shadow = createShadowRoot.apply @$el[0]
+      shadow.innerHTML = Handlebars.compile(template)()
 
-      @$console = @$el.find "#_bt-console"
-      @$results = @$el.find "#_bt-results"
-      @$settings = @$el.find "#_bt-settings"
-
-      $("body").append @$el
+      @$console = $ shadow.querySelector("#console")
+      @$results = $ shadow.querySelector("#results")
+      @$settings = $ shadow.querySelector("#settings")
 
   new App
