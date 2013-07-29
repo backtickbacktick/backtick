@@ -21,6 +21,11 @@
     "default_title": "Open the Backtick console"
   },
 
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["hotkey.js"]
+  }],
+
   "permissions": [
     "tabs", "unlimitedStorage", "http://*/*", "https://*/*"
   ],

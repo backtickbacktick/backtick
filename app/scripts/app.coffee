@@ -22,14 +22,14 @@ define [
     constructor: ->
       _.extend this, Backbone.Events
 
-      @on "open", => @open = true
-      @on "close", => @open = false
+      @on "open", @setOpen.bind(this)
+      @on "close", @setClosed.bind(this)
 
     start: ->
       @appendContainer()
       @trigger "loadConsole.action"
 
-      @on "load.commands", => @open = true
+      @on "load.commands", @setOpen.bind(this)
       @on "load.commands sync.commands", (commands) => @commands = commands
 
       Extension.trigger "ready.app"
@@ -39,6 +39,14 @@ define [
           @trigger "close"
         else
           @trigger "open"
+
+    setOpen: ->
+      @open = true
+      window._BACKTICK_OPEN = true
+
+    setClosed: ->
+      @open = false
+      window._BACKTICK_OPEN = false
 
     appendContainer: ->
       @$el = $(Handlebars.compile(rootTemplate)()).appendTo "body"

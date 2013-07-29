@@ -6,20 +6,21 @@ window.Events = {
 }
 
 Events.$ = $ Events
-chrome.runtime.onMessage.addListener (req) ->
+chrome.runtime.onMessage.addListener (req, sender) ->
+  activeTab = sender.tab
   window.Events.$.trigger(req.event, req.data) if req.event
 
 chrome.browserAction.onClicked.addListener (tab) ->
   activeTab = tab
   chrome.tabs.executeScript null, {
     code: "chrome.runtime.sendMessage({
-      event: 'open.app',
+      event: 'toggle.app',
       data: window._BACKTICK_LOADED
     });"
   }
 
 Events.$.on
-  "open.app": (e, loaded) ->
+  "toggle.app": (e, loaded) ->
     if loaded
       Events.sendTrigger "toggleClose"
     else
