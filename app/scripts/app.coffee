@@ -43,15 +43,24 @@ define [
     appendContainer: ->
       @$el = $(Handlebars.compile(rootTemplate)()).appendTo "body"
 
-      createShadowRoot = @$el[0].createShadowRoot or @$el[0].webkitCreateShadowRoot
-      shadow = createShadowRoot.apply @$el[0]
+      if chrome.runtime
+        createShadowRoot = \
+          @$el[0].createShadowRoot or @$el[0].webkitCreateShadowRoot
 
-      cssPath = "styles/style.css"
-      cssPath = chrome.extension.getURL(cssPath) if chrome.extension
-      shadow.innerHTML = Handlebars.compile(containerTemplate)(cssPath: cssPath)
+        shadow = createShadowRoot.apply @$el[0]
 
-      @$console = $ shadow.querySelector("#console")
-      @$results = $ shadow.querySelector("#results")
-      @$settings = $ shadow.querySelector("#settings")
+        cssPath = "styles/style.css"
+        cssPath = chrome.extension.getURL(cssPath) if chrome.extension
+        shadow.innerHTML = Handlebars.compile(containerTemplate)(cssPath: cssPath)
+
+        @$console = $ shadow.querySelector("#console")
+        @$results = $ shadow.querySelector("#results")
+        @$settings = $ shadow.querySelector("#settings")
+      else
+        @$el.append Handlebars.compile(containerTemplate)(cssPath: null)
+
+        @$console = @$el.find "#console"
+        @$results = @$el.find "#results"
+        @$settings = @$el.find "#settings"
 
   new App
