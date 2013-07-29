@@ -18,6 +18,7 @@ define [
   class App
     open: false
     commands: []
+    env: if chrome.runtime then "extension" else "development"
 
     constructor: ->
       _.extend this, Backbone.Events
@@ -51,7 +52,7 @@ define [
     appendContainer: ->
       @$el = $(Handlebars.compile(rootTemplate)()).appendTo "body"
 
-      if chrome.runtime
+      if @env is "extension"
         createShadowRoot = \
           @$el[0].createShadowRoot or @$el[0].webkitCreateShadowRoot
 

@@ -1,25 +1,29 @@
-define [
-  "app"
-], (
-  App
-) ->
+define [], () ->
+  App = null
   class Extension
-    supported: !!chrome.runtime
     constructor: ->
       @listenAndTrigger()
 
     listenAndTrigger: ->
-      return unless @supported
+      return @loadApp(@listenAndTrigger.bind(this, arguments)) unless App
+      return unless App.env is "extension"
+
       chrome.runtime.onMessage.addListener (req, sender, sendResponse) ->
-        App or= require "app"
         if req.event
           App.trigger(req.event, req.data)
 
     trigger: (eventName, eventData) ->
-      if @supported
+      return @loadApp(@trigger.bind(this, arguments)) unless App
+
+      if App.env is "extension"
         chrome.runtime.sendMessage { event: eventName, data: eventData }
       else
-        App or= require "app"
         App.trigger eventName, eventData
+
+    loadApp: (callback) ->
+      require ["app"], (_App) ->
+        App = _App
+        callback()
+
 
   new Extension

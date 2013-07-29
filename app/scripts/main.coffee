@@ -6,5 +6,5 @@ require [
 ], (App) ->
   window._BACKTICK_LOADED = true
   App.start()
-  require(["local-setup"]) unless chrome.runtime
+  require(["local-setup"]) if App.env is "development"
 
