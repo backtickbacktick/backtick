@@ -8,6 +8,7 @@ define [
   CommandView
 ) ->
   class ResultsView extends BaseView
+    resultsVisible: false
     commandViews: []
     activeCommand: null
     activeCommandIndex: 0
@@ -18,7 +19,12 @@ define [
         @createModelViews()
 
       App.on "command:search", @renderMatches.bind this
-      App.on "command:navigateDown", @cycleActive.bind this, 1
+      App.on "command:navigateDown", (search) =>
+        if search.length is 0 and not @resultsVisible
+          @listAll()
+        else
+          @cycleActive 1
+
       App.on "command:navigateUp", @cycleActive.bind this, -1
       App.on "command:execute", @executeActive.bind this
       App.on "close", @empty.bind this
@@ -30,16 +36,30 @@ define [
         @commandViews.push view
 
     remove: ->
+      @resultsVisible = false
       @$el.remove()
+
+    listAll: ->
+      @commandViews = @collection
+        .sortBy((command) -> command.get("name").toLowerCase())
+        .map((command) ->
+          command.match = null
+          command.view.render()
+        )
+
+      @render()
+      @setActive 0
 
     empty: ->
       @commandViews = []
       @activeCommand = null
       @activeCommandIndex = 0
+      @resultsVisible = false
       @$el.empty()
 
     render: ->
       @$el.empty()
+      @resultsVisible = false
       return unless @commandViews.length and App.open
       $ul = $ "<ul>"
       for view in @commandViews
@@ -47,6 +67,7 @@ define [
         $ul.append view.el
 
       @$el.append $ul
+      @resultsVisible = true
       this
 
     _lastSearch: ""
@@ -58,16 +79,18 @@ define [
         .map (model) -> model.view.render()
 
       @render()
-      @setActive @commandViews[0]
+      @setActive 0
 
     renderMatches: _.debounce ResultsView::_renderMatches, 100
 
     cycleActive: (step) ->
-      @activeCommandIndex = (@activeCommandIndex + step) % @commandViews.length
-      @activeCommandIndex = @commandViews.length - 1 if @activeCommandIndex < 0
-      @setActive @commandViews[@activeCommandIndex]
+      index = (@activeCommandIndex + step) % @commandViews.length
+      index = @commandViews.length - 1 if index < 0
+      @setActive index
 
-    setActive: (view) ->
+    setActive: (index) ->
+      @activeCommandIndex = index
+      view = @commandViews[index]
       return unless view
       @activeCommand = view.model
       @$(".active").removeClass "active"

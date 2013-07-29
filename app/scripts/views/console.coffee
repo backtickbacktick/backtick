@@ -63,9 +63,9 @@ define [
         when Constants.Keys.ENTER
           App.trigger "command:execute"
         when Constants.Keys.ARROW_UP
-          App.trigger "command:navigateUp"
+          App.trigger "command:navigateUp", @$input.val()
         when Constants.Keys.ARROW_DOWN
-          App.trigger "command:navigateDown"
+          App.trigger "command:navigateDown", @$input.val()
         else
           preventDefault = false
           _.defer => App.trigger "command:search", @$input.val()
