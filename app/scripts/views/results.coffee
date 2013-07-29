@@ -74,6 +74,7 @@ define [
     _renderMatches: (search) ->
       return if @_lastSearch is search
       @_lastSearch = search
+      return @listAll() if search is ""
 
       @commandViews = @collection.filterMatches(search)
         .map (model) -> model.view.render()
