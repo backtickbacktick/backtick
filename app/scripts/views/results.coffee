@@ -10,8 +10,8 @@ define [
   class ResultsView extends BaseView
     resultsVisible: false
     commandViews: []
-    activeCommand: null
-    activeCommandIndex: 0
+    selectedCommand: null
+    selectedCommandIndex: 0
 
     initialize: ->
       @$el = App.$results
@@ -23,10 +23,10 @@ define [
         if search.length is 0 and not @resultsVisible
           @listAll()
         else
-          @cycleActive 1
+          @cycleSelected 1
 
-      App.on "command:navigateUp", @cycleActive.bind this, -1
-      App.on "command:execute", @executeActive.bind this
+      App.on "command:navigateUp", @cycleSelected.bind this, -1
+      App.on "command:execute", @executeSelected.bind this
       App.on "close", @empty.bind this
 
     createModelViews: ->
@@ -48,12 +48,12 @@ define [
         )
 
       @render()
-      @setActive 0
+      @setSelected 0
 
     empty: ->
       @commandViews = []
-      @activeCommand = null
-      @activeCommandIndex = 0
+      @selectedCommand = null
+      @selectedCommandIndex = 0
       @resultsVisible = false
       @$el.empty()
 
@@ -80,30 +80,30 @@ define [
         .map (model) -> model.view.render()
 
       @render()
-      @setActive 0
+      @setSelected 0
 
     renderMatches: _.debounce ResultsView::_renderMatches, 100
 
-    cycleActive: (step) ->
-      index = (@activeCommandIndex + step) % @commandViews.length
+    cycleSelected: (step) ->
+      index = (@selectedCommandIndex + step) % @commandViews.length
       index = @commandViews.length - 1 if index < 0
-      @setActive index
+      @setSelected index
 
-    setActive: (index) ->
-      @activeCommandIndex = index
+    setSelected: (index) ->
+      @selectedCommandIndex = index
       view = @commandViews[index]
       return unless view
-      @activeCommand = view.model
-      @$(".active").removeClass "active"
-      view.$el.addClass "active"
+      @selectedCommand = view.model
+      @$(".selected").removeClass "selected"
+      view.$el.addClass "selected"
 
-      @scrollToActive()
+      @scrollToSelected()
 
-    scrollToActive: ->
-      $active = @$ ".active"
+    scrollToSelected: ->
+      $selected = @$ ".selected"
 
-      top = $active.outerHeight() * @activeCommandIndex - @$el.scrollTop()
-      bottom = top + $active.outerHeight()
+      top = $selected.outerHeight() * @selectedCommandIndex - @$el.scrollTop()
+      bottom = top + $selected.outerHeight()
       maxHeight = parseInt @$el.css("max-height"), 10
 
       if bottom > maxHeight
@@ -111,5 +111,9 @@ define [
       else if top < 0
         @$el.scrollTop top + @$el.scrollTop()
 
-    executeActive: ->
-      @activeCommand?.execute()
+    executeSelected: ->
+      $executed = @commandViews[@selectedCommandIndex].$el
+      $executed.addClass "active"
+      setTimeout (-> $executed.removeClass "active"), 100
+
+      @selectedCommand?.execute()

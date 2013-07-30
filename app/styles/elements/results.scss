@@ -9,6 +9,13 @@
 
   background-color: $background-color;
 
+  * {
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+
   ul {
     display: block;
     padding: 0;
@@ -20,9 +27,18 @@
     display: block;
     padding: 6px 10px;
 
-    &.active {
+    &.selected {
       background-color: rgba(255,255,255,0.05);
     }
+
+    &:active, &.active {
+      background-color: rgba(255,255,255,0.1);
+
+      .icon {
+        margin-top: 6px;
+      }
+    }
+
   }
 
   .icon {
@@ -44,7 +60,6 @@
     margin-left: 10px;
     width: 325px;
 
-    * { cursor: default; }
 
     .name {
       display: block;
