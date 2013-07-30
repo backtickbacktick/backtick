@@ -4,6 +4,7 @@
 
 #__backtick__ {
   background: transparent !important;
+  &:focus { outline: none; }
 }
 
 // Can't seem to style another shadow DOM inside
