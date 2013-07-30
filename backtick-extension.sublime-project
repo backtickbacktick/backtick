@@ -8,7 +8,8 @@
         ".sass-cache",
         "dist",
         "node_modules",
-        "app/vendor"
+        "app/vendor",
+        "test/lib"
       ]
     }
   ],
