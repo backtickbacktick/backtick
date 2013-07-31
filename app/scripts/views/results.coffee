@@ -28,6 +28,7 @@ define [
       App.on "command:navigateUp", @cycleSelected.bind this, -1
       App.on "command:execute", @executeSelected.bind this
       App.on "executionError.commands", (command) =>
+        alert "Backtick failed to run command \"#{command.name}\""
         @_lastSearch = undefined
         @_renderMatches command.name
 
