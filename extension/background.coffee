@@ -31,12 +31,12 @@ Events.$.on
   "ready.app": ->
     CommandStore.init()
 
-  "execute.commands": (e, src) ->
+  "execute.commands": (e, command) ->
     $.ajax
-      url: src
+      url: command.src
       success: (response) ->
         url = "javascript:#{response}"
         chrome.tabs.update activeTab.id, {url: url}, ->
-          Events.sendTrigger "executed.commands"
+          Events.sendTrigger "executed.commands", command
 
-      error: console.log.bind(console, "error")
+      error: Events.sendTrigger.bind Events, "executionError.commands", command

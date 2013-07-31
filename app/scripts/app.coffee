@@ -17,6 +17,7 @@ define [
 ) ->
   class App
     open: false
+    loading: false
     commands: []
     env: if chrome.runtime then "extension" else "development"
 
@@ -33,6 +34,9 @@ define [
       @on "load.commands", @setOpen.bind(this)
       @on "load.commands sync.commands", (commands) => @commands = commands
 
+      @on "execute.commands", @setLoading.bind(this)
+      @on "executed.commands executionError.commands", @setLoaded.bind(this)
+
       Extension.trigger "ready.app"
 
       @on "toggleClose", ->
@@ -48,6 +52,14 @@ define [
     setClosed: ->
       @open = false
       window._BACKTICK_OPEN = false
+
+    setLoading: ->
+      @loading = true
+      @$console.addClass "loading"
+
+    setLoaded: ->
+      @loading = false
+      @$console.removeClass "loading"
 
     appendContainer: ->
       @$el = $(Handlebars.compile(rootTemplate)()).appendTo "body"

@@ -74,6 +74,34 @@
     }
   }
 
+  .spinner {
+    display: none;
+    position: absolute;
+    top: 5px;
+    left: 15px;
+    width: 30px;
+    height: 40px;
+
+    opacity: 0.8;
+
+    background-image: inline-image("spinner.png");
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+  }
+
+  &.loading {
+    .spinner {
+      display: block;
+      -webkit-animation: _bt-fade-in 0.5s 0.25s both,
+                         _bt-spinner 0.5s infinite linear both;
+    }
+
+    button.settings {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
   input {
     display: inline-block;
     width: 330px;

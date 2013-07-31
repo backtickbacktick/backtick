@@ -27,6 +27,10 @@ define [
 
       App.on "command:navigateUp", @cycleSelected.bind this, -1
       App.on "command:execute", @executeSelected.bind this
+      App.on "executionError.commands", (command) =>
+        @_lastSearch = undefined
+        @_renderMatches command.name
+
       App.on "close", @empty.bind this
 
     createModelViews: ->
@@ -114,6 +118,9 @@ define [
     executeSelected: ->
       $executed = @commandViews[@selectedCommandIndex].$el
       $executed.addClass "active"
-      setTimeout (-> $executed.removeClass "active"), 100
+      setTimeout =>
+        $executed.removeClass "active"
+        @empty()
+      , 100
 
       @selectedCommand?.execute()

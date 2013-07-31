@@ -15,9 +15,9 @@ require [
         .success((response) => App.trigger "load.commands", response)
         .error(console.log.bind(console, "Error fetching commands"))
 
-    executeCommand: (src) ->
-       $.getScript(src)
-        .success(App.trigger.bind(App, "executed.commands"))
-        .error(console.log.bind(console, "Error loading script"))
+    executeCommand: (command) ->
+       $.getScript(command.src)
+        .success(App.trigger.bind(App, "executed.commands", command))
+        .error(App.trigger.bind(App, "executionError.commands", command))
 
   new LocalSetup

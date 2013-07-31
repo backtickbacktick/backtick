@@ -17,3 +17,21 @@
     -webkit-transform: translate3D(0, -100px, 0);
   }
 }
+
+@-webkit-keyframes _bt-spinner {
+  100% {
+    background-position-x: -100%;
+  }
+}
+
+@-webkit-keyframes _bt-fade-in {
+  0% {
+    opacity: 0;
+  }
+}
+
+@-wekit-keyframes _bt-fade-out {
+  100% {
+    opacity: 0;
+  }
+}
