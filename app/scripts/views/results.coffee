@@ -69,6 +69,7 @@ define [
       $ul = $ "<ul>"
       for view in @commandViews
         view.render() unless view.isRendered()
+        view.delegateEvents()
         $ul.append view.el
 
       @$el.append $ul
