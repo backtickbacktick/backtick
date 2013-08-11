@@ -1,3 +1,4 @@
+LICENSE_ID = "bidehcehegoahgodlobkjbenmgapgkic"
 activeTab = null
 
 window.Events = {
@@ -40,3 +41,18 @@ Events.$.on
           Events.sendTrigger "executed.commands", command
 
       error: Events.sendTrigger.bind Events, "executionError.commands", command
+
+isLicensed = (callback) ->
+  port = chrome.runtime.connect LICENSE_ID
+
+  done = (result) ->
+    port.onMessage.removeListener yep
+    port.onDisconnect.removeListener nope
+    callback result
+
+  yep = done.bind this, true
+  nope = done.bind this, false
+
+  port.postMessage true
+  port.onMessage.addListener yep
+  port.onDisconnect.addListener nope
