@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "Backtick License",
+  "description": "Become a Backtick supporter and unlock premium features.",
+  "version": "1.0",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "icons": {
+    "128": "icon_128.png"
+  }
+}

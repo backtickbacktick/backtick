@@ -1,23 +1,31 @@
 {
+	"build_systems":
+	[
+		{
+			"cmd":
+			[
+				"grunt"
+			],
+			"name": "Grunt"
+		}
+	],
 	"folders":
 	[
 		{
-			"path": "./",
-      "folder_exclude_patterns": [
-        ".tmp",
-        ".sass-cache",
-        "dist",
-        "node_modules",
-        "app/vendor",
-        "test/lib"
-      ]
-    }
-  ],
-  "build_systems":
-  [
-    {
-      "name": "Grunt",
-      "cmd": ["grunt"]
-    }
-  ]
+			"folder_exclude_patterns":
+			[
+				".tmp",
+				".sass-cache",
+				"dist",
+				"bin",
+				"node_modules",
+				"app/vendor",
+				"test/lib"
+			],
+			"path": "/Users/joelbesada/Dropbox/Projects/Backtick/Backtick-Extension"
+		},
+		{
+			"path": "/Users/joelbesada/Dropbox/Projects/Backtick/Website"
+		}
+	]
 }

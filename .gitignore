@@ -8,5 +8,4 @@ node_modules
 app/vendor
 
 dist
-*.crx
-*.pem
+bin
