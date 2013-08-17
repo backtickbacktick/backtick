@@ -118,7 +118,9 @@ define [
         @$el.scrollTop top + @$el.scrollTop()
 
     executeSelected: ->
-      $executed = @commandViews[@selectedCommandIndex].$el
+      $executed = @commandViews[@selectedCommandIndex]?.$el
+      return unless $executed
+
       $executed.addClass "active"
       setTimeout =>
         $executed.removeClass "active"
