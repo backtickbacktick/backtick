@@ -32,6 +32,9 @@ Events.$.on
   "ready.app": ->
     CommandStore.init()
 
+  "open.settings": ->
+    chrome.tabs.create url: "options.html"
+
   "execute.commands": (e, command) ->
     $.ajax
       url: command.src

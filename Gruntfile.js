@@ -284,6 +284,7 @@ module.exports = function (grunt) {
                     dest: '<%= yeoman.dist %>',
                     src: [
                         'manifest.json',
+                        'options.html',
                         'icon128.png'
                     ]
                 }]

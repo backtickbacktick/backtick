@@ -2,6 +2,7 @@ define [
   "underscore"
   "backbone"
   "app"
+  "lib/extension"
   "lib/constants"
   "views/base"
   "text!../../templates/console.hbs"
@@ -9,6 +10,7 @@ define [
   _
   Backbone
   App
+  Extension
   Constants
   BaseView
   template
@@ -18,6 +20,7 @@ define [
 
     events:
       "keydown": "onKeyDown"
+      "click .settings": "openSettings"
 
     initialize: ->
       @$el = App.$console
@@ -60,6 +63,9 @@ define [
 
     displayName: (command) ->
       @$input.val command.name
+
+    openSettings: ->
+      Extension.trigger "open.settings"
 
     onKeyDown: (e) ->
       preventDefault = true
