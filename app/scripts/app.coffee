@@ -39,7 +39,7 @@ define [
 
       Extension.trigger "ready.app"
 
-      @on "toggleClose", ->
+      @on "toggle.app", ->
         if @open
           @trigger "close"
         else

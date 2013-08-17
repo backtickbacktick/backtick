@@ -1,3 +1,5 @@
+// TODO: Clean this is file up, it's a big mess
+
 'use strict';
 var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
 var mountFolder = function (connect, dir) {
@@ -24,7 +26,10 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
         watch: {
             coffee: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
+                files: [
+                    '<%= yeoman.app %>/scripts/{,*/}*.coffee',
+                    'extension/hotkey.coffee'
+                ],
                 tasks: ['coffee:dist']
             },
             coffeeExt: {
@@ -119,11 +124,15 @@ module.exports = function (grunt) {
         coffee: {
             dist: {
                 files: [{
-                    // rather than compiling multiple files here you should
-                    // require them into your main .coffee file
                     expand: true,
                     cwd: '<%= yeoman.app %>/scripts',
                     src: '**/*.coffee',
+                    dest: '.tmp/scripts',
+                    ext: '.js'
+                }, {
+                    expand: true,
+                    cwd: 'extension',
+                    src: 'hotkey.coffee',
                     dest: '.tmp/scripts',
                     ext: '.js'
                 }]
@@ -377,7 +386,7 @@ module.exports = function (grunt) {
         'htmlmin',
         'concat',
         'cssmin',
-        'usemin'
+        // 'usemin'
     ]);
 
     grunt.registerTask('default', ['ext']);

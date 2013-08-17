@@ -23,7 +23,7 @@ chrome.browserAction.onClicked.addListener (tab) ->
 Events.$.on
   "toggle.app": (e, loaded) ->
     if loaded
-      Events.sendTrigger "toggleClose"
+      Events.sendTrigger "toggle.app"
     else
       chrome.tabs.insertCSS null, file: "styles/container.css"
       chrome.tabs.executeScript null, file: "vendor/requirejs/require.js"
