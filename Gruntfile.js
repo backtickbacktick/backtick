@@ -272,7 +272,8 @@ module.exports = function (grunt) {
                         'images/*.svg',
                         'assets/{,*/}*',
                         'vendor/jquery/jquery.js',
-                        'vendor/requirejs/require.js'
+                        'vendor/requirejs/require.js',
+                        'vendor/underscore-amd/underscore.js'
                     ]
                 }]
             },

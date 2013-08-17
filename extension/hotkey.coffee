@@ -1,10 +1,14 @@
 class Hotkey
-  keys: ["`"]
+  defaultChars: ["`"]
   constructor: ->
+    @hotkey = @defaultChars[0]
+    chrome.storage?.sync.get "hotkey", (storage) =>
+      @hotkey = storage.hotkey if storage.hotkey
+
     document.addEventListener "keypress", @onKeyPress.bind(this), true
 
   onKeyPress: (e) ->
-    return unless @keys.indexOf(String.fromCharCode(e.which)) > -1
+    return unless @hotkey is String.fromCharCode e.which
     return if @isInput(document.activeElement) and not window._BACKTICK_OPEN
 
     e.preventDefault()

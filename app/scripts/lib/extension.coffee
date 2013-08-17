@@ -24,5 +24,4 @@ define [], () ->
         App = _App
         callback()
 
-
   new Extension
