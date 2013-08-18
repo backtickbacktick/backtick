@@ -4,7 +4,7 @@
 #results {
   width: 100%;
   display: block;
-  max-height: 310px;
+  max-height: 275px;
   overflow: auto;
 
   background-color: $background-color;
@@ -60,7 +60,6 @@
     margin-left: 10px;
     width: 325px;
 
-
     .name {
       display: block;
 
@@ -93,4 +92,17 @@
       }
     }
   }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: fade-out($foreground-color, 0.7);
+  }
 }
+
