@@ -21,6 +21,8 @@ define [
 
     onClick: (e) =>
       $target = $ e.target
-      return window.location = $target.attr("href") if $target.hasClass "link"
+      if $target.hasClass "link"
+        return window.open($target.attr("href"), "_blank")
+
       @model.execute()
 
