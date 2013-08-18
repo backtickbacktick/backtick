@@ -35,7 +35,7 @@
   }],
 
   "permissions": [
-    "tabs", "storage", "unlimitedStorage", "http://*/*", "https://*/*"
+    "tabs", "storage", "unlimitedStorage", "<all_urls>"
   ],
 
 "web_accessible_resources": [
