@@ -74,6 +74,7 @@ define [
 
       @$el.append $ul
       @resultsVisible = true
+      @maxHeight = parseInt @$el.css("max-height"), 10
       this
 
     _lastSearch: ""
@@ -108,12 +109,11 @@ define [
     scrollToSelected: ->
       $selected = @$ ".selected"
 
-      top = $selected.outerHeight() * @selectedCommandIndex - @$el.scrollTop()
+      top = $selected.offset().top - @$el.offset().top # + @$el.scrollTop()
       bottom = top + $selected.outerHeight()
-      maxHeight = parseInt @$el.css("max-height"), 10
 
-      if bottom > maxHeight
-        @$el.scrollTop bottom - maxHeight + @$el.scrollTop()
+      if bottom > @maxHeight
+        @$el.scrollTop bottom - @maxHeight + @$el.scrollTop()
       else if top < 0
         @$el.scrollTop top + @$el.scrollTop()
 
