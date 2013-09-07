@@ -31,7 +31,9 @@ define [
       @escapeClose()
 
       App.once "load.commands sync.commands",  =>
-        return unless @$input or not @input.val()
+        return unless @$input
+        return unless @$input?.val()
+
         App.trigger "command:search", @$input.val(), true
 
       App.on
