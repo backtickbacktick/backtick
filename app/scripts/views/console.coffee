@@ -30,6 +30,10 @@ define [
       @keepFocused()
       @escapeClose()
 
+      App.once "load.commands sync.commands",  =>
+        return unless @$input or not @input.val()
+        App.trigger "command:search", @$input.val(), true
+
       App.on
         "close": @close.bind this
         "open": @open.bind this

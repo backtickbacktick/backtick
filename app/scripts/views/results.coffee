@@ -78,8 +78,8 @@ define [
       this
 
     _lastSearch: ""
-    _renderMatches: (search) ->
-      return if @_lastSearch is search
+    _renderMatches: (search, force) ->
+      return if @_lastSearch is search and not force
       @_lastSearch = search
       return @listAll() if search is ""
 
