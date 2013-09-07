@@ -30,7 +30,7 @@ define [
       @keepFocused()
       @escapeClose()
 
-      App.once "load.commands sync.commands",  =>
+      App.on "load.commands sync.commands",  =>
         return unless @$input
         return unless @$input?.val()
 
