@@ -35,7 +35,8 @@ class CommandStore
     try
       json = JSON.parse content
     catch e
-      console.log "Error parsing file"
+      console.log "Error parsing file, deleting"
+      @fileEntry.remove($.noop, $.noop)
       return
 
     @commands = json.commands
