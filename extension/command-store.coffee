@@ -5,26 +5,48 @@ class CommandStore
   lastSync: null
 
   init: (ready) ->
-    chrome.storage.local.get @storageLoaded
+    @initStorages().then @storageLoaded
 
-  storageLoaded: (storage) =>
-    @commands = storage.commands or @commands
-    @lastSync = storage.lastSync or @lastSync
+  initStorages: ->
+    localDeferred = $.Deferred()
+    syncDeferred = $.Deferred()
+
+    chrome.storage.local.get localDeferred.resolve.bind(localDeferred)
+    chrome.storage.sync.get syncDeferred.resolve.bind(syncDeferred)
+
+    $.when localDeferred, syncDeferred
+
+  storageLoaded: (local, sync) =>
+    @commands = local.commands or @commands
+    @lastSync = local.lastSync or @lastSync
+
+    @commandIndex = {}
+    @commandIndex[command.gistID] = command for command in @commands
+
     @trigger("load.commands", @commands)  if @commands.length
     @sync()
+
+    @getCustomCommands sync.customCommandIds
 
   storeCommands: ->
     chrome.storage.local.set {commands: @commands, lastSync: @lastSync}
 
   mergeCommands: (updatedCommands) ->
-    commandsMap = {}
-    commandsMap[command.gistID] = command for command in @commands
-
     for command in updatedCommands
-      if commandsMap[command.gistID]
-        $.extend commandsMap[command.gistID], command
+      if @commandIndex[command.gistID]
+        $.extend @commandIndex[command.gistID], command
       else
         @commands.push command
+
+  getCustomCommands: (ids) =>
+    unfetchedCommands = _.filter ids, (id) => not @commandIndex[id]
+    console.log "unfetched", unfetchedCommands
+
+    for id in unfetchedCommands
+      GitHub.fetchCommand(id).then (command) =>
+        command.custom = true
+        @mergeCommands [command]
+        @storeCommands()
 
   sync: ->
     params = {}

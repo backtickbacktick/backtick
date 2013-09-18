@@ -14,6 +14,8 @@
   "background": {
     "scripts": [
       "vendor/jquery/jquery.js",
+      "vendor/underscore-amd/underscore.js",
+      "github.js",
       "command-store.js",
       "background.js"
     ]

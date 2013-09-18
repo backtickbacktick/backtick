@@ -8,8 +8,18 @@
   <h1>Backtick Settings</h1>
   <label for="hotkey">Hotkey</label>
   <input type="text" id="hotkey">
+
+  <label for="hotkey">Import Commands</label>
+  <form action="" id="import-form">
+    <input type="text" name="id">
+    <input type="submit" value="Import">
+  </form>
+  <ul id="import-list">
+
+  </ul>
   <script src="vendor/jquery/jquery.js"></script>
   <script src="vendor/underscore-amd/underscore.js"></script>
+  <script src="github.js"></script>
   <script src="options.js"></script>
 </body>
 </html>
