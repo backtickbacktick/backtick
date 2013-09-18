@@ -5,7 +5,7 @@
     "requirejs": "2.1.6",
     "jquery": "2.0.1",
     "text": "2.0.6",
-    "underscore-amd":"1.4.4",
+    "underscore-amd":"1.5.1",
     "backbone-amd": "1.0.0",
     "handlebars": "~1.0.0"
   },
