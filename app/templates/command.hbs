@@ -2,5 +2,5 @@
 <div class="body">
   <span class="name">{{#if match}}{{highlightMatches match}}{{else}}{{name}}{{/if}}</span>
   <p class="description">{{description}}</p>
-  <a class="link" href="{{link}}">{{prettyUrl link}}</a>
+  {{#if link }}<a class="link" href="{{link}}">{{prettyUrl link}}</a>{{/if}}
 </div>
