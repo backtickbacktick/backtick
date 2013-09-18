@@ -12,7 +12,7 @@ class Options
       @setHotkey char
 
   _setHotkey = (char) -> chrome.storage.sync.set "hotkey": char
-  setHotkey: _.debounce _setHotkey, 100
+  setHotkey: _.debounce _setHotkey, 250
 
   displayHotkey: ->
     chrome.storage.sync.get "hotkey", (storage) =>
