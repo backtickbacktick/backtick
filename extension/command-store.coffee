@@ -1,60 +1,20 @@
 class CommandStore
+  @COMMANDS_ENDPOINT: "http://dev.api.backtick.io/commands"
+
   commands: []
   lastSync: null
-  fileEntry: null
 
   init: (ready) ->
-    @requestFileSystem(
-      window.PERSISTENT
-      10 * 1024 * 1024
-      @onFSLoad.bind this
-      @onLoadError.bind this
-    )
+    chrome.storage.local.get @storageLoaded
 
-  onFSLoad: (fs) ->
-    @fs = fs
-    @fs.root.getFile "commands.json", { create: true }, ((fileEntry) =>
-      @fileEntry = fileEntry
-      fileEntry.file @readFile.bind(this), @onLoadError.bind(this)
-    ), console.log.bind(console, "Error loading file")
-
-  onLoadError: console.log.bind(console, "Error")
-
-  readFile: (file) ->
-    reader = new FileReader
-    reader.readAsText file
-    self = this
-    reader.onloadend = ->
-      self.parseFile @result
-      self.trigger("load.commands", self.commands) if self.commands.length
-      self.sync()
-
-  parseFile: (content) ->
-    return unless content
-
-    try
-      json = JSON.parse content
-    catch e
-      console.log "Error parsing file, deleting"
-      @fileEntry.remove($.noop, $.noop)
-      return
-
-    @commands = json.commands
-    @lastSync = json.lastSync
+  storageLoaded: (storage) =>
+    @commands = storage.commands or @commands
+    @lastSync = storage.lastSync or @lastSync
+    @trigger("load.commands", @commands)  if @commands.length
+    @sync()
 
   storeCommands: ->
-    @fileEntry.createWriter ((fileWriter) =>
-      json = JSON.stringify {
-        commands: @commands
-        lastSync: @lastSync
-      }
-      blob = new Blob [json], type: "application/json"
-
-      fileWriter.write blob
-      fileWriter.onwriteend = \
-        console.log.bind console, "Successfully wrote file"
-      fileWriter.onerror = console.log.bind console, "Error writing file"
-    ), console.log.bind(console, "Error creating writer")
+    chrome.storage.local.set {commands: @commands, lastSync: @lastSync}
 
   mergeCommands: (updatedCommands) ->
     commandsMap = {}
@@ -70,9 +30,10 @@ class CommandStore
     params = {}
     params["updatedSince"] = @lastSync if @lastSync
 
-    $.getJSON("http://dev.api.backtick.io/commands", params)
-      .success((response) =>
+    $.getJSON(CommandStore.COMMANDS_ENDPOINT, params)
+      .done((response) =>
         wasFirstSync = @commands.length is 0
+
         if response.length
           @mergeCommands response
 
@@ -80,10 +41,10 @@ class CommandStore
           @lastSync = response[response.length - 1].updatedAt
 
           @storeCommands()
-          event = if wasFirstSync then "load.commands" else "sync.commands"
-          @trigger event, @commands
+          eventName = if wasFirstSync then "load.commands" else "sync.commands"
+          @trigger eventName, @commands
       )
-      .error(console.log.bind(console, "Error fetching commands"))
+      .fail(console.log.bind(console, "Error fetching commands"))
 
   trigger: (eventName, eventData) ->
     window.Events.sendTrigger eventName, eventData
