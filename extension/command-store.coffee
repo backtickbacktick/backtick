@@ -40,7 +40,6 @@ class CommandStore
 
   getCustomCommands: (ids) =>
     unfetchedCommands = _.filter ids, (id) => not @commandIndex[id]
-    console.log "unfetched", unfetchedCommands
 
     for id in unfetchedCommands
       GitHub.fetchCommand(id).then (command) =>
