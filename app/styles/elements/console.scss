@@ -120,5 +120,10 @@
     &:focus {
       outline: none;
     }
+
+    &::-webkit-input-placeholder {
+      font-style: italic !important;
+      color: mix($foreground-color, $background-color, 50%) !important;
+    }
   }
 }

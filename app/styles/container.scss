@@ -5,10 +5,3 @@
   background: transparent !important;
   &:focus { outline: none; }
 }
-
-// Can't seem to style another shadow DOM inside
-// another shadow DOM's CSS, so let's do it from here.
-input._bt-console::-webkit-input-placeholder {
-  font-style: italic;
-  color: mix($foreground-color, $background-color);
-}
