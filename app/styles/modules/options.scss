@@ -1,0 +1,175 @@
+@import "common/fonts";
+@import "common/vars";
+
+.options-page {
+  color: $foreground-color;
+  background-color: $background-color;
+
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  text-align: center;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1, h2 {
+    font-weight: 300;
+  }
+
+  a, a:visited {
+    color: $accent-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  input[type=text] {
+    font-family: "Lato", sans-serif;
+
+    background-color: $background-color;
+    color: $foreground-color;
+
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .container {
+    width: 520px;
+    margin: 0 auto;
+  }
+
+  .section {
+    width: 100%;
+    background: rgba(0,0,0,0.1);
+    padding: 20px 30px;
+    margin: 20px auto;
+  }
+
+  .hotkey-container {
+    label {
+      vertical-align: middle;
+      font-size: 26px;
+      font-weight: 300;
+      opacity: 0.8;
+    }
+
+    input {
+      width: 70px;
+      height: 70px;
+      padding: 10px;
+      margin-left: 20px;
+      vertical-align: middle;
+
+      font-size: 30px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    small {
+      display: block;
+      margin-top: 20px;
+      opacity: 0.7;
+      font-size: 14px;
+      text-align: left;
+    }
+  }
+
+  .commands-container {
+    h2 {
+      margin-top: 0;
+    }
+
+    input[type=text] {
+      width: 370px;
+      font-size: 16px;
+      padding: 15px 18px;
+
+      &::-webkit-input-placeholder {
+        color: mix($foreground-color, $background-color, 30%) !important;
+      }
+    }
+
+    input[type=submit] {
+      -webkit-appearance: none;
+      border: none;
+      outline: none;
+      box-shadow: none;
+
+      margin-left: 10px;
+      padding: 15px 0;
+      width: 80px;
+
+      font-size: 16px;
+      background-color: fade_out($accent-color, 0.1);
+      color: white;
+
+      cursor: pointer;
+      transition: background-color 0.15s;
+
+      &:hover {
+        background-color: $accent-color;
+      }
+
+      &:active {
+        position: relative;
+        top: 1px;
+      }
+    }
+
+    .learn {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-top: 5px;
+      margin-left: 5px;
+    }
+
+    ul {
+      padding-left: 0;
+      margin-bottom: 10px;
+    }
+
+    .command {
+      position: relative;
+      text-align: left;
+      margin-bottom: 5px;
+      padding: 10px;
+
+      transition: background-color 0.15s;
+
+      small {
+        opacity: 0.5;
+        margin-left: 3px;
+      }
+
+      .remove {
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 5px;
+
+        font-size: 14px;
+        color: $accent-color;
+        cursor: pointer;
+        opacity: 0;
+
+        transition: opacity 0.15s;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &:hover {
+        background-color: rgba(255,255,255,0.05);
+
+        .remove {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+}

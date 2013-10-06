@@ -15,7 +15,6 @@
     user-select: none;
   }
 
-
   ul {
     display: block;
     padding: 0;
@@ -24,9 +23,6 @@
   }
 
   .command {
-    display: block;
-    padding: 6px 10px;
-
     &.selected {
       background-color: rgba(255,255,255,0.05);
     }
@@ -38,8 +34,13 @@
         margin-top: 6px;
       }
     }
-
   }
+}
+
+.command {
+  display: block;
+  padding: 6px 10px;
+
 
   .icon {
     display: inline-block;

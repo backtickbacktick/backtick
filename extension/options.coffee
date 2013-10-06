@@ -38,8 +38,6 @@ class Options
     @commands = commands or []
     @customCommandIds = customCommandIds or []
 
-    console.log @getCustomCommands(), @customCommandIds
-
     @fetchUnfetchedCommands()
     @renderCustomCommands()
 
@@ -47,9 +45,11 @@ class Options
     _.filter @commands, (command) -> command.custom
 
   addCommand: (command) =>
-    return if _.any(@commands, ({gistID}) -> gistID is command.gistID)
-    command.custom = true
+    if _.any(@commands, ({gistID}) -> gistID is command.gistID)
+      alert "You've already imported that command!"
+      return
 
+    command.custom = true
     @commands.push command
     chrome.storage.local.set commands: @commands
 
@@ -84,8 +84,24 @@ class Options
     commands = []
     for command in @getCustomCommands()
       commands.push $("""
-        <li>#{command.name}
-         <button class="remove" data-id="#{command.gistID}">Remove</button>
+        <li class="command">
+          <div class="icon" #{
+            if command.icon
+              "style=\"background-image: url(#{command.icon})\" "
+            else
+              ""
+          }>
+          </div>
+          <div class="body">
+            <span class="name">#{command.name} <small>(#{command.gistID})</small></span>
+            <p class="description">#{command.description}</p>
+            #{if command.link
+                "<a class=\"link\" href=\"#{command.link}\">#{command.link}</a>"
+              else
+                ""
+            }
+          </div>
+          <span class="remove" data-id="#{command.gistID}">Remove</span>
         </li>
       """)
 
@@ -100,6 +116,7 @@ class Options
   onImportFormSubmit: (e) =>
     e.preventDefault()
     gistID = @$importInput.val()
+    return unless gistID
     GitHub.fetchCommand(gistID)
       .done(@addCommand, @syncCommand)
       .fail(alert.bind(window))

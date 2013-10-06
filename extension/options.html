@@ -3,20 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>Backtick Settings</title>
+  <link rel="stylesheet" href="styles/style.css">
 </head>
-<body>
-  <h1>Backtick Settings</h1>
-  <label for="hotkey">Hotkey</label>
-  <input type="text" id="hotkey">
+<body class="options-page">
+  <div class="container">
+    <h1>Backtick Settings</h1>
 
-  <label for="hotkey">Import Commands</label>
-  <form action="" id="import-form">
-    <input type="text" name="id">
-    <input type="submit" value="Import">
-  </form>
-  <ul id="import-list">
+    <div class="hotkey-container section">
+      <label for="hotkey">Hotkey:</label>
+      <input type="text" id="hotkey">
+      <small>Note: You can also set a hotkey through the <a href="http://googlesystem.blogspot.com/2012/08/create-keyboard-shortcuts-for-chrome.html">Chrome settings page</a>. Do this if other extensions are interfering with the Backtick hotkey.</small>
+    </div>
 
-  </ul>
+    <div class="commands-container section">
+      <h2>Custom Commands</h2>
+      <form action="" id="import-form">
+        <input type="text" name="id" placeholder="Command Gist ID"><input type="submit" value="Add">
+      </form>
+      <ul id="import-list">
+      </ul>
+      <a href="#" class="learn">Learn how to create and add custom commands.</a>
+    </div>
+
+  </div>
   <script src="vendor/jquery/jquery.js"></script>
   <script src="vendor/underscore-amd/underscore.js"></script>
   <script src="github.js"></script>
