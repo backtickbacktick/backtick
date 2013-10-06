@@ -110,7 +110,7 @@ class Options
     @$importList.append commands
 
   onClickCommandRemove: (e) =>
-    id = $(e.target).data("id")
+    id = "#{$(e.target).data("id")}"
     command = _.findWhere @getCustomCommands(), gistID: id
     if confirm "Are you sure you want to remove \"#{command.name}\""
       @removeCommand id
