@@ -172,4 +172,26 @@
       }
     }
   }
+
+  .spinner {
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
+    width: 30px;
+    height: 40px;
+
+    opacity: 0;
+
+    background-image: inline-image("spinner.png");
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+
+    transition: opacity 0.5s;
+    -webkit-animation: _bt-spinner 0.5s infinite linear both;
+  }
+
+  &.loading .spinner {
+    opacity: 0.5;
+    transition: opacity 0.5s 0.2s;
+  }
 }

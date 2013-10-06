@@ -1,4 +1,6 @@
 class Options
+  $body: $ "body"
+
   $hotkeyInput: $ "#hotkey"
 
   $importForm: $ "#import-form"
@@ -117,9 +119,15 @@ class Options
     e.preventDefault()
     gistID = @$importInput.val()
     return unless gistID
+
+    @loading()
     GitHub.fetchCommand(gistID)
       .done(@addCommand, @syncCommand)
       .fail(alert.bind(window))
+      .always(@loaded)
+
+  loading: => @$body.addClass "loading"
+  loaded: => @$body.removeClass "loading"
 
   onHotkeyKeypress: (e) =>
     e.preventDefault()
