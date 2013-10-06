@@ -40,8 +40,8 @@ Events.$.on
       url: command.src
       success: (response) ->
         url = "javascript:#{response}"
-        chrome.tabs.update activeTab.id, {url: url}, ->
-          Events.sendTrigger "executed.commands", command
+        chrome.tabs.update activeTab.id, {url: url}
+        Events.sendTrigger "executed.commands", command
 
       error: Events.sendTrigger.bind Events, "executionError.commands", command
 
