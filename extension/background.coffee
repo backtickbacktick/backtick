@@ -1,3 +1,5 @@
+# TOOO: Clean up and refactor this into a class
+
 LICENSE_ID = "fdocciflgajbbcgmnfifnmoamjgiefip"
 activeTab = null
 
@@ -31,6 +33,7 @@ Events.$.on
 
   "ready.app": ->
     CommandStore.init()
+    checkLicense()
 
   "open.settings": ->
     chrome.tabs.create url: "options.html"
@@ -45,17 +48,13 @@ Events.$.on
 
       error: Events.sendTrigger.bind Events, "executionError.commands", command
 
+checkLicense = ->
+  isLicensed (result) ->
+    console.log "licensed", result
+    return if result
+    Events.sendTrigger "unlicensedUse.app"
+
 isLicensed = (callback) ->
-  port = chrome.runtime.connect LICENSE_ID
-
-  done = (result) ->
-    port.onMessage.removeListener yep
-    port.onDisconnect.removeListener nope
-    callback result
-
-  yep = done.bind this, true
-  nope = done.bind this, false
-
-  port.postMessage true
-  port.onMessage.addListener yep
-  port.onDisconnect.addListener nope
+  console.log "testing license", LICENSE_ID
+  chrome.runtime.sendMessage LICENSE_ID, "ping", (response) ->
+    callback !!response
