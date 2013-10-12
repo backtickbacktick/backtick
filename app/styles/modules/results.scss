@@ -35,18 +35,6 @@
       }
     }
   }
-
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: none;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: fade-out($foreground-color, 0.7);
-  }
 }
 
 .command {
