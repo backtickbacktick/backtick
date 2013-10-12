@@ -7,12 +7,20 @@ class Options
   $importInput: $ "#import-form input[type=text]"
   $importList: $ "#import-list"
 
+  $licenseSection: $ ".license"
+
   constructor: ->
     @displayHotkey()
     @setupListeners()
 
     $.when(@getCommands(), @getCustomCommandIds())
       .then @handleCommands
+
+    @checkLicense()
+
+  checkLicense: ->
+    License.isLicensed (result) =>
+      @$licenseSection.addClass(if result then "active" else "inactive")
 
   setupListeners: ->
     $(document)

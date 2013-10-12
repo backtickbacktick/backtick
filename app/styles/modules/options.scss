@@ -26,6 +26,34 @@
     }
   }
 
+  .button, a.button {
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+
+    padding: 15px 20px;
+
+    font-size: 16px;
+    background-color: fade_out($accent-color, 0.1);
+    color: white;
+
+    cursor: pointer;
+    transition: background-color 0.15s;
+
+    text-decoration: none;
+
+    &:hover {
+      background-color: $accent-color;
+      text-decoration: none;
+    }
+
+    &:active {
+      position: relative;
+      top: 1px;
+    }
+  }
+
   input[type=text] {
     font-family: "Lato", sans-serif;
 
@@ -47,6 +75,14 @@
     background: rgba(0,0,0,0.1);
     padding: 20px 30px;
     margin: 20px auto;
+
+    h2 {
+      margin-top: 0;
+    }
+
+    small, p {
+      opacity: 0.7;
+    }
   }
 
   .hotkey-container {
@@ -72,7 +108,6 @@
     small {
       display: block;
       margin-top: 20px;
-      opacity: 0.7;
       font-size: 14px;
       text-align: left;
       line-height: 1.6em;
@@ -80,10 +115,6 @@
   }
 
   .commands-container {
-    h2 {
-      margin-top: 0;
-    }
-
     input[type=text] {
       width: 370px;
       font-size: 16px;
@@ -95,30 +126,10 @@
     }
 
     input[type=submit] {
-      -webkit-appearance: none;
-      border: none;
-      outline: none;
-      box-shadow: none;
-
       margin-left: 10px;
-      padding: 15px 0;
       width: 80px;
-
-      font-size: 16px;
-      background-color: fade_out($accent-color, 0.1);
-      color: white;
-
-      cursor: pointer;
-      transition: background-color 0.15s;
-
-      &:hover {
-        background-color: $accent-color;
-      }
-
-      &:active {
-        position: relative;
-        top: 1px;
-      }
+      padding-left: 0;
+      padding-right: 0;
     }
 
     .learn {
@@ -131,6 +142,8 @@
     ul {
       padding-left: 0;
       margin-bottom: 10px;
+      max-height: 290px;
+      overflow: auto;
     }
 
     .command {
@@ -172,6 +185,50 @@
         }
       }
     }
+  }
+
+  .license {
+    display: none;
+
+    p {
+      line-height: 1.4em;
+      font-size: 15px;
+    }
+
+    .unlicensed {
+      display: none;
+      padding-bottom: 20px;
+
+      p {
+       padding-bottom: 20px;
+     }
+    }
+
+    .licensed {
+      display: none;
+    }
+
+    &.active, &.inactive {
+      display: block;
+    }
+
+    &.active {
+      background: mix($accent-color, rgba(0,0,0,0.1), 60%);
+
+      .licensed {
+        display: block;
+      }
+    }
+
+    &.inactive {
+      .unlicensed {
+        display: block;
+      }
+    }
+  }
+
+  .credits small {
+    font-size: 14px;
   }
 
   .spinner {

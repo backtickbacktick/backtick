@@ -1,6 +1,4 @@
 # TOOO: Clean up and refactor this into a class
-
-LICENSE_ID = "fdocciflgajbbcgmnfifnmoamjgiefip"
 activeTab = null
 
 window.Events = {
@@ -49,12 +47,6 @@ Events.$.on
       error: Events.sendTrigger.bind Events, "executionError.commands", command
 
 checkLicense = ->
-  isLicensed (result) ->
-    console.log "licensed", result
+  License.isLicensed (result) ->
     return if result
     Events.sendTrigger "unlicensedUse.app"
-
-isLicensed = (callback) ->
-  console.log "testing license", LICENSE_ID
-  chrome.runtime.sendMessage LICENSE_ID, "ping", (response) ->
-    callback !!response
