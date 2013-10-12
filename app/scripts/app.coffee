@@ -6,6 +6,7 @@ define [
   "lib/extension"
   "text!../templates/root.hbs"
   "text!../templates/container.hbs"
+  "text!../templates/nag-message.txt"
 ], (
   _
   $
@@ -14,8 +15,15 @@ define [
   Extension
   rootTemplate
   containerTemplate
+  nagMessage
 ) ->
   class App
+    @I_AM_A_PIRATE: false
+
+    @USES_BETWEEN_NAG_DIALOG: 15
+    @LICENSE_URL: "https://chrome.google.com/webstore/detail/" +
+                  "backtick-license/fdocciflgajbbcgmnfifnmoamjgiefip"
+
     open: false
     loading: false
     commands: []
@@ -44,6 +52,23 @@ define [
           @trigger "close"
         else
           @trigger "open"
+
+      @on "unlicensedUse.app", @countUnlicensedUses.bind(this)
+
+    countUnlicensedUses: ->
+      chrome.storage.sync.get 'unlicensedUses', (storage) =>
+        uses = storage.unlicensedUses or 0
+        uses++
+
+        if uses % App.USES_BETWEEN_NAG_DIALOG is 0
+          @showNagDialog()
+
+        chrome.storage.sync.set unlicensedUses: uses
+
+    showNagDialog: ->
+      return if App.I_AM_A_PIRATE
+      openLicensePage = confirm nagMessage
+      window.open(App.LICENSE_URL, "_blank") if openLicensePage
 
     setOpen: ->
       @open = true

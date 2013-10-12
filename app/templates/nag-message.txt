@@ -1,0 +1,5 @@
+You are using a demo version of Backtick, which means that this dialog will pop up once in a while.
+
+To get rid of this, and to support the continued development of this extension, please buy a Backtick license.
+
+Would you like to do that now?
