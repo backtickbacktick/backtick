@@ -120,6 +120,7 @@ class Options
     gistID = @$importInput.val()
     return unless gistID
 
+    @$importInput.val ""
     @loading()
     GitHub.fetchCommand(gistID)
       .done(@addCommand, @syncCommand)
