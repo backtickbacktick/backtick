@@ -18,8 +18,6 @@ define [
   nagMessage
 ) ->
   class App
-    @I_AM_A_PIRATE: false
-
     @USES_BETWEEN_NAG_DIALOG: 15
     @LICENSE_URL: "https://chrome.google.com/webstore/detail/" +
                   "backtick-license/fdocciflgajbbcgmnfifnmoamjgiefip"
@@ -66,7 +64,6 @@ define [
         chrome.storage.sync.set unlicensedUses: uses
 
     showNagDialog: ->
-      return if App.I_AM_A_PIRATE
       openLicensePage = confirm nagMessage
       window.open(App.LICENSE_URL, "_blank") if openLicensePage
 
