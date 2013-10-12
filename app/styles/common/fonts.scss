@@ -1,12 +1,6 @@
 @font-face {
   font-family: 'Lato';
   font-style: normal;
-  font-weight: 100;
-  src: local('Lato Hairline'), local('Lato-Hairline'), url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Lato-Hairline.ttf') format('woff'), url(../../assets/fonts/Lato-Hairline.ttf) format('woff');
-}
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
   font-weight: 300;
   src: local('Lato Light'), local('Lato-Light'), url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Lato-Light.ttf') format('woff'), url(../../assets/fonts/Lato-Light.ttf) format('woff');
 }
@@ -24,37 +18,7 @@
 }
 @font-face {
   font-family: 'Lato';
-  font-style: normal;
-  font-weight: 900;
-  src: local('Lato Black'), local('Lato-Black'), url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Lato-Black.ttf') format('woff'), url(../../assets/fonts/Lato-Black.ttf) format('woff');
-}
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 100;
-  src: local('Lato Hairline Italic'), local('Lato-HairlineItalic'), url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Lato-HairlineItalic.ttf') format('woff'), url(../../assets/fonts/Lato-HairlineItalic.ttf) format('woff');
-}
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 300;
-  src: local('Lato Light Italic'), local('Lato-LightItalic'), url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Lato-LightItalic.ttf') format('woff'), url(../../assets/fonts/Lato-LightItalic.ttf) format('woff');
-}
-@font-face {
-  font-family: 'Lato';
   font-style: italic;
   font-weight: 400;
   src: local('Lato Italic'), local('Lato-Italic'), url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Lato-Italic.ttf') format('woff'), url(../../assets/fonts/Lato-Italic.ttf) format('woff');
-}
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 700;
-  src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Lato-BoldItalic.ttf') format('woff'), url(../../assets/fonts/Lato-BoldItalic.ttf) format('woff');
-}
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 900;
-  src: local('Lato Black Italic'), local('Lato-BlackItalic'), url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Lato-BlackItalic.ttf') format('woff'), url(../../assets/fonts/Lato-BlackItalic.ttf) format('woff');
 }
