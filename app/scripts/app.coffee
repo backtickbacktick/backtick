@@ -65,6 +65,11 @@ define [
 
     showNagDialog: ->
       openLicensePage = confirm nagMessage
+
+      Extension.trigger "track",
+        category: "Got Nag Dialog",
+        action: "Clicked #{if openLicensePage then "OK" else "Cancel"}"
+
       window.open(App.LICENSE_URL, "_blank") if openLicensePage
 
     setOpen: ->
