@@ -1,5 +1,5 @@
 class CommandStore
-  @COMMANDS_ENDPOINT: "http://dev.api.backtick.io/commands"
+  @COMMANDS_ENDPOINT: "http://api.backtick.io/commands"
 
   commands: []
   lastSync: null
