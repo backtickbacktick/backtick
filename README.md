@@ -4,7 +4,7 @@
 
 #### Developing
 If you want to play around with the code, you'll want to install [Grunt](http://gruntjs.com/) first. With that installed,
-just run `grunt build` to compile everything and import the `dist` folder as an unpacked extension in Chrome.
+just run `grunt build` to compile everything. You'll then want to import the `dist` folder as an unpacked extension in Chrome.
 
 #### Why are you open sourcing this?
 Because that's just something I like to do to contribute back to the community. It also forces me to write cleaner code. (Well, in theory at least)
