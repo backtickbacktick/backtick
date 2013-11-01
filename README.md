@@ -1,8 +1,6 @@
-Backtick is a console for bookmarklets and scripts. For a better explanation, try out the demo at [backtick.io/](http://backtick.io).
+**Backtick is a console for bookmarklets and scripts.** For a better explanation, try out the demo at [backtick.io/](http://backtick.io). The extension is free to use, but it will occasionally nag you to install the [$5 Backtick license](Backtick License).
 
-The extension is free to use, but it will occasionally nag you to install the [$5 Backtick license](Backtick License).
-
-[MIT Licensed](http://opensource.org/licenses/MIT) 2013 Joel Besada
+*[MIT Licensed](http://opensource.org/licenses/MIT) 2013 Joel Besada*
 
 #### Why are you open sourcing this?
 Because that's just something I like to do to contribute back to the community and force myself to write cleaner code.
