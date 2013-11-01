@@ -3,7 +3,7 @@
 *[MIT Licensed](http://opensource.org/licenses/MIT) 2013 Joel Besada*
 
 #### Developing
-If you want to play around with the code, you'll want to install (Grunt)[http://gruntjs.com/] first. With that installed,
+If you want to play around with the code, you'll want to install [Grunt](http://gruntjs.com/) first. With that installed,
 just run `grunt build` to compile everything and import the `dist` folder as an unpacked extension in Chrome.
 
 #### Why are you open sourcing this?
