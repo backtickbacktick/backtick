@@ -39,7 +39,7 @@ define [
       App.on
         "close": @close.bind this
         "open": @open.bind this
-        "execute.commands": @displayName.bind this
+        "fetch.commands": @displayName.bind this
 
     open: ->
       @$input.val ""

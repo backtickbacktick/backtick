@@ -43,17 +43,14 @@ Events.$.on
     chrome.tabs.create url: "options.html"
     trackEvent "Open Settings", "Click"
 
-  "execute.commands": (e, command) ->
+  "fetch.commands": (e, command) ->
     $.ajax
       url: command.src
       success: (response) ->
-        url = "javascript:#{response}"
-        chrome.tabs.update activeTab.id, {url: url}
-        Events.sendTrigger "executed.commands", command
-
+        Events.sendTrigger "fetched.commands", response
         trackEvent "Executed Command", command.name, command.gistID
 
-      error: Events.sendTrigger.bind Events, "executionError.commands", command
+      error: Events.sendTrigger.bind Events, "fetchError.commands", command
 
   "track": (e, data) ->
     trackEvent data.category, data.action, data.label, data.value

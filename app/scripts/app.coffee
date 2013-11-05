@@ -40,8 +40,8 @@ define [
       @on "load.commands", @setOpen.bind(this)
       @on "load.commands sync.commands", (commands) => @commands = commands
 
-      @on "execute.commands", @setLoading.bind(this)
-      @on "executed.commands executionError.commands", @setLoaded.bind(this)
+      @on "fetch.commands", @setLoading.bind(this)
+      @on "fetched.commands fetchError.commands", @setLoaded.bind(this)
 
       Extension.trigger "ready.app"
 

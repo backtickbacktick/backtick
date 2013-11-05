@@ -21,5 +21,7 @@ define [
       @match = new FuzzyMatch @get("name"), search
 
     execute: ->
-      Extension.trigger "execute.commands", @attributes
-      App.on "executed.commands", App.trigger.bind(App, "close")
+      Extension.trigger "fetch.commands", @attributes
+      App.once "fetched.commands", (src) =>
+        window.location = "javascript:#{encodeURIComponent src}"
+        App.trigger "close"
