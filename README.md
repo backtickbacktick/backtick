@@ -1,4 +1,5 @@
-**Backtick is a console for bookmarklets and scripts**, packaged as a Chrome extension. For a better explanation, try out the demo at [backtick.io/](http://backtick.io). The extension is free to use, but it will occasionally nag you to install the [$5 Backtick license](http://goo.gl/LkPHMG).
+
+[![Build Status](https://travis-ci.org/JoelBesada/Backtick.png?branch=master)](https://travis-ci.org/JoelBesada/Backtick) **Backtick is a console for bookmarklets and scripts**, packaged as a Chrome extension. For a better explanation, try out the demo at [backtick.io/](http://backtick.io). The extension is free to use, but it will occasionally nag you to install the [$5 Backtick license](http://goo.gl/LkPHMG).
 
 *[MIT Licensed](http://opensource.org/licenses/MIT) 2013 Joel Besada*
 
