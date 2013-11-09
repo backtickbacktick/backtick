@@ -1,6 +1,4 @@
 require.config
-  deps: ["main"]
-
   shim: {
     handlebars: exports: "Handlebars"
   }
@@ -15,5 +13,5 @@ require.config
     backbone: "../vendor/backbone-amd/backbone"
     underscore: "../vendor/underscore-amd/underscore"
 
-define ->
+require ["main"], ->
   API_URL: "http://api.backtick.io"
