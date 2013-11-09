@@ -7,16 +7,10 @@
 </head>
 <body>
     <div id="mocha"></div>
+
     <script src="lib/mocha/mocha.js"></script>
-    <script>mocha.setup('bdd')</script>
-    <!-- assertion framework -->
     <script src="lib/chai.js"></script>
     <script src="lib/chai-changes.js"></script>
-    <script>
-        var expect = chai.expect
-        var should = chai.should()
-    </script>
-
     <script data-main="spec/test.js" src="vendor/requirejs/require.js"></script>
 </body>
 </html>

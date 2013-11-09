@@ -15,7 +15,13 @@ require.config
 
 require [
   "jquery"
-  "lib/fuzzy-match"
-  "lib/command-store"
 ], ->
-  mocha.ignoreLeaks().run()
+  mocha.setup "bdd"
+  window.expect = chai.expect
+  window.should = chai.should()
+
+  require [
+    "lib/fuzzy-match"
+    "lib/command-store"
+  ], ->
+    mocha.ignoreLeaks().run()
