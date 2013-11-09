@@ -25,7 +25,7 @@ To load the built extension files from the *dist/* folder into Chrome, [follow t
 
 You can also use `grunt serve` if you want to run the code inside a web page instead of an extension. This gives you an option to more quickly develop "front-end" features of Backtick, with auto compiling and live reloading. You can't test any extension-specific code with this, however.
 
-###### Testing
+##### Testing
 There are a couple of tests in the *test/* folder. Use `grunt test` to run this on a web page. This also uses live reload, so you can write code or new tests and the page will automatically refresh.
 
 #### Why are you open sourcing this?
