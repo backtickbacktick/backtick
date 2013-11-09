@@ -9,16 +9,17 @@ require [
   class LocalSetup
     constructor: ->
       @loadCommands()
-      App.on "execute.commands", @executeCommand.bind(this)
+      App.on "fetch.commands", @fetchCommand.bind(this)
 
     loadCommands: ->
       $.getJSON("http://api.backtick.io/commands")
         .success((response) => App.trigger "load.commands", response)
         .error(console.log.bind(console, "Error fetching commands"))
 
-    executeCommand: (command) ->
-       $.getScript(command.src)
-        .success(App.trigger.bind(App, "executed.commands", command))
-        .error(App.trigger.bind(App, "executionError.commands", command))
+    fetchCommand: (command) ->
+      setTimeout ->
+        App.trigger "fetched.commands",
+          "alert('Commands can only be executed when running as an extension.')"
+      , 0
 
   new LocalSetup
