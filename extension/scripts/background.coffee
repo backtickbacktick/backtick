@@ -40,7 +40,7 @@ Events.$.on
     checkLicense()
 
   "open.settings": ->
-    chrome.tabs.create url: "options.html"
+    chrome.tabs.create url: "extension/options.html"
     trackEvent "Open Settings", "Click"
 
   "fetch.commands": (e, command) ->

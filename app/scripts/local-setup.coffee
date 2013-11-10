@@ -1,7 +1,7 @@
 require [
   "jquery"
   "app"
-  "../extension/hotkey"
+  "../extension/scripts/hotkey"
 ], (
   $
   App

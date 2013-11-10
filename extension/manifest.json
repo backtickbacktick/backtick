@@ -27,7 +27,7 @@
 
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["extension/hotkey.js"]
+    "js": ["extension/scripts/hotkey.js"]
   }],
 
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
