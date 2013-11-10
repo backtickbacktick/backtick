@@ -38,15 +38,9 @@
 
 "web_accessible_resources": [
     "styles/style.css",
-    "assets/fonts/Lato-Black.ttf",
-    "assets/fonts/Lato-BlackItalic.ttf",
     "assets/fonts/Lato-Bold.ttf",
-    "assets/fonts/Lato-BoldItalic.ttf",
-    "assets/fonts/Lato-Hairline.ttf",
-    "assets/fonts/Lato-HairlineItalic.ttf",
     "assets/fonts/Lato-Italic.ttf",
     "assets/fonts/Lato-Light.ttf",
-    "assets/fonts/Lato-LightItalic.ttf",
     "assets/fonts/Lato-Regular.ttf"
   ]
 }
