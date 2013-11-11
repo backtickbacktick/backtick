@@ -1,68 +1,80 @@
-# TOOO: Clean up and refactor this into a class
-activeTab = null
+class Background
+  events:
+    "toggle.app": "toggleApp"
+    "ready.app": "initApp"
+    "open.settings": "openSettings"
+    "fetch.commands": "fetchCommands"
+    "track": "trackScriptEvent"
 
-window.Events = {
-  sendTrigger: (eventName, eventData) ->
-    chrome.tabs.sendMessage activeTab?.id, { event: eventName, data: eventData }
-}
+  constructor: ->
+    # Replace strings with the actual methods
+    @events[eventName] = @[method] for eventName, method of @events
 
-window._gaq or= []
-window._gaq.push ["_setAccount", "UA-45140113-2"]
+    @initAnalytics()
+    @setupListeners()
 
-Events.$ = $ Events
-chrome.runtime.onMessage.addListener (req, sender) ->
-  activeTab = sender.tab
-  window.Events.$.trigger(req.event, req.data) if req.event
+  initAnalytics: ->
+    window._gaq or= []
+    window._gaq.push ["_setAccount", "UA-45140113-2"]
 
-chrome.browserAction.onClicked.addListener (tab) ->
-  activeTab = tab
-  chrome.tabs.executeScript null, {
-    code: "chrome.runtime.sendMessage({
-      event: 'toggle.app',
-      data: { loaded: window._BACKTICK_LOADED, action: 'Click' }
-    });"
-  }
+  setupListeners: ->
+    chrome.browserAction.onClicked.addListener @onClickBrowserAction
+    window.Events.$.on @events
 
-Events.$.on
-  "toggle.app": (e, data) ->
+  onClickBrowserAction: (tab) =>
+    chrome.tabs.executeScript null, {
+      code: "chrome.runtime.sendMessage({
+        event: 'toggle.app',
+        data: { loaded: window._BACKTICK_LOADED, action: 'Click' }
+      });"
+    }
+
+  toggleApp: (e, data) =>
+    eventName = ""
+
     if data.loaded
-      Events.sendTrigger "toggle.app"
-      trackEvent "Toggled App", data.action, data.hotkey
+      window.Events.sendTrigger "toggle.app"
+      eventName = "Toggled App"
     else
       chrome.tabs.insertCSS null, file: "styles/container.css"
       chrome.tabs.executeScript null, file: "vendor/requirejs/require.js"
       chrome.tabs.executeScript null, file: "scripts/app.js"
 
-      trackEvent "Loaded App", data.action, data.hotkey
+      eventName = "Loaded App"
 
-  "ready.app": ->
-    CommandStore.init()
-    checkLicense()
+    @trackEvent eventName, data.action, data.hotkey
 
-  "open.settings": ->
+  initApp: =>
+    window.CommandStore.init()
+    @checkLicense()
+
+  openSettings: =>
     chrome.tabs.create url: "extension/options.html"
-    trackEvent "Open Settings", "Click"
+    @trackEvent "Open Settings", "Click"
 
-  "fetch.commands": (e, command) ->
+  fetchCommands: (e, command) =>
     $.ajax
       url: command.src
-      success: (response) ->
-        Events.sendTrigger "fetched.commands", response
-        trackEvent "Executed Command", command.name, command.gistID
+      success: (response) =>
+        window.Events.sendTrigger "fetched.commands", response
+        @trackEvent "Executed Command", command.name, command.gistID
 
-      error: Events.sendTrigger.bind Events, "fetchError.commands", command
+      error: window.Events.sendTrigger.bind(window.Events,
+        "fetchError.commands", command)
 
-  "track": (e, data) ->
-    trackEvent data.category, data.action, data.label, data.value
+  trackScriptEvent: (e, data) =>
+    @trackEvent data.category, data.action, data.label, data.value
 
-checkLicense = ->
-  License.isLicensed (result) ->
-    return if result
-    Events.sendTrigger "unlicensedUse.app"
+  trackEvent: (category, action, label, value) ->
+    eventArray = ["_trackEvent", category, action]
+    eventArray.push(label) if label
+    eventArray.push(parseInt(value, 10)) if value
 
-trackEvent = (category, action, label, value) ->
-  eventArray = ["_trackEvent", category, action]
-  eventArray.push(label) if label
-  eventArray.push(parseInt(value, 10)) if value
+    window._gaq.push eventArray
 
-  window._gaq.push eventArray
+  checkLicense: ->
+    window.License.isLicensed (result) ->
+      return if result
+      window.Events.sendTrigger "unlicensedUse.app"
+
+window.Background = new Background
