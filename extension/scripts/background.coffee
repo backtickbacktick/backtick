@@ -10,12 +10,7 @@ class Background
     # Replace strings with the actual methods
     @events[eventName] = @[method] for eventName, method of @events
 
-    @initAnalytics()
     @setupListeners()
-
-  initAnalytics: ->
-    window._gaq or= []
-    window._gaq.push ["_setAccount", "UA-45140113-2"]
 
   setupListeners: ->
     chrome.browserAction.onClicked.addListener @onClickBrowserAction
@@ -42,7 +37,7 @@ class Background
 
       eventName = "Loaded App"
 
-    @trackEvent eventName, data.action, data.hotkey
+    window.Analytics.trackEvent eventName, data.action, data.hotkey
 
   initApp: =>
     window.CommandStore.init()
@@ -50,27 +45,22 @@ class Background
 
   openSettings: =>
     chrome.tabs.create url: "extension/options.html"
-    @trackEvent "Open Settings", "Click"
+    window.Analytics.trackEvent "Open Settings", "Click"
 
   fetchCommands: (e, command) =>
     $.ajax
       url: command.src
       success: (response) =>
         window.Events.sendTrigger "fetched.commands", response
-        @trackEvent "Executed Command", command.name, command.gistID
+        window.Analytics.trackEvent("Executed Command", command.name,
+          command.gistID)
 
       error: window.Events.sendTrigger.bind(window.Events,
         "fetchError.commands", command)
 
   trackScriptEvent: (e, data) =>
-    @trackEvent data.category, data.action, data.label, data.value
-
-  trackEvent: (category, action, label, value) ->
-    eventArray = ["_trackEvent", category, action]
-    eventArray.push(label) if label
-    eventArray.push(parseInt(value, 10)) if value
-
-    window._gaq.push eventArray
+    window.Analytics.trackEvent(data.category, data.action,
+      data.label, data.value)
 
   checkLicense: ->
     window.License.isLicensed (result) ->
