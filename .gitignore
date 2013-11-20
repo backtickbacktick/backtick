@@ -8,5 +8,9 @@
 node_modules
 app/vendor
 
+auth/*
+!auth/*.sample.*
+
+commands.json
 dist
 bin
