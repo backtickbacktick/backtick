@@ -7,6 +7,8 @@ class GitHub
       url: "https://api.github.com/gists/#{gistID}" +
             "?client_id=#{githubAuth.clientID}" +
             "&client_secret=#{githubAuth.clientSecret}"
+      headers:
+        "User-Agent": "Backtick/1.0"
       json: true
     , (err, res, body) ->
       return callback err if err
