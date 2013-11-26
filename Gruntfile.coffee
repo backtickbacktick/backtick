@@ -220,12 +220,15 @@ config =
       secret: aws.secret
       bucket: aws.bucket
       access: "public-read"
+      gzip: true
 
     dist:
       upload: [
         src: "commands.json",
         dest: "commands.json"
-        options: { gzip: true }
+      ,
+        src: "commands.json"
+        dest: "commands#{Date.now()}.json"
       ]
 
 
