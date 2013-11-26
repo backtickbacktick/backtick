@@ -100,6 +100,8 @@ class Options
     @$importList.empty()
     commands = []
     for command in @getCustomCommands()
+      # TODO: Use a template for this by using a sandbox
+      # http://developer.chrome.com/apps/sandboxingEval.html
       commands.push $("""
         <li class="command">
           <div class="icon" #{
