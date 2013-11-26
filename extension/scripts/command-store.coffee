@@ -70,9 +70,4 @@ class CommandStore
   trigger: (eventName, eventData) ->
     window.Events.sendTrigger eventName, eventData
 
-  requestFileSystem: (
-    window.requestFileSystem ||
-    window.webkitRequestFileSystem
-  ).bind(window)
-
 window.CommandStore = new CommandStore
