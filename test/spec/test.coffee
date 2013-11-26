@@ -22,6 +22,5 @@ require [
 
   require [
     "lib/fuzzy-match"
-    "lib/command-store"
   ], ->
     mocha.ignoreLeaks().run()
