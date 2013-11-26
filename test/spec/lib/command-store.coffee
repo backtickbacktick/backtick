@@ -1,4 +1,4 @@
-require ["/extension/command-store.js"], ->
+require ["/extension/scripts/command-store.js"], ->
   describe "CommandStore", ->
     describe "#mergeCommands", ->
       beforeEach ->
