@@ -14,4 +14,3 @@ require.config
     underscore: "../vendor/underscore-amd/underscore"
 
 require ["main"], ->
-  API_URL: "http://api.backtick.io"

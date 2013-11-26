@@ -1,8 +1,8 @@
 class CommandStore
-  @COMMANDS_ENDPOINT: "http://api.backtick.io/commands"
+  @COMMANDS_URL: "https://backtickio.s3.amazonaws.com/commands.json"
+  @SCHEMA_VERSION: 2
 
   commands: []
-  lastSync: null
 
   init: (ready) ->
     @initStorages().then @storageLoaded
@@ -17,8 +17,11 @@ class CommandStore
     $.when localDeferred, syncDeferred
 
   storageLoaded: (local, sync) =>
-    @commands = local.commands or @commands
-    @lastSync = local.lastSync or @lastSync
+    # Only use commands from storage if schema version has not changed
+    if local.schemaVersion is CommandStore.SCHEMA_VERSION
+      @commands = local.commands or @commands
+    else
+      console.log "Outdated storage schema, re-fetching everything"
 
     @commandIndex = {}
     @commandIndex[command.gistID] = command for command in @commands
@@ -29,14 +32,9 @@ class CommandStore
     @getCustomCommands sync.customCommandIds
 
   storeCommands: ->
-    chrome.storage.local.set {commands: @commands, lastSync: @lastSync}
-
-  mergeCommands: (updatedCommands) ->
-    for command in updatedCommands
-      if @commandIndex[command.gistID]
-        $.extend @commandIndex[command.gistID], command
-      else
-        @commands.push command
+    chrome.storage.local.set
+      commands: @commands
+      schemaVersion: CommandStore.SCHEMA_VERSION
 
   getCustomCommands: (ids) =>
     unfetchedCommands = _.filter ids, (id) => not @commandIndex[id]
@@ -44,24 +42,19 @@ class CommandStore
     for id in unfetchedCommands
       GitHub.fetchCommand(id).then (command) =>
         command.custom = true
-        @mergeCommands [command]
+        @commands.push command
         @storeCommands()
 
   sync: ->
-    params = {}
-    params["updatedSince"] = @lastSync if @lastSync
-
-    $.getJSON(CommandStore.COMMANDS_ENDPOINT, params)
+    $.getJSON(CommandStore.COMMANDS_URL)
       .done((response) =>
         wasFirstSync = @commands.length is 0
 
         if response.length
-          @mergeCommands response
-
-          # Response is sorted by ascending updatedAt
-          @lastSync = response[response.length - 1].updatedAt
-
+          @commands = _.filter @commands, (command) -> command.custom
+          @commands = @commands.concat response
           @storeCommands()
+
           eventName = if wasFirstSync then "load.commands" else "sync.commands"
           @trigger eventName, @commands
       )
