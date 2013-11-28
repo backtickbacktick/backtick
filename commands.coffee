@@ -1,11 +1,13 @@
 # A list of default commands included with Backtick
 
 module.exports =
+  "Amazon Wish List": "7699000"
   "App.net Share": "5a543b6f98460f5e5c8b"
   "BeeLine Reader": "9f6c45105b28e53b8d3e"
   "Bitly Bitmark": "7311982"
   "Buffer Share": "b11c2e97c442b1df2cef"
   "Bullseye": "84e569a0892294d9c8fe"
+  "Designer News Submit": "fb217de41be7f5fd904e"
   "Download Video": "f7bd06857000c7ff1cb4"
   "Facebook Share": "592cd1e7139ba65b46d0"
   "Flipboard Share": "44a5d68de6f442ed0f74"
