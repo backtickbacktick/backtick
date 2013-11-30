@@ -13,9 +13,9 @@ define [
 ) ->
   class Actions
     constructor: ->
-      App.on "loadConsole.action", @initConsole.bind this
+      App.on "loadConsole.action", @initConsole
 
-    initConsole: ->
+    initConsole: =>
       new ConsoleView
       new ResultsView collection: new CommandCollection
 

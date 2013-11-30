@@ -4,13 +4,12 @@ define [], () ->
     constructor: ->
       @listenAndTrigger()
 
-    listenAndTrigger: ->
-      return @loadApp(@listenAndTrigger.bind(this, arguments)) unless App
+    listenAndTrigger: =>
+      return @loadApp(@listenAndTrigger) unless App
       return unless App.env is "extension"
 
       chrome.runtime.onMessage.addListener (req, sender, sendResponse) ->
-        if req.event
-          App.trigger(req.event, req.data)
+        App.trigger(req.event, req.data) if req.event
 
     trigger: (eventName, eventData) ->
       return @loadApp(@trigger.bind(this, eventName, eventData)) unless App

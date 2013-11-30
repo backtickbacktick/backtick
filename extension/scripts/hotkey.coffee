@@ -5,9 +5,9 @@ class Hotkey
     chrome.storage?.sync.get "hotkey", (storage) =>
       @hotkey = storage.hotkey if storage.hotkey
 
-    document.addEventListener "keypress", @onKeyPress.bind(this), true
+    document.addEventListener "keypress", @onKeyPress, true
 
-  onKeyPress: (e) ->
+  onKeyPress: (e) =>
     return unless @hotkey is String.fromCharCode e.which
     return if @isInput(document.activeElement) and not window._BACKTICK_OPEN
 

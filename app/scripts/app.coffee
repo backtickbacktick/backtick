@@ -30,18 +30,18 @@ define [
     constructor: ->
       _.extend this, Backbone.Events
 
-      @on "open", @setOpen.bind(this)
-      @on "close", @setClosed.bind(this)
+      @on "open", @setOpen
+      @on "close", @setClosed
 
     start: ->
       @appendContainer()
       @trigger "loadConsole.action"
 
-      @on "load.commands", @setOpen.bind(this)
+      @on "load.commands", @setOpen
       @on "load.commands sync.commands", (commands) => @commands = commands
 
-      @on "fetch.commands", @setLoading.bind(this)
-      @on "fetched.commands fetchError.commands", @setLoaded.bind(this)
+      @on "fetch.commands", @setLoading
+      @on "fetched.commands fetchError.commands", @setLoaded
 
       Extension.trigger "ready.app"
 
@@ -51,9 +51,9 @@ define [
         else
           @trigger "open"
 
-      @on "unlicensedUse.app", @countUnlicensedUses.bind(this)
+      @on "unlicensedUse.app", @countUnlicensedUses
 
-    countUnlicensedUses: ->
+    countUnlicensedUses: =>
       chrome.storage.sync.get 'unlicensedUses', (storage) =>
         uses = storage.unlicensedUses or 0
         uses++
@@ -72,19 +72,19 @@ define [
 
       window.open(App.LICENSE_URL, "_blank") if openLicensePage
 
-    setOpen: ->
+    setOpen: =>
       @open = true
       window._BACKTICK_OPEN = true
 
-    setClosed: ->
+    setClosed: =>
       @open = false
       window._BACKTICK_OPEN = false
 
-    setLoading: ->
+    setLoading: =>
       @loading = true
       @$console.addClass "loading"
 
-    setLoaded: ->
+    setLoaded: =>
       @loading = false
       @$console.removeClass "loading"
 

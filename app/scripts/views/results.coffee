@@ -18,7 +18,7 @@ define [
       @collection.on "sync", =>
         @createModelViews()
 
-      App.on "command:search", @renderMatches.bind this
+      App.on "command:search", @renderMatches.bind(this)
       App.on "command:navigateDown", (search) =>
         if search.length is 0 and not @resultsVisible
           @listAll()
@@ -26,13 +26,13 @@ define [
           @cycleSelected 1
 
       App.on "command:navigateUp", @cycleSelected.bind this, -1
-      App.on "command:execute", @executeSelected.bind this
+      App.on "command:execute", @executeSelected
       App.on "executionError.commands", (command) =>
         alert "Backtick failed to run command \"#{command.name}\""
         @_lastSearch = undefined
         @_renderMatches command.name
 
-      App.on "close", @empty.bind this
+      App.on "close", @empty
 
     createModelViews: ->
       @collection.each (command) =>
@@ -55,7 +55,7 @@ define [
       @render()
       @setSelected 0
 
-    empty: ->
+    empty: =>
       @commandViews = []
       @selectedCommand = null
       @selectedCommandIndex = 0
@@ -78,7 +78,7 @@ define [
       this
 
     _lastSearch: ""
-    _renderMatches: (search, force) ->
+    _renderMatches: (search, force) =>
       return if @_lastSearch is search and not force
       @_lastSearch = search
       return @listAll() if search is ""
@@ -117,7 +117,7 @@ define [
       else if top < 0
         @$el.scrollTop top + @$el.scrollTop()
 
-    executeSelected: ->
+    executeSelected: =>
       $executed = @commandViews[@selectedCommandIndex]?.$el
       return unless $executed
 
