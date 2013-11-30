@@ -16,7 +16,7 @@ class GitHub
     deferred
 
   fetchGist: (id) ->
-    $.getJSON("#{GitHub.API_URL}/gists/#{id}")
+    $.getJSON("#{GitHub.API_URL}/gists/#{id}?t=#{Date.now()}")
       .error(-> console.error "Unable to get Gist with id #{id}")
 
   commandFromGist: (gist) ->
