@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Backtick",
   "description": "Powerful commands in your browser.",
-  "version": "0.5.0",
+  "version": "0.5.1",
 
   "icons": {
     "16": "extension/icon128.png",
