@@ -12,7 +12,7 @@ require [
       App.on "fetch.commands", @fetchCommand.bind(this)
 
     loadCommands: ->
-      $.getJSON("https://backtickio.s3.amazonaws.com/commands.json")
+      $.getJSON("https://backtickio.s3.amazonaws.com/commands.json?t=#{Date.now()}")
         .success((response) => App.trigger "load.commands", response)
         .error(console.log.bind(console, "Error fetching commands"))
 

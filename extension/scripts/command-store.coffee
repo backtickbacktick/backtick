@@ -46,7 +46,7 @@ class CommandStore
         @storeCommands()
 
   sync: ->
-    $.getJSON(CommandStore.COMMANDS_URL)
+    $.getJSON("#{CommandStore.COMMANDS_URL}?t=#{Date.now()}")
       .done((response) =>
         wasFirstSync = @commands.length is 0
 
