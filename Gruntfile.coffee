@@ -231,9 +231,14 @@ config =
         dest: "commands#{Date.now()}.json"
       ]
 
-  zip:
-    "bin/backtick.zip": ["dist/"]
+  compress:
+    main:
+      options:
+        archive: "bin/backtick.zip"
 
+      files: [
+        src: ["dist/**"]
+      ]
 
 module.exports = (grunt) ->
   require("time-grunt") grunt
@@ -265,7 +270,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "package", [
     "build"
-    "zip"
+    "compress"
   ]
 
   grunt.registerTask "upload-commands", [
