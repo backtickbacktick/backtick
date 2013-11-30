@@ -231,6 +231,9 @@ config =
         dest: "commands#{Date.now()}.json"
       ]
 
+  zip:
+    "bin/backtick.zip": ["dist/"]
+
 
 module.exports = (grunt) ->
   require("time-grunt") grunt
@@ -258,6 +261,11 @@ module.exports = (grunt) ->
     "concurrent:dist"
     "copy"
     "requirejs"
+  ]
+
+  grunt.registerTask "package", [
+    "build"
+    "zip"
   ]
 
   grunt.registerTask "upload-commands", [
