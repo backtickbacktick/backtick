@@ -74,10 +74,12 @@ define [
 
     setOpen: =>
       @open = true
+      @$el.addClass "open"
       window._BACKTICK_OPEN = true
 
     setClosed: =>
       @open = false
+      @$el.removeClass "open"
       window._BACKTICK_OPEN = false
 
     setLoading: =>

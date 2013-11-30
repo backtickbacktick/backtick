@@ -2,6 +2,9 @@
 @import "common/vars";
 
 #__backtick__ {
+  pointer-events: none;
   background: transparent !important;
+
+  &.open { pointer-events: all; }
   &:focus { outline: none; }
 }
