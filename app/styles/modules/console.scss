@@ -73,6 +73,10 @@
     &:active {
       top: 1px;
     }
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .spinner {
