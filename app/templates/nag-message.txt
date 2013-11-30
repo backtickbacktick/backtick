@@ -1,4 +1,4 @@
-You are using a demo version of Backtick, which means that this dialog will pop up once in a while.
+You are using an unlicensed version of Backtick, which means that this dialog will pop up once in a while.
 
 To get rid of this, and to support the continued development of this extension, please buy the Backtick license for $4.99.
 
