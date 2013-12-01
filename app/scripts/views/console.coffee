@@ -19,7 +19,6 @@ define [
     rawTemplate: template
 
     events:
-      "keydown": "onKeyDown"
       "click .settings": "openSettings"
 
     initialize: ->
@@ -29,6 +28,8 @@ define [
 
       @keepFocused()
       @escapeClose()
+
+      document.addEventListener "keydown", @onKeyDown, true
 
       App.on "load.commands sync.commands",  =>
         return unless @$input
@@ -73,7 +74,9 @@ define [
     openSettings: ->
       Extension.trigger "open.settings"
 
-    onKeyDown: (e) ->
+    onKeyDown: (e) =>
+      return unless App.open
+      e.stopPropagation()
       preventDefault = true
       unless App.loading
         switch e.which
