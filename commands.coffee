@@ -19,6 +19,7 @@ module.exports =
   "Instapaper Read Later": "7f14f0119b48d777637a"
   "Is it Down?": "7361458"
   "Kern.js": "10256b190ed5006e894c"
+  "Markup": "c96d3e5e2bfa2a587f73"
   "Pinterest Share": "3e50b60e77fb8283c00e"
   "Readability Read Later": "26152acc6cd5137df078"
   "Readability Read Now": "9b3edb25051030f6a8b2"
@@ -33,4 +34,5 @@ module.exports =
   "Visual Event": "ac2a6f2db6767b9d2f58"
   "Wayback Machine": "3e6dafa7c828a9dc092a"
   "WhatFont": "ee98ca9dc1a9c6470822"
+  "Whois Lookup": "7741276"
   "Youtube Skip Ad": "67be7bdb59c49769c9a9"
