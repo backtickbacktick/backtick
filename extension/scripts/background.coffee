@@ -4,6 +4,7 @@ class Background
     "ready.app": "initApp"
     "open.settings": "openSettings"
     "fetch.commands": "fetchCommands"
+    "fetch.commands": "fetchCommand"
     "track": "trackScriptEvent"
 
   constructor: ->
@@ -48,6 +49,7 @@ class Background
     window.Analytics.trackEvent "Open Settings", "Click"
 
   fetchCommands: (e, command) =>
+  fetchCommand: (e, command) =>
     $.ajax
       url: command.src
       success: (response) =>
