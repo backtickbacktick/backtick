@@ -5,6 +5,28 @@
 #### Developing
 The code is open for you to play around with and contribute to, if you wish. Here's some instructions on how to get up and running.
 
+##### Vagrant
+
+The easiest way to install all the dependencies and build the extension is using the provided Vagrantfile. Download [vagrant](http://downloads.vagrantup.com/), [VirtualBox](https://www.virtualbox.org/wiki/Downloads), then do the following:
+
+```
+git clone https://github.com/JoelBesada/Backtick.git
+cd Backtick
+vagrant up
+```
+
+After making changes to the source files, you can rebuild `dist/` as follows:
+
+```
+# either run it as one command:
+vagrant ssh -- 'bash -l -c "cd /vagrant/ ; grunt build"'
+
+# or do it interactively
+vagrant ssh
+cd /vagrant
+grunt build
+```
+
 ##### Dependencies
 To compile Backtick, you'll need to install the following dependencies on your system:
   * [Node.js](http://nodejs.org/)
