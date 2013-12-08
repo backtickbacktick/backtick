@@ -42,5 +42,9 @@
     "assets/fonts/Lato-Italic.ttf",
     "assets/fonts/Lato-Light.ttf",
     "assets/fonts/Lato-Regular.ttf"
-  ]
+  ],
+
+  "externally_connectable": {
+    "matches": ["*://*.github.com/*"]
+  }
 }

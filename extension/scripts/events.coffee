@@ -7,6 +7,7 @@ class Events
 
   setupListeners: ->
     chrome.runtime.onMessage.addListener @onMessage
+    chrome.runtime.onMessageExternal.addListener @onMessage
 
   onMessage: (req, sender) =>
     @activeTab = sender.tab

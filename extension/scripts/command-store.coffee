@@ -32,7 +32,10 @@ class CommandStore
     @fetchCustomCommands sync.customCommandIds
 
   importCustomCommand: (gistID) =>
-    if _.any(@commands, (command) -> command.gistID is gistID)
+    alreadyImported = _.any @commands, (command) ->
+      parseInt(command.gistID, 10) is parseInt(gistID, 10)
+
+    if alreadyImported
       return $.Deferred().reject "You've already imported that command!"
 
     GitHub.fetchCommand(gistID)

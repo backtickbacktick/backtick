@@ -43,6 +43,9 @@ define [
       @on "fetch.commands", @setLoading
       @on "fetched.commands fetchError.commands", @setLoaded
 
+      @on "added.commands", alert.bind(window, "Added command!")
+      @on "addError.commands", alert.bind(window)
+
       Extension.trigger "ready.app"
 
       @on "toggle.app", ->

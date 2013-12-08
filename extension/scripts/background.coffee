@@ -3,8 +3,8 @@ class Background
     "toggle.app": "toggleApp"
     "ready.app": "initApp"
     "open.settings": "openSettings"
-    "fetch.commands": "fetchCommands"
     "fetch.commands": "fetchCommand"
+    "add.commands": "addCommand"
     "track": "trackScriptEvent"
 
   constructor: ->
@@ -48,7 +48,6 @@ class Background
     chrome.tabs.create url: "extension/options.html"
     window.Analytics.trackEvent "Open Settings", "Click"
 
-  fetchCommands: (e, command) =>
   fetchCommand: (e, command) =>
     $.ajax
       url: command.src
@@ -59,6 +58,16 @@ class Background
 
       error: window.Events.sendTrigger.bind(window.Events,
         "fetchError.commands", command)
+
+  addCommand: (e, gistID) =>
+    window.CommandStore.importCustomCommand(gistID)
+      .done((command) ->
+        window.Events.sendTrigger "added.commands", command
+        window.Events.globalTrigger "load.commands", window.CommandStore.commands
+      )
+      .fail((error) ->
+        window.Events.sendTrigger "addError.commands", error
+      )
 
   trackScriptEvent: (e, data) =>
     window.Analytics.trackEvent(data.category, data.action,
