@@ -23,6 +23,10 @@ define [
     execute: ->
       Extension.trigger "fetch.commands", @attributes
       App.once "fetched.commands", (src) =>
-        src = decodeURIComponent src
+        try
+          src = decodeURIComponent src
+        catch e
+          # Do nothing
+
         window.location = "javascript:#{encodeURIComponent src}"
         App.trigger "close"
