@@ -76,11 +76,14 @@ class CommandStore
   sync: ->
     $.getJSON("#{CommandStore.COMMANDS_URL}?t=#{Date.now()}")
       .done((response) =>
+        wasFirstSync = @commands.length is 0
+
         if response.length
           @commands = response.concat @getCustomCommands()
           @storeCommands()
 
-          Events.globalTrigger "load.commands", @commands
+          eventName = if wasFirstSync then "load.commands" else "sync.commands"
+          Events.globalTrigger eventName, @commands
       )
       .fail(console.log.bind(console, "Error fetching commands"))
 
