@@ -63,7 +63,7 @@ class Background
     window.CommandStore.importCustomCommand(gistID)
       .done((command) ->
         window.Events.sendTrigger "added.commands", command
-        window.Events.globalTrigger "load.commands", window.CommandStore.commands
+        window.Events.globalTrigger "sync.commands", window.CommandStore.commands
       )
       .fail((error) ->
         window.Events.sendTrigger "addError.commands", error
