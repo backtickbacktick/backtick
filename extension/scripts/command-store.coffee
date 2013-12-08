@@ -33,7 +33,7 @@ class CommandStore
 
   importCustomCommand: (gistID) =>
     alreadyImported = _.any @commands, (command) ->
-      parseInt(command.gistID, 10) is parseInt(gistID, 10)
+      "#{command.gistID}" is "#{gistID}"
 
     if alreadyImported
       return $.Deferred().reject "You've already imported that command!"
