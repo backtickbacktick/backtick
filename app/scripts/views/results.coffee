@@ -80,6 +80,8 @@ define [
     _lastSearch: ""
     _renderMatches: (search, force) =>
       return if @_lastSearch is search and not force
+      return if not App.open
+
       @_lastSearch = search
       return @listAll() if search is ""
 
