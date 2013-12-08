@@ -13,7 +13,7 @@ define [
     model: Command
 
     initialize: ->
-      App.on "sync.commands load.commands", _.defer.bind(_, @fetch.bind(this))
+      App.on "load.commands", _.defer.bind(_, @fetch.bind(this))
 
     sync: (method, collection, {success}) ->
       return super unless method is "read"

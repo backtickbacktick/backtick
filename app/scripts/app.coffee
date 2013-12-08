@@ -38,7 +38,7 @@ define [
       @trigger "loadConsole.action"
 
       @on "load.commands", @setOpen
-      @on "load.commands sync.commands", (commands) => @commands = commands
+      @on "load.commands", (commands) => @commands = commands
 
       @on "fetch.commands", @setLoading
       @on "fetched.commands fetchError.commands", @setLoaded

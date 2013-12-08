@@ -31,7 +31,7 @@ define [
 
       document.addEventListener "keydown", @onKeyDown, true
 
-      App.on "load.commands sync.commands",  =>
+      App.on "load.commands",  =>
         return unless @$input
         return unless @$input?.val()
 
