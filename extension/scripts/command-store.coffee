@@ -59,11 +59,16 @@ class CommandStore
 
   fetchCustomCommands: (ids) =>
     unfetchedCommands = _.filter ids, (id) => not @commandIndex[id]
+    return unless unfetchedCommands.length
+
+    partDone = _.after unfetchedCommands.length, =>
+      @storeCommands()
+      Events.globalTrigger "load.commands"
 
     for id in unfetchedCommands
       GitHub.fetchCommand(id).then (command) =>
         @addCustomCommand command
-        @storeCommands()
+        partDone()
 
   sync: ->
     $.getJSON("#{CommandStore.COMMANDS_URL}?t=#{Date.now()}")
