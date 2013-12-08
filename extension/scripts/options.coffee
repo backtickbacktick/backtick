@@ -12,13 +12,11 @@ class Options
   constructor: ->
     @displayHotkey()
     @setupListeners()
-
     @initAnalytics()
-
-    $.when(@getCommands(), @getCustomCommandIds())
-      .then @handleCommands
-
     @checkLicense()
+
+    CommandStore.init()
+    Events.$.on "load.commands", @renderCommands
 
   checkLicense: ->
     License.isLicensed (result) =>
@@ -35,71 +33,10 @@ class Options
       .on("submit", "#import-form", @onImportFormSubmit)
       .on("click", "#import-list .remove", @onClickCommandRemove)
 
-  getCommands: ->
-    deferred = $.Deferred()
-
-    chrome.storage.local.get "commands", (storage) ->
-      deferred.resolve storage.commands
-
-    deferred
-
-  getCustomCommandIds: ->
-    deferred = $.Deferred()
-
-    chrome.storage.sync.get "customCommandIds", (storage) ->
-      deferred.resolve storage.customCommandIds or []
-
-    deferred
-
-  handleCommands: (commands, customCommandIds) =>
-    @commands = commands or []
-    @customCommandIds = customCommandIds or []
-
-    @fetchUnfetchedCommands()
-    @renderCustomCommands()
-
-  getCustomCommands: =>
-    _.filter @commands, (command) -> command.custom
-
-  addCommand: (command) =>
-    if _.any(@commands, ({gistID}) -> gistID is command.gistID)
-      alert "You've already imported that command!"
-      return
-
-    command.custom = true
-    @commands.push command
-    chrome.storage.local.set commands: @commands
-
-    @renderCustomCommands()
-
-  syncCommand: (command) =>
-    return if _.contains @customCommandIds, command.gistID
-    @customCommandIds.push command.gistID
-    chrome.storage.sync.set customCommandIds: @customCommandIds
-
-  removeCommand: (removeID) =>
-    @commands = _.filter @commands, ({gistID}) ->
-      gistID isnt removeID
-
-    @customCommandIds =_.filter @customCommandIds, (id) ->
-      id isnt removeID
-
-    chrome.storage.sync.set customCommandIds: @customCommandIds
-    chrome.storage.local.set commands: @commands
-    @renderCustomCommands()
-
-  fetchUnfetchedCommands: ->
-    commandIndex = {}
-    commandIndex[command.gistID] = command for command in @getCustomCommands()
-    unfetchedCommands = _.filter @customCommandIds, (id) -> not commandIndex[id]
-
-    for id in unfetchedCommands
-      GitHub.fetchCommand(id).then @addCommand
-
-  renderCustomCommands: =>
+  renderCommands: =>
     @$importList.empty()
     commands = []
-    for command in @getCustomCommands()
+    for command in CommandStore.getCustomCommands()
       # TODO: Use a template for this by using a sandbox
       # http://developer.chrome.com/apps/sandboxingEval.html
       commands.push $("""
@@ -128,9 +65,10 @@ class Options
 
   onClickCommandRemove: (e) =>
     id = "#{$(e.target).data("id")}"
-    command = _.findWhere @getCustomCommands(), gistID: id
+    command = _.findWhere CommandStore.getCustomCommands(), gistID: id
     if confirm "Are you sure you want to remove \"#{command.name}\""
-      @removeCommand id
+      CommandStore.removeCustomCommand id
+      @renderCommands()
 
   onImportFormSubmit: (e) =>
     e.preventDefault()
@@ -139,8 +77,10 @@ class Options
 
     @$importInput.val ""
     @loading()
-    GitHub.fetchCommand(gistID)
-      .done(@addCommand, @syncCommand)
+
+    CommandStore
+      .importCustomCommand(gistID)
+      .done(@renderCommands)
       .fail(alert.bind(window))
       .always(@loaded)
 

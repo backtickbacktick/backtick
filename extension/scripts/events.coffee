@@ -10,9 +10,16 @@ class Events
 
   onMessage: (req, sender) =>
     @activeTab = sender.tab
-    @$.trigger(req.event, req.data) if req.event
+    @trigger(req.event, req.data) if req.event
+
+  trigger: (eventName, eventData) =>
+    @$.trigger eventName, eventData
 
   sendTrigger: (eventName, eventData) =>
     chrome.tabs.sendMessage @activeTab?.id, { event: eventName, data: eventData }
+
+  globalTrigger: (eventName, eventData) =>
+    @trigger eventName, eventData
+    @sendTrigger eventName, eventData
 
 window.Events = new Events

@@ -26,23 +26,43 @@ class CommandStore
     @commandIndex = {}
     @commandIndex[command.gistID] = command for command in @commands
 
-    @trigger("load.commands", @commands)  if @commands.length
+    Events.globalTrigger("load.commands", @commands) if @commands.length
     @sync()
 
-    @getCustomCommands sync.customCommandIds
+    @fetchCustomCommands sync.customCommandIds
 
-  storeCommands: ->
+  importCustomCommand: (gistID) =>
+    if _.any(@commands, (command) -> command.gistID is gistID)
+      return $.Deferred().reject "You've already imported that command!"
+
+    GitHub.fetchCommand(gistID)
+      .done(@addCustomCommand, @storeCommands, @syncCustomCommands)
+
+  addCustomCommand: (command) =>
+    command.custom = true
+    @commands.push command
+
+  removeCustomCommand: (gistID) =>
+    @commands = _.filter @commands, (command) ->
+      command.gistID isnt gistID
+
+    @storeCommands()
+    @syncCustomCommands()
+
+  storeCommands: =>
     chrome.storage.local.set
       commands: @commands
       schemaVersion: CommandStore.SCHEMA_VERSION
 
-  getCustomCommands: (ids) =>
+  getCustomCommands: =>
+    _.filter @commands, (command) -> command.custom
+
+  fetchCustomCommands: (ids) =>
     unfetchedCommands = _.filter ids, (id) => not @commandIndex[id]
 
     for id in unfetchedCommands
       GitHub.fetchCommand(id).then (command) =>
-        command.custom = true
-        @commands.push command
+        @addCustomCommand command
         @storeCommands()
 
   sync: ->
@@ -51,16 +71,16 @@ class CommandStore
         wasFirstSync = @commands.length is 0
 
         if response.length
-          @commands = _.filter @commands, (command) -> command.custom
-          @commands = @commands.concat response
+          @commands = response.concat @getCustomCommands()
           @storeCommands()
 
           eventName = if wasFirstSync then "load.commands" else "sync.commands"
-          @trigger eventName, @commands
+          Events.globalTrigger eventName, @commands
       )
       .fail(console.log.bind(console, "Error fetching commands"))
 
-  trigger: (eventName, eventData) ->
-    window.Events.sendTrigger eventName, eventData
+  syncCustomCommands: =>
+    chrome.storage.sync.set
+      customCommandIds: _.pluck @getCustomCommands(), "gistID"
 
 window.CommandStore = new CommandStore
