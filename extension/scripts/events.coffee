@@ -16,7 +16,8 @@ class Events
     @$.trigger eventName, eventData
 
   sendTrigger: (eventName, eventData) =>
-    chrome.tabs.sendMessage @activeTab?.id, { event: eventName, data: eventData }
+    return unless @activeTab?.id
+    chrome.tabs.sendMessage @activeTab.id, { event: eventName, data: eventData }
 
   globalTrigger: (eventName, eventData) =>
     @trigger eventName, eventData
