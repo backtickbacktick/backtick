@@ -1,6 +1,7 @@
 # A list of default commands included with Backtick
 
 module.exports =
+  "Add to Backtick": "8dde812886f949e241e0"
   "Amazon Wish List": "7699000"
   "App.net Share": "5a543b6f98460f5e5c8b"
   "BeeLine Reader": "9f6c45105b28e53b8d3e"
