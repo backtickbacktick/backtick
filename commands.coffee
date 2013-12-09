@@ -2,6 +2,7 @@
 
 module.exports =
   "Add to Backtick": "8dde812886f949e241e0"
+  "Add to Delicious": "7881195"
   "Amazon Wish List": "7699000"
   "App.net Share": "5a543b6f98460f5e5c8b"
   "BeeLine Reader": "9f6c45105b28e53b8d3e"
@@ -20,8 +21,10 @@ module.exports =
   "Instapaper Read Later": "7f14f0119b48d777637a"
   "Is it Down?": "7361458"
   "Kern.js": "10256b190ed5006e894c"
+  "Magicscroll Web Reader": "7880657"
   "Markup": "c96d3e5e2bfa2a587f73"
   "Pinterest Share": "3e50b60e77fb8283c00e"
+  "Post to Tumblr": "7880974"
   "Readability Read Later": "26152acc6cd5137df078"
   "Readability Read Now": "9b3edb25051030f6a8b2"
   "Reddit Submit": "9685429b0bc17b9b2df0"
