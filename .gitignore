@@ -4,6 +4,7 @@
 
 .tmp
 .sass-cache
+.vagrant
 
 node_modules
 app/vendor
