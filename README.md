@@ -5,27 +5,6 @@
 #### Developing
 The code is open for you to play around with and contribute to, if you wish. Here's some instructions on how to get up and running.
 
-##### Vagrant
-
-The easiest way to install all the dependencies and build the extension is using the provided Vagrantfile. Download [vagrant](http://downloads.vagrantup.com/), [VirtualBox](https://www.virtualbox.org/wiki/Downloads), then do the following:
-
-```
-git clone https://github.com/JoelBesada/Backtick.git
-cd Backtick
-vagrant up
-```
-
-After making changes to the source files, you can rebuild `dist/` as follows:
-
-```
-# either run it as one command:
-vagrant ssh -- 'bash -l -c "cd /vagrant/ ; grunt build"'
-
-# or do it interactively
-vagrant ssh
-cd /vagrant
-grunt build
-```
 
 ##### Dependencies
 To compile Backtick, you'll need to install the following dependencies on your system:
@@ -49,6 +28,28 @@ You can also use `grunt serve` if you want to run the code inside a web page ins
 
 ##### Testing
 There are a couple of tests in the *test/* folder. Use `grunt test` to run this on a web page. This also uses live reload, so you can write code or new tests and the page will automatically refresh.
+
+##### Vagrant
+
+If you'd like to use Vagrant instead, there is a Vagrantfile for setting everything up for building the extension. If you haven't already, download [Vagrant](http://downloads.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads), and then do the following:
+
+```
+git clone https://github.com/JoelBesada/Backtick.git
+cd Backtick
+vagrant up
+```
+
+After making changes to the source files, you can rebuild `dist/` as follows:
+
+```
+# either run it as one command:
+vagrant ssh -- 'bash -l -c "cd /vagrant/ ; grunt build"'
+
+# or do it interactively
+vagrant ssh
+cd /vagrant
+grunt build
+```
 
 #### Why are you open sourcing this?
 Because that's just something I like to do to contribute back to the community. It also forces me to write cleaner code. (Well, in theory at least.)
