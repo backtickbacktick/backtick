@@ -1,9 +1,10 @@
 class Background
+  JAVASCRIPT_URL_REGEXP: /^javascript:/
   events:
     "toggle.app": "toggleApp"
     "ready.app": "initApp"
     "open.settings": "openSettings"
-    "fetch.commands": "fetchCommand"
+    "execute.commands": "executeCommand"
     "add.commands": "addCommand"
     "track": "trackScriptEvent"
 
@@ -48,16 +49,29 @@ class Background
     chrome.tabs.create url: "extension/options.html"
     window.Analytics.trackEvent "Open Settings", "Click"
 
-  fetchCommand: (e, command) =>
-    $.ajax
+  convertCommandSource: (url) ->
+    if @JAVASCRIPT_URL_REGEXP.test url
+      url = url.replace @JAVASCRIPT_URL_REGEXP, ""
+      try
+        url = decodeURIComponent url
+      catch e
+        # Do nothing
+
+    "javascript:#{url}"
+
+  executeCommand: (e, command) =>
+    $.ajax(
       url: command.src
       success: (response) =>
-        window.Events.sendTrigger "fetched.commands", response
+        chrome.tabs.update null, url: @convertCommandSource(response)
+
+        window.Events.sendTrigger "executed.commands", command
         window.Analytics.trackEvent("Executed Command", command.name,
           command.gistID)
 
       error: window.Events.sendTrigger.bind(window.Events,
         "fetchError.commands", command)
+    )
 
   addCommand: (e, gistID) =>
     window.CommandStore.importCustomCommand(gistID)

@@ -40,8 +40,8 @@ define [
       @on "load.commands", @setOpen
       @on "load.commands sync.commands", (commands) => @commands = commands
 
-      @on "fetch.commands", @setLoading
-      @on "fetched.commands fetchError.commands", @setLoaded
+      @on "execute.commands", @setLoading
+      @on "executed.commands executionError.commands", @setLoaded
 
       @on "added.commands", alert.bind(window, "Added command!")
       @on "addError.commands", alert.bind(window)
