@@ -23,6 +23,7 @@ module.exports =
   "Kern.js": "10256b190ed5006e894c"
   "Magicscroll Web Reader": "7880657"
   "Markup": "c96d3e5e2bfa2a587f73"
+  "OpenSpritz": "9451789"
   "Pinterest Share": "3e50b60e77fb8283c00e"
   "Post to Tumblr": "7880974"
   "Readability Read Later": "26152acc6cd5137df078"
