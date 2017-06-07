@@ -106,7 +106,7 @@ function BacktickCommands(store) {
         return Promise.resolve(commandItems);
     }
 
-    function BacktickCommand(rawCommand, prepend) {
+    function BacktickCommand(rawCommand) {
 
         if (!rawCommand) {
             return {};
