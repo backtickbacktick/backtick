@@ -1,4 +1,4 @@
-# Backtick2
+# Backtick
 
 **Backtick is a command line for bookmarklets and scripts**, packaged as a Chrome extension. ~~For a better explanation, try out the demo at [backtick.ninja/](http://backtick.ninja)~~ Coming soon. The extension is free to use.
 
