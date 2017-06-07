@@ -130,6 +130,8 @@
     #backtick-container .console.loading button.settings {
       opacity: 0;
       pointer-events: none; }
+    #backtick-container .console button.add-gist {
+      display: none; }
     #backtick-container .console input {
       display: inline-block;
       width: 330px;
@@ -145,6 +147,31 @@
       #backtick-container .console input::-webkit-input-placeholder {
         font-style: italic !important;
         color: #9a938b !important; }
+  #backtick-container.gist-detected .console button.add-gist {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 30px;
+    height: 40px;
+    margin-left: 5px;
+    padding: 0;
+    background: url("chrome-extension://__MSG_@@extension_id__/images/add-icon.png") no-repeat center center;
+    background-size: 100%;
+    background-color: inherit;
+    border: none;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: opacity 0.25s; }
+    #backtick-container.gist-detected .console button.add-gist:hover {
+      opacity: 1; }
+      #backtick-container.gist-detected .console button.add-gist:hover:after {
+        opacity: 1; }
+    #backtick-container.gist-detected .console button.add-gist:active {
+      top: 1px; }
+    #backtick-container.gist-detected .console button.add-gist:focus {
+      outline: none; }
+  #backtick-container.gist-detected .console input {
+    width: 293px; }
   #backtick-container .results {
     width: 100%;
     display: block;

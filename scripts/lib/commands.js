@@ -1,10 +1,11 @@
 /* globals $ */
-function BacktickCommands(store, addGist) {
+function BacktickCommands(store) {
 
     let commandItems = [], $results, $resultsContainer, loaded = false;
 
     return {
         init,
+        addItem,
         searchCommands,
         selectNext: select('next'),
         selectPrev: select('prev'),
@@ -74,7 +75,6 @@ function BacktickCommands(store, addGist) {
         commandItems = [];
 
         return Promise.resolve(store.getCommands())
-            .then(includeAddCommand)
             .then(initializeItems);
     }
 
@@ -89,7 +89,11 @@ function BacktickCommands(store, addGist) {
 
         let command = new BacktickCommand(rawCommand);
 
-        command.$element.insertAfter($('li:first-child', $resultsContainer));
+        command.$element.prependTo($resultsContainer);
+
+        command.$element.setSelected();
+
+        return Promise.resolve(true);
     }
 
     function initializeItems(rawCommands) {
@@ -105,20 +109,6 @@ function BacktickCommands(store, addGist) {
         });
 
         return Promise.resolve(commandItems);
-    }
-
-    function includeAddCommand(rawCommands) {
-
-        rawCommands.unshift({
-            slug: 'add-to-backtick',
-            addGist: true,
-            name: 'Add to Backtick',
-            description: 'Add the current command gist on GitHub to Backtick.',
-            author: 'iambriansreed',
-            icon: 'chrome-extension://jbegpjojkmmenbhkofanmfmhcladpcif/images/add-icon.png'
-        });
-
-        return rawCommands;
     }
 
     function BacktickCommand(rawCommand) {
@@ -155,17 +145,6 @@ function BacktickCommands(store, addGist) {
 
         function run() {
 
-            if (rawCommand.addGist) {
-                return addGist()
-                    .then(rawCommand => {
-                        addItem(rawCommand);
-                        alert('New command added!');
-                    })
-                    .catch(error => {
-                        alert(error);
-                    });
-            }
-
             if (script) {
                 chrome.runtime.sendMessage({ action: 'LoadBacktickCommand', script },
                     (response) => {
@@ -185,7 +164,7 @@ function BacktickCommands(store, addGist) {
             commandItems.forEach(command => command.setSelected(false));
 
             selected = true;
-            command.$element.addClass('selected');
+            command.$element.addClass('selected').focus();
         }
 
         function isSelected() {

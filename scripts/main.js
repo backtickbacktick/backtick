@@ -10,7 +10,7 @@ window.slugify = function(text) {
 new BacktickStore().then(backtickStore => {
 
     let AddGist = BacktickAddGistInitiator(backtickStore);
-    let backtickCommands = new BacktickCommands(backtickStore, AddGist);
-    new BacktickConsole(backtickStore, backtickCommands);
+    let backtickCommands = new BacktickCommands(backtickStore);
+    new BacktickConsole(backtickStore, backtickCommands, AddGist);
 
 });

@@ -178,6 +178,10 @@ $fonts: "Lato", sans-serif;
 			}
 		}
 
+		button.add-gist {
+display: none;
+		}
+
 		input {
 			display: inline-block;
 			width: 330px;
@@ -199,6 +203,52 @@ $fonts: "Lato", sans-serif;
 			&::-webkit-input-placeholder {
 				font-style: italic !important;
 				color: mix($foreground-color, $background-color, 50%) !important;
+			}
+		}
+	}
+
+	&.gist-detected {
+
+		.console {
+
+			button.add-gist {
+				position: relative;
+				display: inline-block;
+				vertical-align: top;
+
+				width: 30px;
+				height: 40px;
+				margin-left: 5px;
+				padding: 0;
+
+				background: url($root-url + "/images/add-icon.png") no-repeat center center;
+				background-size: 100%;
+				background-color: inherit;
+
+				border: none;
+				opacity: 0.8;
+
+				cursor: pointer;
+				transition: opacity 0.25s;
+
+				&:hover {
+					opacity: 1;
+					&:after {
+						opacity: 1;
+					}
+				}
+
+				&:active {
+					top: 1px;
+				}
+
+				&:focus {
+					outline: none;
+				}
+			}
+
+			input {
+				width: 293px;
 			}
 		}
 	}
