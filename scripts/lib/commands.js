@@ -115,7 +115,7 @@ function BacktickCommands(store, addGist) {
             name: 'Add to Backtick',
             description: 'Add the current command gist on GitHub to Backtick.',
             author: 'iambriansreed',
-            icon: 'chrome-extension://jbegpjojkmmenbhkofanmfmhcladpcif/images/add-icon.png'
+            icon: 'chrome-extension://' + chrome.runtime.id + '/images/add-icon.png'
         });
 
         return rawCommands;
