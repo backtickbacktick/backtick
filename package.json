@@ -1,6 +1,6 @@
 {
   "name": "backtick",
-  "version": "0.6.0",
+  "version": "0.6.2",
   "description": "The Rebuilt Backtick Chrome Extension",
   "main": "index.js",
   "scripts": {
