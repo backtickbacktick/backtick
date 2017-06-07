@@ -49,7 +49,7 @@ function BacktickAddGistInitiator(store) {
             if (gist.hasOwnProperty('files')
                 && gist.files.hasOwnProperty('command.json')
                 && gist.files['command.json'].hasOwnProperty('content')) {
-                command = parseJson(gist.files['command.json']['content']);
+                command = Object.assign({}, parseJson(gist.files['command.json']['content']), command);
                 if (command.error) {
                     return Promise.reject(command.error);
                 }

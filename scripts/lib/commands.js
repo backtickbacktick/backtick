@@ -4,6 +4,10 @@ function BacktickCommands(store) {
     let commandItems = [], $results, $resultsContainer, loaded = false;
     const resultsHeight = 275;
 
+    commandItems.showing = () => commandItems.filter(command => command.isShowing());
+
+    commandItems.selected = () => commandItems.filter(command => command.isSelected());
+
     return {
         init,
         addItem,
@@ -16,20 +20,20 @@ function BacktickCommands(store) {
 
     function runSelected() {
 
-        let selected = commandItems.filter(command => command.isSelected());
+        let selected = commandItems.selected();
         selected.length && selected[0].run();
     }
 
     function select(action) {
         return function() {
 
-            let selected = commandItems.filter(command => command.isSelected());
+            let selected = commandItems.selected();
 
             if ('run' === action && selected.length) {
                 selected[0].run();
             }
 
-            let showing = commandItems.filter(command => command.isShowing());
+            let showing = commandItems.showing();
 
             if (!loaded) {
                 $results.show();
@@ -73,7 +77,7 @@ function BacktickCommands(store) {
 
         commandItems.forEach(commandItem => commandItem.$element.remove());
 
-        commandItems = [];
+        commandItems.length = 0;
 
         return Promise.resolve(store.getCommands())
             .then(initializeItems);
@@ -88,7 +92,7 @@ function BacktickCommands(store) {
 
     function addItem(rawCommand) {
 
-        let command = new BacktickCommand(rawCommand);
+        let command = new BacktickCommand(rawCommand, true);
 
         command.setSelected();
 
@@ -102,7 +106,7 @@ function BacktickCommands(store) {
         return Promise.resolve(commandItems);
     }
 
-    function BacktickCommand(rawCommand) {
+    function BacktickCommand(rawCommand, prepend) {
 
         if (!rawCommand) {
             return {};
@@ -125,7 +129,14 @@ function BacktickCommands(store) {
 
         const blob = [rawCommand.name, rawCommand.description, rawCommand.link].join(' ').toLowerCase();
 
-        command.$element.appendTo($resultsContainer);
+        if (prepend) {
+            commandItems.unshift(command);
+            command.$element.prependTo($resultsContainer);
+            commandItems.forEach((cmd, index) => { cmd.index = index; });
+        } else {
+            commandItems.push(command);
+            command.$element.appendTo($resultsContainer);
+        }
 
         command.$element.on('click', () => {
             command.setSelected();
@@ -134,11 +145,11 @@ function BacktickCommands(store) {
 
         command.$element.on('run.backtick.command.please', command.run);
 
-        commandItems.push(command);
-
         return command;
 
         function run() {
+
+            console.log(rawCommand);
 
             if (script) {
                 chrome.runtime.sendMessage({ action: 'LoadBacktickCommand', script },
@@ -174,18 +185,20 @@ function BacktickCommands(store) {
 
         function scrollTo() {
 
-            if (command.index === 0) {
+            const showingCommands = commandItems.showing();
+
+            if (showingCommands[0].index === command.index) {
                 return 0;
             }
 
-            const itemTop = commandItems
+            const itemTop = showingCommands
                 .map(cmd => {
                     return cmd.index < command.index ? cmd.getHeight() : 0;
                 })
                 .concat([0])
                 .reduce(function(a, b) { return a + b; });
 
-            if (command.index === commandItems.length - 1) {
+            if (showingCommands[showingCommands.length - 1].index === command.index) {
                 return itemTop;
             }
 
@@ -264,16 +277,14 @@ function BacktickCommands(store) {
 
         searchText = (searchText || '').toLowerCase().trim();
 
-        let showingCommands = false;
+        commandItems.forEach(command => command.setShow(searchText));
 
-        commandItems.forEach(command => {
-            showingCommands = command.setShow(searchText) || showingCommands;
-        });
+        let isShowingCommands = commandItems.showing().length > 0;
 
-        $results.toggle(showingCommands);
+        $results.toggle(isShowingCommands);
 
         select('first')();
 
-        return showingCommands;
+        return isShowingCommands;
     }
 }

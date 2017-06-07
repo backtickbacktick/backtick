@@ -37,7 +37,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['fonts/**', 'images/**', 'background.html', 'options.html', 'manifest.json'],
+                        src: ['fonts/**', 'images/**', 'background.html', 'options.html', 'test.html', 'manifest.json'],
                         dest: '_dist/'
                     },
                     {
@@ -104,19 +104,13 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: 'scripts/',
-                        src: ['background.js', 'content-script.js'],
+                        src: ['background.js', 'content-script.js', 'test.js'],
                         dest: '.tmp/scripts/'
                     },
                     {
                         expand: true,
                         cwd: '.tmp/scripts/',
-                        src: ['main.js'],
-                        dest: '.tmp/scripts/'
-                    },
-                    {
-                        expand: true,
-                        cwd: '.tmp/scripts/',
-                        src: ['options.js'],
+                        src: ['main.js', 'options.js'],
                         dest: '.tmp/scripts/'
                     }
                 ]
@@ -157,7 +151,7 @@ module.exports = function(grunt) {
                 }
             },
             others: {
-                files: ['fonts/**', 'images/**', 'background.html', 'options.html', 'manifest.json'],
+                files: ['fonts/**', 'images/**', 'background.html', 'test.html', 'options.html', 'manifest.json'],
                 tasks: ['copy'],
                 options: {
                     spawn: false
