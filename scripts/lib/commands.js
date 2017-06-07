@@ -106,7 +106,7 @@ function BacktickCommands(store) {
         return Promise.resolve(commandItems);
     }
 
-    function BacktickCommand(rawCommand) {
+    function BacktickCommand(rawCommand, prepend) {
 
         if (!rawCommand) {
             return {};
@@ -114,7 +114,6 @@ function BacktickCommands(store) {
 
         let selected = false,
             showing = true,
-            script = rawCommand.command || '',
             command = {
                 height: 0,
                 index: commandItems.length,
@@ -148,15 +147,7 @@ function BacktickCommands(store) {
         return command;
 
         function run() {
-
-            console.log(rawCommand);
-
-            if (script) {
-                chrome.runtime.sendMessage({ action: 'LoadBacktickCommand', script },
-                    (response) => {
-                        console.info(response);
-                    });
-            }
+            chrome.runtime.sendMessage({ action: 'LoadBacktickCommand', script: rawCommand.command });
         }
 
         function getHeight() {
