@@ -10,7 +10,7 @@ function BacktickStore() {
             addMessage,
             getLibrary,
             getHotkey: () => ('' + store.hotkey),
-            getCommands: () => $.extend(true, [], store.commands)
+            getCommands: () => $.extend(true, [], store.commands),
         };
 
     return getStore()

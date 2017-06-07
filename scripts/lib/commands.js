@@ -1,10 +1,16 @@
 /* globals $ */
-function BacktickCommands(store, addGist) {
+function BacktickCommands(store) {
 
     let commandItems = [], $results, $resultsContainer, loaded = false;
+    const resultsHeight = 275;
+
+    commandItems.showing = () => commandItems.filter(command => command.isShowing());
+
+    commandItems.selected = () => commandItems.filter(command => command.isSelected());
 
     return {
         init,
+        addItem,
         searchCommands,
         selectNext: select('next'),
         selectPrev: select('prev'),
@@ -14,20 +20,20 @@ function BacktickCommands(store, addGist) {
 
     function runSelected() {
 
-        let selected = commandItems.filter(command => command.isSelected());
+        let selected = commandItems.selected();
         selected.length && selected[0].run();
     }
 
     function select(action) {
         return function() {
 
-            let selected = commandItems.filter(command => command.isSelected());
+            let selected = commandItems.selected();
 
             if ('run' === action && selected.length) {
                 selected[0].run();
             }
 
-            let showing = commandItems.filter(command => command.isShowing());
+            let showing = commandItems.showing();
 
             if (!loaded) {
                 $results.show();
@@ -71,10 +77,9 @@ function BacktickCommands(store, addGist) {
 
         commandItems.forEach(commandItem => commandItem.$element.remove());
 
-        commandItems = [];
+        commandItems.length = 0;
 
         return Promise.resolve(store.getCommands())
-            .then(includeAddCommand)
             .then(initializeItems);
     }
 
@@ -87,41 +92,21 @@ function BacktickCommands(store, addGist) {
 
     function addItem(rawCommand) {
 
-        let command = new BacktickCommand(rawCommand);
+        let command = new BacktickCommand(rawCommand, true);
 
-        command.$element.insertAfter($('li:first-child', $resultsContainer));
+        command.setSelected();
+
+        return Promise.resolve(true);
     }
 
     function initializeItems(rawCommands) {
 
-        commandItems = [];
-
-        rawCommands.forEach(rawCommand => {
-
-            let command = new BacktickCommand(rawCommand);
-
-            command.$element.appendTo($resultsContainer);
-
-        });
+        rawCommands.forEach(rawCommand => new BacktickCommand(rawCommand));
 
         return Promise.resolve(commandItems);
     }
 
-    function includeAddCommand(rawCommands) {
-
-        rawCommands.unshift({
-            slug: 'add-to-backtick',
-            addGist: true,
-            name: 'Add to Backtick',
-            description: 'Add the current command gist on GitHub to Backtick.',
-            author: 'iambriansreed',
-            icon: 'chrome-extension://' + chrome.runtime.id + '/images/add-icon.png'
-        });
-
-        return rawCommands;
-    }
-
-    function BacktickCommand(rawCommand) {
+    function BacktickCommand(rawCommand, prepend) {
 
         if (!rawCommand) {
             return {};
@@ -129,18 +114,28 @@ function BacktickCommands(store, addGist) {
 
         let selected = false,
             showing = true,
-            runCount = 0,
-            script = rawCommand.command || '',
             command = {
+                height: 0,
+                index: commandItems.length,
                 $element: $(buildHtml(rawCommand)),
                 isSelected,
                 isShowing,
                 setShow,
                 setSelected,
-                run
+                run,
+                getHeight
             };
 
         const blob = [rawCommand.name, rawCommand.description, rawCommand.link].join(' ').toLowerCase();
+
+        if (prepend) {
+            commandItems.unshift(command);
+            command.$element.prependTo($resultsContainer);
+            commandItems.forEach((cmd, index) => { cmd.index = index; });
+        } else {
+            commandItems.push(command);
+            command.$element.appendTo($resultsContainer);
+        }
 
         command.$element.on('click', () => {
             command.setSelected();
@@ -149,43 +144,69 @@ function BacktickCommands(store, addGist) {
 
         command.$element.on('run.backtick.command.please', command.run);
 
-        commandItems.push(command);
-
         return command;
 
         function run() {
+            chrome.runtime.sendMessage({ action: 'LoadBacktickCommand', script: rawCommand.command });
+        }
 
-            if (rawCommand.addGist) {
-                return addGist()
-                    .then(rawCommand => {
-                        addItem(rawCommand);
-                        alert('New command added!');
-                    })
-                    .catch(error => {
-                        alert(error);
-                    });
+        function getHeight() {
+            if (!command.height) {
+                command.height = command.$element.outerHeight();
             }
-
-            if (script) {
-                chrome.runtime.sendMessage({ action: 'LoadBacktickCommand', script },
-                    (response) => {
-                        console.info(response);
-                    });
-            }
+            return command.height;
         }
 
         function setSelected(selectCommand) {
 
             if (selectCommand === false) {
-                selected = false;
                 command.$element.removeClass('selected');
-                return;
+                selected = false;
+                return selected;
             }
 
             commandItems.forEach(command => command.setSelected(false));
+            command.$element.addClass('selected').focus();
+
+            $results.scrollTop(scrollTo());
 
             selected = true;
-            command.$element.addClass('selected');
+            return selected;
+        }
+
+        function scrollTo() {
+
+            const showingCommands = commandItems.showing();
+
+            if (showingCommands[0].index === command.index) {
+                return 0;
+            }
+
+            const itemTop = showingCommands
+                .map(cmd => {
+                    return cmd.index < command.index ? cmd.getHeight() : 0;
+                })
+                .concat([0])
+                .reduce(function(a, b) { return a + b; });
+
+            if (showingCommands[showingCommands.length - 1].index === command.index) {
+                return itemTop;
+            }
+
+            const
+                itemBottom = itemTop + command.getHeight(),
+                windowTop = $results.scrollTop(),
+                windowBottom = windowTop + resultsHeight;
+
+            const
+                withinTop = itemTop >= windowTop,
+                withinBottom = itemBottom <= windowBottom;
+
+            if (!withinTop || !withinBottom) {
+
+                let increment = (!withinTop ? -1 : 1);
+                return windowTop + (increment * command.getHeight());
+            }
         }
 
         function isSelected() {
@@ -239,7 +260,6 @@ function BacktickCommands(store, addGist) {
     </div>
 </li>`;
         }
-
     }
 
     function searchCommands(searchText) {
@@ -248,16 +268,14 @@ function BacktickCommands(store, addGist) {
 
         searchText = (searchText || '').toLowerCase().trim();
 
-        let showingCommands = false;
+        commandItems.forEach(command => command.setShow(searchText));
 
-        commandItems.forEach(command => {
-            showingCommands = command.setShow(searchText) || showingCommands;
-        });
+        let isShowingCommands = commandItems.showing().length > 0;
 
-        $results.toggle(showingCommands);
+        $results.toggle(isShowingCommands);
 
         select('first')();
 
-        return showingCommands;
+        return isShowingCommands;
     }
 }

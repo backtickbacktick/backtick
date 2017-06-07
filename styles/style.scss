@@ -178,6 +178,10 @@ $fonts: "Lato", sans-serif;
 			}
 		}
 
+		button.add-gist {
+display: none;
+		}
+
 		input {
 			display: inline-block;
 			width: 330px;
@@ -203,12 +207,59 @@ $fonts: "Lato", sans-serif;
 		}
 	}
 
+	&.gist-detected {
+
+		.console {
+
+			button.add-gist {
+				position: relative;
+				display: inline-block;
+				vertical-align: top;
+
+				width: 30px;
+				height: 40px;
+				margin-left: 5px;
+				padding: 0;
+
+				background: url($root-url + "/images/add-icon.png") no-repeat center center;
+				background-size: 100%;
+				background-color: inherit;
+
+				border: none;
+				opacity: 0.8;
+
+				cursor: pointer;
+				transition: opacity 0.25s;
+
+				&:hover {
+					opacity: 1;
+					&:after {
+						opacity: 1;
+					}
+				}
+
+				&:active {
+					top: 1px;
+				}
+
+				&:focus {
+					outline: none;
+				}
+			}
+
+			input {
+				width: 293px;
+			}
+		}
+	}
+
 	.results {
 		width: 100%;
 		display: block;
 		max-height: 275px;
 		overflow: auto;
 		background-color: $background-color;
+		position: relative;
 
 		* {
 			cursor: default;
@@ -224,7 +275,7 @@ $fonts: "Lato", sans-serif;
 
 		.command {
 			&.selected {
-				background-color: rgba(255, 255, 255, 0.05);
+				background-color: rgba(255, 255, 255, 0.095);
 			}
 
 			&:active, &.active {
@@ -241,6 +292,7 @@ $fonts: "Lato", sans-serif;
 .command {
 	display: block;
 	padding: 6px 10px;
+	margin: 0;
 
 	.icon {
 		display: inline-block;
@@ -371,7 +423,7 @@ $fonts: "Lato", sans-serif;
 		}
 	}
 
-	input[type=text] {
+	input[type="text"] {
 		font-family: "Lato", sans-serif;
 
 		background-color: $background-color;

@@ -130,6 +130,8 @@
     #backtick-container .console.loading button.settings {
       opacity: 0;
       pointer-events: none; }
+    #backtick-container .console button.add-gist {
+      display: none; }
     #backtick-container .console input {
       display: inline-block;
       width: 330px;
@@ -145,12 +147,38 @@
       #backtick-container .console input::-webkit-input-placeholder {
         font-style: italic !important;
         color: #9a938b !important; }
+  #backtick-container.gist-detected .console button.add-gist {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 30px;
+    height: 40px;
+    margin-left: 5px;
+    padding: 0;
+    background: url("chrome-extension://__MSG_@@extension_id__/images/add-icon.png") no-repeat center center;
+    background-size: 100%;
+    background-color: inherit;
+    border: none;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: opacity 0.25s; }
+    #backtick-container.gist-detected .console button.add-gist:hover {
+      opacity: 1; }
+      #backtick-container.gist-detected .console button.add-gist:hover:after {
+        opacity: 1; }
+    #backtick-container.gist-detected .console button.add-gist:active {
+      top: 1px; }
+    #backtick-container.gist-detected .console button.add-gist:focus {
+      outline: none; }
+  #backtick-container.gist-detected .console input {
+    width: 293px; }
   #backtick-container .results {
     width: 100%;
     display: block;
     max-height: 275px;
     overflow: auto;
-    background-color: #362D26; }
+    background-color: #362D26;
+    position: relative; }
     #backtick-container .results * {
       cursor: default;
       -webkit-user-select: none;
@@ -160,7 +188,7 @@
       padding: 0 0 10px;
       margin: 0; }
     #backtick-container .results .command.selected {
-      background-color: rgba(255, 255, 255, 0.05); }
+      background-color: rgba(255, 255, 255, 0.095); }
     #backtick-container .results .command:active, #backtick-container .results .command.active {
       background-color: rgba(255, 255, 255, 0.1); }
       #backtick-container .results .command:active .icon, #backtick-container .results .command.active .icon {
@@ -168,7 +196,8 @@
 
 .command {
   display: block;
-  padding: 6px 10px; }
+  padding: 6px 10px;
+  margin: 0; }
   .command .icon {
     display: inline-block;
     vertical-align: top;
@@ -256,7 +285,7 @@
     .options-page .button:active, .options-page a.button:active {
       position: relative;
       top: 1px; }
-  .options-page input[type=text] {
+  .options-page input[type="text"] {
     font-family: "Lato", sans-serif;
     background-color: #362D26;
     color: #fef8f0;

@@ -38,4 +38,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
     }
 
+    if (request.action === 'LoadBacktickChromeTabs' && request.tabAction) {
+        chrome.tabs[request.tabAction](request.params || {});
+    }
+
 });
