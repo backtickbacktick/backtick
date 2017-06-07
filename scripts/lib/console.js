@@ -157,6 +157,5 @@ function BacktickConsole(store, commands, addGist) {
             });
         }
 
-
     }
 }

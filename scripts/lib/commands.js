@@ -91,7 +91,7 @@ function BacktickCommands(store) {
 
         command.$element.prependTo($resultsContainer);
 
-        command.$element.setSelected();
+        command.setSelected();
 
         return Promise.resolve(true);
     }
