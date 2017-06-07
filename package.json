@@ -1,27 +1,35 @@
 {
-  "name": "backtick-extension",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {},
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-compass": "~0.5.0",
-    "grunt-contrib-cssmin": "~0.6.0",
-    "grunt-contrib-connect": "~0.5.0",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-contrib-watch": "~0.5.2",
-    "grunt-concurrent": "~0.3.0",
-    "grunt-s3": "~0.2.0",
-    "grunt-contrib-compress": "~0.5.3",
-    "underscore": "1.5.2",
-    "load-grunt-tasks": "~0.1.0",
-    "time-grunt": "~0.1.1",
-    "request": "~2.27.0"
+  "name": "backtick",
+  "version": "0.6.0",
+  "description": "The Rebuilt Backtick Chrome Extension",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "engines": {
-    "node": ">=0.8.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://iambriansreed@github.com/backtickbacktick/Backtick2.git"
+  },
+  "author": "Brian Reed <me@iambrian.com> (http://iambrian.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/backtickbacktick/Backtick2/issues"
+  },
+  "homepage": "https://github.com/backtickbacktick/Backtick2#readme",
+  "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^6.0.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-sass": "^2.0.0",
+    "load-grunt-tasks": "^3.5.2"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
   }
 }

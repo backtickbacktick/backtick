@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Backtick Settings</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body class="options-page loading">
+<div class="container">
+    <h1>Backtick Settings</h1>
+
+    <div class="hotkey-container section">
+        <label for="hotkey">Hotkey:</label>
+        <input type="text" id="hotkey" maxlength="1" minlength="1">
+        <p>
+            <small>Note: You can also set a hotkey through the <a
+                    href="http://googlesystem.blogspot.com/2012/08/create-keyboard-shortcuts-for-chrome.html">Chrome
+                settings page</a>. Do this if other extensions are interfering with the Backtick
+                hotkey,
+                or vice versa.
+            </small>
+        </p>
+    </div>
+
+    <div class="commands-container section">
+        <h2>Your Commands</h2>
+        <p>
+            <small>Commands you or someone else create that aren't officially supported.</small>
+        </p>
+        <form action="#" id="import-form">
+            <input type="text" name="gistId" placeholder="Command Gist ID" spellcheck="false">
+            <button type="submit" class="button">Add</button>
+        </form>
+        <ul id="saved-list" class="custom-scrollbar">
+            <li class="none">No commands selected.</li>
+        </ul>
+        <a href="https://gist.github.com/JoelBesada/6859173" target="_blank" class="learn">Learn
+            how to create and add custom commands.</a>
+    </div>
+
+
+    <div class="commands-container section">
+        <h2>Curated Commands</h2>
+        <p>
+            <small>Curated Commands created by the Backtick team or contributed and reviewed. These
+                commands are considered safe and are officially supported.
+            </small>
+        </p>
+        <ul id="library-list">
+            <li class="none">All library commands selected.</li>
+        </ul>
+    </div>
+
+    <div class="credits section">
+
+        <small>The rebuilt Backtick was made by <a
+                href="https://twitter.com/iambriansreed"
+                target="_blank">@iambriansreed</a>, and is <a
+                href="https://github.com/BacktickBacktick" target="_blank">open sourced on
+            GitHub</a>. The original version of Backtick was developed by <a
+                href="https://twitter.com/JoelBesada" target="_blank">@JoelBesada</a>.
+        </small>
+    </div>
+</div>
+<div class="spinner"></div>
+
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/options.js"></script>
+</body>
+</html>

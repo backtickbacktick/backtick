@@ -1,0 +1,570 @@
+$root-url: 'chrome-extension://__MSG_@@extension_id__';
+
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Lato Light'), local('Lato-Light'),
+	url($root-url + '/fonts/Lato-Light.ttf') format('woff'),
+	url($root-url + '/fonts/Lato-Light.ttf') format('woff');
+}
+
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Lato Regular'), local('Lato-Regular'),
+	url($root-url + '/fonts/Lato-Regular.ttf') format('woff'),
+	url($root-url + '/fonts/Lato-Regular.ttf') format('woff');
+}
+
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Lato Bold'), local('Lato-Bold'),
+	url($root-url + '/fonts/Lato-Bold.ttf') format('woff'),
+	url($root-url + '/fonts/Lato-Bold.ttf') format('woff');
+}
+
+@font-face {
+	font-family: 'Lato';
+	font-style: italic;
+	font-weight: 400;
+	src: local('Lato Italic'), local('Lato-Italic'),
+	url($root-url + '/fonts/Lato-Italic.ttf') format('woff'),
+	url($root-url + '/fonts/Lato-Italic.ttf') format('woff');
+}
+
+$background-color: #362D26;
+$foreground-color: #fef8f0;
+$accent-color: #ff9900;
+
+$fonts: "Lato", sans-serif;
+
+#backtick-container {
+
+	display: block;
+	position: fixed;
+	z-index: 2147483647;
+
+	left: 20px;
+	top: 20px;
+
+	width: 400px;
+
+	font-family: "Lato", sans-serif;
+	font-size: 16px;
+	text-align: left;
+	line-height: normal;
+	color: $foreground-color;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	.custom-scrollbar {
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: none;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: fade-out($foreground-color, 0.7);
+		}
+	}
+
+	@import "animations";
+
+	.console {
+		display: block;
+		width: 100%;
+		height: 50px;
+		padding: 5px 10px;
+
+		background-color: $background-color;
+
+		opacity: 0;
+
+		&.in {
+			-webkit-animation: _bt-console-in 0.3s both;
+		}
+
+		&.out {
+			-webkit-animation: _bt-console-out 0.3s both;
+		}
+
+		button.settings {
+			position: relative;
+			display: inline-block;
+			vertical-align: top;
+
+			width: 40px;
+			height: 40px;
+			margin-right: 5px;
+
+			background: url($root-url + "/images/icon.png") no-repeat;
+			background-size: 100%;
+			background-color: inherit;
+
+			border: none;
+			opacity: 0.8;
+
+			cursor: pointer;
+			transition: opacity 0.25s;
+
+			&:after {
+				display: block;
+				content: "";
+				position: absolute;
+
+				left: 0;
+				top: 0;
+
+				width: 100%;
+				height: 100%;
+
+				background-image: url($root-url + "/images/icon-highlight.png");
+				background-size: 100%;
+				background-color: inherit;
+				opacity: 0;
+
+				transition: opacity 0.25s;
+			}
+
+			&:hover {
+				opacity: 1;
+				&:after {
+					opacity: 1;
+				}
+			}
+
+			&:active {
+				top: 1px;
+			}
+
+			&:focus {
+				outline: none;
+			}
+		}
+
+		.spinner {
+			display: none;
+			position: absolute;
+			top: 5px;
+			left: 15px;
+			width: 30px;
+			height: 40px;
+
+			opacity: 0.8;
+
+			background: url($root-url + "/images/spinner.png") repeat-x;
+			background-size: auto 100%;
+		}
+
+		&.loading {
+			.spinner {
+				display: block;
+				-webkit-animation: _bt-fade-in 0.5s 0.25s both,
+				_bt-spinner 0.5s infinite linear both;
+			}
+
+			button.settings {
+				opacity: 0;
+				pointer-events: none;
+			}
+		}
+
+		input {
+			display: inline-block;
+			width: 330px;
+			height: 100%;
+
+			background: transparent;
+			border: none;
+
+			font-family: $fonts;
+			font-size: 16px;
+			line-height: 18px;
+
+			color: $foreground-color !important;
+
+			&:focus {
+				outline: none;
+			}
+
+			&::-webkit-input-placeholder {
+				font-style: italic !important;
+				color: mix($foreground-color, $background-color, 50%) !important;
+			}
+		}
+	}
+
+	.results {
+		width: 100%;
+		display: block;
+		max-height: 275px;
+		overflow: auto;
+		background-color: $background-color;
+
+		* {
+			cursor: default;
+			-webkit-user-select: none;
+			user-select: none;
+		}
+
+		ul {
+			display: block;
+			padding: 0 0 10px;
+			margin: 0;
+		}
+
+		.command {
+			&.selected {
+				background-color: rgba(255, 255, 255, 0.05);
+			}
+
+			&:active, &.active {
+				background-color: rgba(255, 255, 255, 0.1);
+
+				.icon {
+					margin-top: 6px;
+				}
+			}
+		}
+	}
+}
+
+.command {
+	display: block;
+	padding: 6px 10px;
+
+	.icon {
+		display: inline-block;
+		vertical-align: top;
+		height: 30px;
+		width: 30px;
+		margin-top: 4px;
+		border-radius: 3px;
+		margin-left: 5px;
+
+		background: url($root-url + "/images/command-default.png") no-repeat;
+		background-size: 100%;
+	}
+
+	.body {
+		display: inline-block;
+		margin-left: 10px;
+		width: 325px;
+
+		.name {
+			display: block;
+
+			.match {
+				font-weight: bold;
+				color: $accent-color;
+			}
+		}
+
+		.description {
+			margin: 2px 0;
+			opacity: 0.8;
+			font-size: 14px;
+			font-style: italic;
+			&:empty {
+				display: none;
+			}
+			.match {
+				font-weight: bold;
+				color: $accent-color;
+			}
+		}
+
+		a.link, a.link:visited {
+			display: inline-block;
+			width: auto;
+			font-size: 12px;
+			margin-top: 3px;
+			opacity: 0.5;
+			cursor: pointer;
+			color: $foreground-color;
+			text-decoration: none;
+			&:empty {
+				display: none;
+			}
+			&:hover {
+				text-decoration: underline;
+				color: $accent-color;
+				opacity: 1;
+			}
+
+			.match {
+				font-weight: bold;
+				color: $accent-color;
+			}
+		}
+	}
+}
+
+.command + .none {
+	display: none;
+}
+
+.options-page {
+	color: $foreground-color;
+	background-color: $background-color;
+
+	font-family: "Lato", sans-serif;
+	font-size: 16px;
+	text-align: center;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	h1, h2 {
+		font-weight: 300;
+		margin-bottom: 0.25em;
+	}
+
+	h1 + p, h2 + p {
+		margin: 0.25em 0 1em;
+	}
+
+	a, a:visited {
+		color: $accent-color;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.button, a.button {
+		-webkit-appearance: none;
+		border: none;
+		outline: none;
+		box-shadow: none;
+
+		padding: 15px 20px;
+
+		font-size: 16px;
+		background-color: fade_out($accent-color, 0.1);
+		color: white;
+
+		cursor: pointer;
+		transition: background-color 0.15s;
+
+		text-decoration: none;
+
+		&:hover {
+			background-color: $accent-color;
+			text-decoration: none;
+		}
+
+		&:active {
+			position: relative;
+			top: 1px;
+		}
+	}
+
+	input[type=text] {
+		font-family: "Lato", sans-serif;
+
+		background-color: $background-color;
+		color: $foreground-color;
+
+		border: none;
+		outline: none;
+		box-shadow: none;
+	}
+
+	.container {
+		width: 520px;
+		margin: 0 auto;
+	}
+
+	.section {
+		width: 100%;
+		background: rgba(0, 0, 0, 0.1);
+		padding: 20px 30px;
+		margin: 20px auto;
+
+		h2 {
+			margin-top: 0;
+		}
+
+		small, p {
+			opacity: 0.7;
+		}
+	}
+
+	.hotkey-container {
+		label {
+			vertical-align: middle;
+			font-size: 26px;
+			font-weight: 300;
+			opacity: 0.8;
+		}
+
+		input {
+			width: 70px;
+			height: 70px;
+			padding: 10px;
+			margin-left: 20px;
+			vertical-align: middle;
+
+			font-size: 30px;
+			text-align: center;
+			font-weight: bold;
+			&::selection {
+				background-color: rgba(255, 255, 255, 0.075);
+			}
+		}
+
+		small {
+			display: block;
+			margin-top: 20px;
+			font-size: 14px;
+			text-align: left;
+			line-height: 1.6em;
+		}
+	}
+
+	.commands-container {
+
+		input[type=text] {
+			width: 370px;
+			font-size: 16px;
+			padding: 15px 18px;
+
+			&::-webkit-input-placeholder {
+				color: mix($foreground-color, $background-color, 30%) !important;
+			}
+			&::selection {
+				background-color: rgba(255, 255, 255, 0.075);
+			}
+		}
+
+		input[type=submit] {
+			margin-left: 10px;
+			width: 80px;
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		.learn {
+			font-size: 14px;
+			opacity: 0.7;
+			margin-top: 5px;
+			margin-left: 5px;
+		}
+
+		ul {
+			padding-left: 0;
+			margin-bottom: 10px;
+			max-height: 290px;
+			overflow: auto;
+		}
+
+		#saved-list {
+			.toggle {
+				.remove {
+					display: inline;
+				}
+				.add {
+					display: none;
+				}
+			}
+		}
+
+		#library-list {
+			.toggle {
+				.remove {
+					display: none;
+				}
+				.add {
+					display: inline;
+				}
+			}
+		}
+
+		.command {
+			position: relative;
+			text-align: left;
+			margin-bottom: 5px;
+			padding: 10px;
+
+			transition: background-color 0.15s;
+
+			small {
+				opacity: 0.5;
+				margin-left: 3px;
+			}
+
+			.toggle {
+				text-transform: capitalize;
+				display: block;
+				position: absolute;
+				right: 10px;
+				top: 5px;
+
+				font-size: 14px;
+				color: $accent-color;
+				cursor: pointer;
+				opacity: 0;
+
+				transition: opacity 0.15s;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.05);
+
+				.toggle {
+					opacity: 0.7;
+				}
+			}
+		}
+	}
+
+	.credits small {
+		font-size: 14px;
+	}
+
+	.spinner {
+		position: fixed;
+		bottom: 5px;
+		right: 15px;
+		width: 30px;
+		height: 40px;
+		opacity: 0;
+		background: url($root-url + "/images/spinner.png") repeat-x;
+		background-size: auto 100%;
+		transition: opacity 0.5s;
+		-webkit-animation: _bt-spinner 0.5s infinite linear both;
+	}
+
+	&.loading .spinner {
+		opacity: 0.5;
+		transition: opacity 0.5s 0.2s;
+	}
+}
+
+#__backtick__ {
+	pointer-events: none;
+	background: transparent !important;
+
+	&.open {
+		pointer-events: all;
+	}
+	&:focus {
+		outline: none;
+	}
+}

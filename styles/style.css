@@ -1,0 +1,380 @@
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  src: local("Lato Light"), local("Lato-Light"), url("chrome-extension://__MSG_@@extension_id__/fonts/Lato-Light.ttf") format("woff"), url("chrome-extension://__MSG_@@extension_id__/fonts/Lato-Light.ttf") format("woff"); }
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Lato Regular"), local("Lato-Regular"), url("chrome-extension://__MSG_@@extension_id__/fonts/Lato-Regular.ttf") format("woff"), url("chrome-extension://__MSG_@@extension_id__/fonts/Lato-Regular.ttf") format("woff"); }
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: local("Lato Bold"), local("Lato-Bold"), url("chrome-extension://__MSG_@@extension_id__/fonts/Lato-Bold.ttf") format("woff"), url("chrome-extension://__MSG_@@extension_id__/fonts/Lato-Bold.ttf") format("woff"); }
+
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 400;
+  src: local("Lato Italic"), local("Lato-Italic"), url("chrome-extension://__MSG_@@extension_id__/fonts/Lato-Italic.ttf") format("woff"), url("chrome-extension://__MSG_@@extension_id__/fonts/Lato-Italic.ttf") format("woff"); }
+
+#backtick-container {
+  display: block;
+  position: fixed;
+  z-index: 2147483647;
+  left: 20px;
+  top: 20px;
+  width: 400px;
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  text-align: left;
+  line-height: normal;
+  color: #fef8f0; }
+  #backtick-container * {
+    box-sizing: border-box; }
+  #backtick-container .custom-scrollbar::-webkit-scrollbar {
+    width: 5px; }
+  #backtick-container .custom-scrollbar::-webkit-scrollbar-track {
+    background: none; }
+  #backtick-container .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(254, 248, 240, 0.3); }
+
+@-webkit-keyframes _bt-console-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3D(0, -100px, 0); }
+  100% {
+    opacity: 1; } }
+
+@-webkit-keyframes _bt-console-out {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3D(0, -100px, 0); } }
+
+@-webkit-keyframes _bt-spinner {
+  100% {
+    background-position-x: -100%; } }
+
+@-webkit-keyframes _bt-fade-in {
+  0% {
+    opacity: 0; } }
+
+@-webkit-keyframes _bt-fade-out {
+  100% {
+    opacity: 0; } }
+  #backtick-container .console {
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding: 5px 10px;
+    background-color: #362D26;
+    opacity: 0; }
+    #backtick-container .console.in {
+      -webkit-animation: _bt-console-in 0.3s both; }
+    #backtick-container .console.out {
+      -webkit-animation: _bt-console-out 0.3s both; }
+    #backtick-container .console button.settings {
+      position: relative;
+      display: inline-block;
+      vertical-align: top;
+      width: 40px;
+      height: 40px;
+      margin-right: 5px;
+      background: url("chrome-extension://__MSG_@@extension_id__/images/icon.png") no-repeat;
+      background-size: 100%;
+      background-color: inherit;
+      border: none;
+      opacity: 0.8;
+      cursor: pointer;
+      transition: opacity 0.25s; }
+      #backtick-container .console button.settings:after {
+        display: block;
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("chrome-extension://__MSG_@@extension_id__/images/icon-highlight.png");
+        background-size: 100%;
+        background-color: inherit;
+        opacity: 0;
+        transition: opacity 0.25s; }
+      #backtick-container .console button.settings:hover {
+        opacity: 1; }
+        #backtick-container .console button.settings:hover:after {
+          opacity: 1; }
+      #backtick-container .console button.settings:active {
+        top: 1px; }
+      #backtick-container .console button.settings:focus {
+        outline: none; }
+    #backtick-container .console .spinner {
+      display: none;
+      position: absolute;
+      top: 5px;
+      left: 15px;
+      width: 30px;
+      height: 40px;
+      opacity: 0.8;
+      background: url("chrome-extension://__MSG_@@extension_id__/images/spinner.png") repeat-x;
+      background-size: auto 100%; }
+    #backtick-container .console.loading .spinner {
+      display: block;
+      -webkit-animation: _bt-fade-in 0.5s 0.25s both, _bt-spinner 0.5s infinite linear both; }
+    #backtick-container .console.loading button.settings {
+      opacity: 0;
+      pointer-events: none; }
+    #backtick-container .console input {
+      display: inline-block;
+      width: 330px;
+      height: 100%;
+      background: transparent;
+      border: none;
+      font-family: "Lato", sans-serif;
+      font-size: 16px;
+      line-height: 18px;
+      color: #fef8f0 !important; }
+      #backtick-container .console input:focus {
+        outline: none; }
+      #backtick-container .console input::-webkit-input-placeholder {
+        font-style: italic !important;
+        color: #9a938b !important; }
+  #backtick-container .results {
+    width: 100%;
+    display: block;
+    max-height: 275px;
+    overflow: auto;
+    background-color: #362D26; }
+    #backtick-container .results * {
+      cursor: default;
+      -webkit-user-select: none;
+      user-select: none; }
+    #backtick-container .results ul {
+      display: block;
+      padding: 0 0 10px;
+      margin: 0; }
+    #backtick-container .results .command.selected {
+      background-color: rgba(255, 255, 255, 0.05); }
+    #backtick-container .results .command:active, #backtick-container .results .command.active {
+      background-color: rgba(255, 255, 255, 0.1); }
+      #backtick-container .results .command:active .icon, #backtick-container .results .command.active .icon {
+        margin-top: 6px; }
+
+.command {
+  display: block;
+  padding: 6px 10px; }
+  .command .icon {
+    display: inline-block;
+    vertical-align: top;
+    height: 30px;
+    width: 30px;
+    margin-top: 4px;
+    border-radius: 3px;
+    margin-left: 5px;
+    background: url("chrome-extension://__MSG_@@extension_id__/images/command-default.png") no-repeat;
+    background-size: 100%; }
+  .command .body {
+    display: inline-block;
+    margin-left: 10px;
+    width: 325px; }
+    .command .body .name {
+      display: block; }
+      .command .body .name .match {
+        font-weight: bold;
+        color: #ff9900; }
+    .command .body .description {
+      margin: 2px 0;
+      opacity: 0.8;
+      font-size: 14px;
+      font-style: italic; }
+      .command .body .description:empty {
+        display: none; }
+      .command .body .description .match {
+        font-weight: bold;
+        color: #ff9900; }
+    .command .body a.link, .command .body a.link:visited {
+      display: inline-block;
+      width: auto;
+      font-size: 12px;
+      margin-top: 3px;
+      opacity: 0.5;
+      cursor: pointer;
+      color: #fef8f0;
+      text-decoration: none; }
+      .command .body a.link:empty, .command .body a.link:visited:empty {
+        display: none; }
+      .command .body a.link:hover, .command .body a.link:visited:hover {
+        text-decoration: underline;
+        color: #ff9900;
+        opacity: 1; }
+      .command .body a.link .match, .command .body a.link:visited .match {
+        font-weight: bold;
+        color: #ff9900; }
+
+.command + .none {
+  display: none; }
+
+.options-page {
+  color: #fef8f0;
+  background-color: #362D26;
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  text-align: center; }
+  .options-page * {
+    box-sizing: border-box; }
+  .options-page h1, .options-page h2 {
+    font-weight: 300;
+    margin-bottom: 0.25em; }
+  .options-page h1 + p, .options-page h2 + p {
+    margin: 0.25em 0 1em; }
+  .options-page a, .options-page a:visited {
+    color: #ff9900;
+    text-decoration: none; }
+    .options-page a:hover, .options-page a:visited:hover {
+      text-decoration: underline; }
+  .options-page .button, .options-page a.button {
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding: 15px 20px;
+    font-size: 16px;
+    background-color: rgba(255, 153, 0, 0.9);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    text-decoration: none; }
+    .options-page .button:hover, .options-page a.button:hover {
+      background-color: #ff9900;
+      text-decoration: none; }
+    .options-page .button:active, .options-page a.button:active {
+      position: relative;
+      top: 1px; }
+  .options-page input[type=text] {
+    font-family: "Lato", sans-serif;
+    background-color: #362D26;
+    color: #fef8f0;
+    border: none;
+    outline: none;
+    box-shadow: none; }
+  .options-page .container {
+    width: 520px;
+    margin: 0 auto; }
+  .options-page .section {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+    margin: 20px auto; }
+    .options-page .section h2 {
+      margin-top: 0; }
+    .options-page .section small, .options-page .section p {
+      opacity: 0.7; }
+  .options-page .hotkey-container label {
+    vertical-align: middle;
+    font-size: 26px;
+    font-weight: 300;
+    opacity: 0.8; }
+  .options-page .hotkey-container input {
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    margin-left: 20px;
+    vertical-align: middle;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold; }
+    .options-page .hotkey-container input::selection {
+      background-color: rgba(255, 255, 255, 0.075); }
+  .options-page .hotkey-container small {
+    display: block;
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: left;
+    line-height: 1.6em; }
+  .options-page .commands-container input[type=text] {
+    width: 370px;
+    font-size: 16px;
+    padding: 15px 18px; }
+    .options-page .commands-container input[type=text]::-webkit-input-placeholder {
+      color: #726a63 !important; }
+    .options-page .commands-container input[type=text]::selection {
+      background-color: rgba(255, 255, 255, 0.075); }
+  .options-page .commands-container input[type=submit] {
+    margin-left: 10px;
+    width: 80px;
+    padding-left: 0;
+    padding-right: 0; }
+  .options-page .commands-container .learn {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-top: 5px;
+    margin-left: 5px; }
+  .options-page .commands-container ul {
+    padding-left: 0;
+    margin-bottom: 10px;
+    max-height: 290px;
+    overflow: auto; }
+  .options-page .commands-container #saved-list .toggle .remove {
+    display: inline; }
+  .options-page .commands-container #saved-list .toggle .add {
+    display: none; }
+  .options-page .commands-container #library-list .toggle .remove {
+    display: none; }
+  .options-page .commands-container #library-list .toggle .add {
+    display: inline; }
+  .options-page .commands-container .command {
+    position: relative;
+    text-align: left;
+    margin-bottom: 5px;
+    padding: 10px;
+    transition: background-color 0.15s; }
+    .options-page .commands-container .command small {
+      opacity: 0.5;
+      margin-left: 3px; }
+    .options-page .commands-container .command .toggle {
+      text-transform: capitalize;
+      display: block;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      font-size: 14px;
+      color: #ff9900;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s; }
+      .options-page .commands-container .command .toggle:hover {
+        text-decoration: underline; }
+    .options-page .commands-container .command:hover {
+      background-color: rgba(255, 255, 255, 0.05); }
+      .options-page .commands-container .command:hover .toggle {
+        opacity: 0.7; }
+  .options-page .credits small {
+    font-size: 14px; }
+  .options-page .spinner {
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 30px;
+    height: 40px;
+    opacity: 0;
+    background: url("chrome-extension://__MSG_@@extension_id__/images/spinner.png") repeat-x;
+    background-size: auto 100%;
+    transition: opacity 0.5s;
+    -webkit-animation: _bt-spinner 0.5s infinite linear both; }
+  .options-page.loading .spinner {
+    opacity: 0.5;
+    transition: opacity 0.5s 0.2s; }
+
+#__backtick__ {
+  pointer-events: none;
+  background: transparent !important; }
+  #__backtick__.open {
+    pointer-events: all; }
+  #__backtick__:focus {
+    outline: none; }
