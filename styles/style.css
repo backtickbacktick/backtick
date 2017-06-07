@@ -177,7 +177,8 @@
     display: block;
     max-height: 275px;
     overflow: auto;
-    background-color: #362D26; }
+    background-color: #362D26;
+    position: relative; }
     #backtick-container .results * {
       cursor: default;
       -webkit-user-select: none;
@@ -187,7 +188,7 @@
       padding: 0 0 10px;
       margin: 0; }
     #backtick-container .results .command.selected {
-      background-color: rgba(255, 255, 255, 0.05); }
+      background-color: rgba(255, 255, 255, 0.095); }
     #backtick-container .results .command:active, #backtick-container .results .command.active {
       background-color: rgba(255, 255, 255, 0.1); }
       #backtick-container .results .command:active .icon, #backtick-container .results .command.active .icon {
@@ -195,7 +196,8 @@
 
 .command {
   display: block;
-  padding: 6px 10px; }
+  padding: 6px 10px;
+  margin: 0; }
   .command .icon {
     display: inline-block;
     vertical-align: top;
@@ -283,7 +285,7 @@
     .options-page .button:active, .options-page a.button:active {
       position: relative;
       top: 1px; }
-  .options-page input[type=text] {
+  .options-page input[type="text"] {
     font-family: "Lato", sans-serif;
     background-color: #362D26;
     color: #fef8f0;

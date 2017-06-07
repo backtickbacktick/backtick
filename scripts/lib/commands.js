@@ -2,6 +2,7 @@
 function BacktickCommands(store) {
 
     let commandItems = [], $results, $resultsContainer, loaded = false;
+    const resultsHeight = 275;
 
     return {
         init,
@@ -89,8 +90,6 @@ function BacktickCommands(store) {
 
         let command = new BacktickCommand(rawCommand);
 
-        command.$element.prependTo($resultsContainer);
-
         command.setSelected();
 
         return Promise.resolve(true);
@@ -98,15 +97,7 @@ function BacktickCommands(store) {
 
     function initializeItems(rawCommands) {
 
-        commandItems = [];
-
-        rawCommands.forEach(rawCommand => {
-
-            let command = new BacktickCommand(rawCommand);
-
-            command.$element.appendTo($resultsContainer);
-
-        });
+        rawCommands.forEach(rawCommand => new BacktickCommand(rawCommand));
 
         return Promise.resolve(commandItems);
     }
@@ -119,18 +110,22 @@ function BacktickCommands(store) {
 
         let selected = false,
             showing = true,
-            runCount = 0,
             script = rawCommand.command || '',
             command = {
+                height: 0,
+                index: commandItems.length,
                 $element: $(buildHtml(rawCommand)),
                 isSelected,
                 isShowing,
                 setShow,
                 setSelected,
-                run
+                run,
+                getHeight
             };
 
         const blob = [rawCommand.name, rawCommand.description, rawCommand.link].join(' ').toLowerCase();
+
+        command.$element.appendTo($resultsContainer);
 
         command.$element.on('click', () => {
             command.setSelected();
@@ -153,18 +148,61 @@ function BacktickCommands(store) {
             }
         }
 
+        function getHeight() {
+            if (!command.height) {
+                command.height = command.$element.outerHeight();
+            }
+            return command.height;
+        }
+
         function setSelected(selectCommand) {
 
             if (selectCommand === false) {
-                selected = false;
                 command.$element.removeClass('selected');
-                return;
+                selected = false;
+                return selected;
             }
 
             commandItems.forEach(command => command.setSelected(false));
+            command.$element.addClass('selected').focus();
+
+            $results.scrollTop(scrollTo());
 
             selected = true;
-            command.$element.addClass('selected').focus();
+            return selected;
+        }
+
+        function scrollTo() {
+
+            if (command.index === 0) {
+                return 0;
+            }
+
+            const itemTop = commandItems
+                .map(cmd => {
+                    return cmd.index < command.index ? cmd.getHeight() : 0;
+                })
+                .concat([0])
+                .reduce(function(a, b) { return a + b; });
+
+            if (command.index === commandItems.length - 1) {
+                return itemTop;
+            }
+
+            const
+                itemBottom = itemTop + command.getHeight(),
+                windowTop = $results.scrollTop(),
+                windowBottom = windowTop + resultsHeight;
+
+            const
+                withinTop = itemTop >= windowTop,
+                withinBottom = itemBottom <= windowBottom;
+
+            if (!withinTop || !withinBottom) {
+
+                let increment = (!withinTop ? -1 : 1);
+                return windowTop + (increment * command.getHeight());
+            }
         }
 
         function isSelected() {
@@ -218,7 +256,6 @@ function BacktickCommands(store) {
     </div>
 </li>`;
         }
-
     }
 
     function searchCommands(searchText) {

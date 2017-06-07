@@ -259,6 +259,7 @@ display: none;
 		max-height: 275px;
 		overflow: auto;
 		background-color: $background-color;
+		position: relative;
 
 		* {
 			cursor: default;
@@ -274,7 +275,7 @@ display: none;
 
 		.command {
 			&.selected {
-				background-color: rgba(255, 255, 255, 0.05);
+				background-color: rgba(255, 255, 255, 0.095);
 			}
 
 			&:active, &.active {
@@ -291,6 +292,7 @@ display: none;
 .command {
 	display: block;
 	padding: 6px 10px;
+	margin: 0;
 
 	.icon {
 		display: inline-block;
@@ -421,7 +423,7 @@ display: none;
 		}
 	}
 
-	input[type=text] {
+	input[type="text"] {
 		font-family: "Lato", sans-serif;
 
 		background-color: $background-color;
